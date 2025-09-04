@@ -17,7 +17,6 @@ NELUA_CFLAGS += -D NELUA_GEN
 
 # Options for C++ sources
 CPPOPT       += -I$(IMPLOT_DIR)
-CPPOPT       += -I../../libs/cimgui
 
 OBJS +=  $(BUILD_DIR)/cimplot.o
 OBJS +=  $(BUILD_DIR)/implot.o

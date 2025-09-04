@@ -16,7 +16,6 @@ NELUA_CFLAGS  += -I$(CIMTOGGLE_DIR)
 
 # Options for C++ sources
 CPPOPT       += -I$(IMTOGGLE_DIR)
-CPPOPT       += -I../../libs/cimgui
 
 CPPOPT += -D SPINNER_SCALESQUARES
 

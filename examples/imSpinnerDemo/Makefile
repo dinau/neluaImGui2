@@ -14,7 +14,6 @@ NELUA_CFLAGS  += -I$(CIMSPINNER_DIR)
 
 # Options for C++ sources
 CPPOPT       += -I$(CIMSPINNER_DIR)/imspinner
-CPPOPT       += -I../../libs/cimgui
 
 # Adding spinner widgets.
 # See  ../../libs/cimspinner/imspinner/cimspinner.h         <--- Available names defined

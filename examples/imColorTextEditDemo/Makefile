@@ -18,8 +18,6 @@ NELUA_CFLAGS             += -I$(CIMCTE_DIR)
 # Options for C++ sources
 CPPOPT       += -I$(IMGUI_COLOR_TEXTEDIT_DIR)
 CPPOPT       += -I$(IMGUI_COLOR_TEXTEDIT_DIR)/vendor/regex/include
-CPPOPT       += -I../../libs/cimgui
-#CPPOPT       += -fexceptions
 
 OBJS +=  $(BUILD_DIR)/cimCTE.o
 OBJS +=  $(BUILD_DIR)/TextEditor.o

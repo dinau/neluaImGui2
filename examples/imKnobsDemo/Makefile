@@ -16,7 +16,6 @@ NELUA_CFLAGS  += -I$(CIMKNOBS_DIR)
 
 # Options for C++ sources
 CPPOPT       += -I$(IMKNOBS_DIR)
-CPPOPT       += -I../../libs/cimgui
 
 CPPOPT += -D SPINNER_SCALESQUARES
 

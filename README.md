@@ -1,7 +1,39 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [NeluaImGui2](#neluaimgui2)
+  - [Currently highly work in progress](#currently-highly-work-in-progress)
+  - [Versions](#versions)
+  - [Prerequisites](#prerequisites)
+  - [Build and run on Windows OS](#build-and-run-on-windows-os)
+  - [Examples](#examples)
+    - [imGuiToggleDemo](#imguitoggledemo)
+    - [imKnobsDemo](#imknobsdemo)
+    - [imSpinnerDemo](#imspinnerdemo)
+    - [imColorTextEditDemo](#imcolortexteditdemo)
+    - [imGuizmoDemo](#imguizmodemo)
+    - [imNodesDemo](#imnodesdemo)
+    - [imFileDialogDemo](#imfiledialogdemo)
+    - [iconFontViewer](#iconfontviewer)
+    - [imPlotDemo](#implotdemo)
+    - [imPlot3DDemo](#implot3ddemo)
+    - [glfw_opengl3, sdl2_opengl3](#glfw_opengl3-sdl2_opengl3)
+    - [glfw_opengl3_jp](#glfw_opengl3_jp)
+  - [Available libraries list at this moment](#available-libraries-list-at-this-moment)
+  - [Update NeluaImGui](#update-neluaimgui)
+  - [SDL2 / GLFW / STB headers for Nelua](#sdl2--glfw--stb-headers-for-nelua)
+  - [My tools version](#my-tools-version)
+  - [History](#history)
+  - [Other ImGui / CImGui project](#other-imgui--cimgui-project)
+  - [SDL game tutorial Platfromer](#sdl-game-tutorial-platfromer)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+### NeluaImGui2
+
 ![alt](https://github.com/dinau/neluaImGui2/actions/workflows/windows.yml/badge.svg) 
 ![alt](https://github.com/dinau/neluaImGui2/actions/workflows/linux.yml/badge.svg)
 
-### NeluaImGui2
 
 #### Currently highly work in progress
 

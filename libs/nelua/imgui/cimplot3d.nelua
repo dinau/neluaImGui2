@@ -1,0 +1,2915 @@
+--
+-- This file has been auto generated. Don't edit this file.
+--
+
+##[==[
+cinclude "cimgui.h"
+cinclude "cimplot3d.h"
+]==]
+global ImVec2: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVec4: type <cimport,nodecl,forwarddecl> = @record{}
+global ImTextureRef: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_char: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiStoragePair: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiSelectionRequest: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImDrawChannel: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImDrawCmd: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImDrawIdx: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImDrawVert: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImVec2: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImVec4: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImTextureRef: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImU8: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImDrawListPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImTextureRect: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImWchar: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImFontPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImFontConfig: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImDrawListSharedDataPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_float: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImU16: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImFontGlyph: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImFontConfigPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiPlatformMonitor: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImTextureDataPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiViewportPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawCmdHeader: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawChannel: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawCmd: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawList: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawListSharedData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawListSplitter: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawVert: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFont: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontAtlas: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontAtlasBuilder: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontAtlasCustomRect: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontBaked: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontConfig: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontGlyph: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontBuilderIO: type <cimport,nodecl,forwarddecl> = @record{}
+global ImTextureData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImTextureRect: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiContext: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiIO: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiKeyData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiListClipper: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiMultiSelectIO: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiPayload: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiPlatformIO: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiPlatformImeData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiPlatformMonitor: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiSelectionRequest: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiSizeCallbackData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiStorage: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiStoragePair: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiStyle: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTableSortSpecs: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTableColumnSortSpecs: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTextBuffer: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiViewport: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiWindowClass: type <cimport,nodecl,forwarddecl> = @record{}
+ImVec2 = @record{
+  x: float32,
+  y: float32
+}
+ImVec4 = @record{
+  x: float32,
+  y: float32,
+  z: float32,
+  w: float32
+}
+ImTextureRef = @record{
+  _TexData: *ImTextureData,
+  _TexID: culonglong
+}
+ImGuiTableSortSpecs = @record{
+  Specs: *ImGuiTableColumnSortSpecs,
+  SpecsCount: cint,
+  SpecsDirty: boolean
+}
+ImGuiTableColumnSortSpecs = @record{
+  ColumnUserID: cuint,
+  ColumnIndex: cshort,
+  SortOrder: cshort,
+  SortDirection: cuchar
+}
+ImVector_char = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: cstring
+}
+ImVector_ImGuiStoragePair = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiStoragePair
+}
+ImVector_ImGuiSelectionRequest = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiSelectionRequest
+}
+ImVector_ImDrawChannel = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImDrawChannel
+}
+ImVector_ImDrawCmd = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImDrawCmd
+}
+ImVector_ImDrawIdx = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cuint
+}
+ImVector_ImDrawVert = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImDrawVert
+}
+ImVector_ImVec2 = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImVec2
+}
+ImVector_ImVec4 = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImVec4
+}
+ImVector_ImTextureRef = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImTextureRef
+}
+ImVector_ImU8 = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cuchar
+}
+ImVector_ImDrawListPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImDrawList
+}
+ImVector_ImTextureRect = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImTextureRect
+}
+ImVector_ImWchar = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cushort
+}
+ImVector_ImFontPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImFont
+}
+ImVector_ImFontConfig = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImFontConfig
+}
+ImVector_ImDrawListSharedDataPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImDrawListSharedData
+}
+ImVector_float = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *float32
+}
+ImVector_ImU16 = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cushort
+}
+ImVector_ImFontGlyph = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImFontGlyph
+}
+ImVector_ImFontConfigPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImFontConfig
+}
+ImVector_ImGuiPlatformMonitor = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiPlatformMonitor
+}
+ImVector_ImTextureDataPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImTextureData
+}
+ImVector_ImGuiViewportPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImGuiViewport
+}
+ImGuiStyle = @record{
+  FontSizeBase: float32,
+  FontScaleMain: float32,
+  FontScaleDpi: float32,
+  Alpha: float32,
+  DisabledAlpha: float32,
+  WindowPadding: ImVec2,
+  WindowRounding: float32,
+  WindowBorderSize: float32,
+  WindowBorderHoverPadding: float32,
+  WindowMinSize: ImVec2,
+  WindowTitleAlign: ImVec2,
+  WindowMenuButtonPosition: cint,
+  ChildRounding: float32,
+  ChildBorderSize: float32,
+  PopupRounding: float32,
+  PopupBorderSize: float32,
+  FramePadding: ImVec2,
+  FrameRounding: float32,
+  FrameBorderSize: float32,
+  ItemSpacing: ImVec2,
+  ItemInnerSpacing: ImVec2,
+  CellPadding: ImVec2,
+  TouchExtraPadding: ImVec2,
+  IndentSpacing: float32,
+  ColumnsMinSpacing: float32,
+  ScrollbarSize: float32,
+  ScrollbarRounding: float32,
+  GrabMinSize: float32,
+  GrabRounding: float32,
+  LogSliderDeadzone: float32,
+  ImageBorderSize: float32,
+  TabRounding: float32,
+  TabBorderSize: float32,
+  TabMinWidthBase: float32,
+  TabMinWidthShrink: float32,
+  TabCloseButtonMinWidthSelected: float32,
+  TabCloseButtonMinWidthUnselected: float32,
+  TabBarBorderSize: float32,
+  TabBarOverlineSize: float32,
+  TableAngledHeadersAngle: float32,
+  TableAngledHeadersTextAlign: ImVec2,
+  TreeLinesFlags: cint,
+  TreeLinesSize: float32,
+  TreeLinesRounding: float32,
+  ColorButtonPosition: cint,
+  ButtonTextAlign: ImVec2,
+  SelectableTextAlign: ImVec2,
+  SeparatorTextBorderSize: float32,
+  SeparatorTextAlign: ImVec2,
+  SeparatorTextPadding: ImVec2,
+  DisplayWindowPadding: ImVec2,
+  DisplaySafeAreaPadding: ImVec2,
+  DockingSeparatorSize: float32,
+  MouseCursorScale: float32,
+  AntiAliasedLines: boolean,
+  AntiAliasedLinesUseTex: boolean,
+  AntiAliasedFill: boolean,
+  CurveTessellationTol: float32,
+  CircleTessellationMaxError: float32,
+  Colors: [60]ImVec4,
+  HoverStationaryDelay: float32,
+  HoverDelayShort: float32,
+  HoverDelayNormal: float32,
+  HoverFlagsForTooltipMouse: cint,
+  HoverFlagsForTooltipNav: cint,
+  _MainScale: float32,
+  _NextFrameFontSizeBase: float32
+}
+ImGuiKeyData = @record{
+  Down: boolean,
+  DownDuration: float32,
+  DownDurationPrev: float32,
+  AnalogValue: float32
+}
+ImGuiIO = @record{
+  ConfigFlags: cint,
+  BackendFlags: cint,
+  DisplaySize: ImVec2,
+  DisplayFramebufferScale: ImVec2,
+  DeltaTime: float32,
+  IniSavingRate: float32,
+  IniFilename: cstring,
+  LogFilename: cstring,
+  UserData: pointer,
+  Fonts: *ImFontAtlas,
+  FontDefault: *ImFont,
+  FontAllowUserScaling: boolean,
+  ConfigNavSwapGamepadButtons: boolean,
+  ConfigNavMoveSetMousePos: boolean,
+  ConfigNavCaptureKeyboard: boolean,
+  ConfigNavEscapeClearFocusItem: boolean,
+  ConfigNavEscapeClearFocusWindow: boolean,
+  ConfigNavCursorVisibleAuto: boolean,
+  ConfigNavCursorVisibleAlways: boolean,
+  ConfigDockingNoSplit: boolean,
+  ConfigDockingWithShift: boolean,
+  ConfigDockingAlwaysTabBar: boolean,
+  ConfigDockingTransparentPayload: boolean,
+  ConfigViewportsNoAutoMerge: boolean,
+  ConfigViewportsNoTaskBarIcon: boolean,
+  ConfigViewportsNoDecoration: boolean,
+  ConfigViewportsNoDefaultParent: boolean,
+  ConfigViewportPlatformFocusSetsImGuiFocus: boolean,
+  ConfigDpiScaleFonts: boolean,
+  ConfigDpiScaleViewports: boolean,
+  MouseDrawCursor: boolean,
+  ConfigMacOSXBehaviors: boolean,
+  ConfigInputTrickleEventQueue: boolean,
+  ConfigInputTextCursorBlink: boolean,
+  ConfigInputTextEnterKeepActive: boolean,
+  ConfigDragClickToInputText: boolean,
+  ConfigWindowsResizeFromEdges: boolean,
+  ConfigWindowsMoveFromTitleBarOnly: boolean,
+  ConfigWindowsCopyContentsWithCtrlC: boolean,
+  ConfigScrollbarScrollByPage: boolean,
+  ConfigMemoryCompactTimer: float32,
+  MouseDoubleClickTime: float32,
+  MouseDoubleClickMaxDist: float32,
+  MouseDragThreshold: float32,
+  KeyRepeatDelay: float32,
+  KeyRepeatRate: float32,
+  ConfigErrorRecovery: boolean,
+  ConfigErrorRecoveryEnableAssert: boolean,
+  ConfigErrorRecoveryEnableDebugLog: boolean,
+  ConfigErrorRecoveryEnableTooltip: boolean,
+  ConfigDebugIsDebuggerPresent: boolean,
+  ConfigDebugHighlightIdConflicts: boolean,
+  ConfigDebugHighlightIdConflictsShowItemPicker: boolean,
+  ConfigDebugBeginReturnValueOnce: boolean,
+  ConfigDebugBeginReturnValueLoop: boolean,
+  ConfigDebugIgnoreFocusLoss: boolean,
+  ConfigDebugIniSettings: boolean,
+  BackendPlatformName: cstring,
+  BackendRendererName: cstring,
+  BackendPlatformUserData: pointer,
+  BackendRendererUserData: pointer,
+  BackendLanguageUserData: pointer,
+  WantCaptureMouse: boolean,
+  WantCaptureKeyboard: boolean,
+  WantTextInput: boolean,
+  WantSetMousePos: boolean,
+  WantSaveIniSettings: boolean,
+  NavActive: boolean,
+  NavVisible: boolean,
+  Framerate: float32,
+  MetricsRenderVertices: cint,
+  MetricsRenderIndices: cint,
+  MetricsRenderWindows: cint,
+  MetricsActiveWindows: cint,
+  MouseDelta: ImVec2,
+  Ctx: *ImGuiContext,
+  MousePos: ImVec2,
+  MouseDown: [5]boolean,
+  MouseWheel: float32,
+  MouseWheelH: float32,
+  MouseSource: cint,
+  MouseHoveredViewport: cuint,
+  KeyCtrl: boolean,
+  KeyShift: boolean,
+  KeyAlt: boolean,
+  KeySuper: boolean,
+  KeyMods: cint,
+  KeysData: [155]ImGuiKeyData,
+  WantCaptureMouseUnlessPopupClose: boolean,
+  MousePosPrev: ImVec2,
+  MouseClickedPos: [5]ImVec2,
+  MouseClickedTime: [5]float64,
+  MouseClicked: [5]boolean,
+  MouseDoubleClicked: [5]boolean,
+  MouseClickedCount: [5]cushort,
+  MouseClickedLastCount: [5]cushort,
+  MouseReleased: [5]boolean,
+  MouseReleasedTime: [5]float64,
+  MouseDownOwned: [5]boolean,
+  MouseDownOwnedUnlessPopupClose: [5]boolean,
+  MouseWheelRequestAxisSwap: boolean,
+  MouseCtrlLeftAsRightClick: boolean,
+  MouseDownDuration: [5]float32,
+  MouseDownDurationPrev: [5]float32,
+  MouseDragMaxDistanceAbs: [5]ImVec2,
+  MouseDragMaxDistanceSqr: [5]float32,
+  PenPressure: float32,
+  AppFocusLost: boolean,
+  AppAcceptingEvents: boolean,
+  InputQueueSurrogate: cushort,
+  InputQueueCharacters: ImVector_ImWchar,
+  FontGlobalScale: float32,
+  GetClipboardTextFn: function(user_data: pointer): cstring,
+  SetClipboardTextFn: function(user_data: pointer, text: cstring): void,
+  ClipboardUserData: pointer
+}
+ImGuiSizeCallbackData = @record{
+  UserData: pointer,
+  Pos: ImVec2,
+  CurrentSize: ImVec2,
+  DesiredSize: ImVec2
+}
+ImGuiWindowClass = @record{
+  ClassId: cuint,
+  ParentViewportId: cuint,
+  FocusRouteParentWindowId: cuint,
+  ViewportFlagsOverrideSet: cint,
+  ViewportFlagsOverrideClear: cint,
+  TabItemFlagsOverrideSet: cint,
+  DockNodeFlagsOverrideSet: cint,
+  DockingAlwaysTabBar: boolean,
+  DockingAllowUnclassed: boolean
+}
+ImGuiPayload = @record{
+  Data: pointer,
+  DataSize: cint,
+  SourceId: cuint,
+  SourceParentId: cuint,
+  DataFrameCount: cint,
+  DataType: [33]cchar,
+  Preview: boolean,
+  Delivery: boolean
+}
+ImGuiTextBuffer = @record{
+  Buf: ImVector_char
+}
+ImGuiStoragePair = @record{
+  key: cuint,
+  __unnamed2: union{
+    val_i: cint,
+    val_f: float32,
+    val_p: pointer
+  }
+}
+ImGuiStorage = @record{
+  Data: ImVector_ImGuiStoragePair
+}
+ImGuiListClipper = @record{
+  Ctx: *ImGuiContext,
+  DisplayStart: cint,
+  DisplayEnd: cint,
+  ItemsCount: cint,
+  ItemsHeight: float32,
+  StartPosY: float64,
+  StartSeekOffsetY: float64,
+  TempData: pointer
+}
+ImGuiMultiSelectIO = @record{
+  Requests: ImVector_ImGuiSelectionRequest,
+  RangeSrcItem: clonglong,
+  NavIdItem: clonglong,
+  NavIdSelected: boolean,
+  RangeSrcReset: boolean,
+  ItemsCount: cint
+}
+global ImGuiSelectionRequestType: type <cimport,nodecl,using> = @enum(cint){
+  ImGuiSelectionRequestType_None = 0,
+  ImGuiSelectionRequestType_SetAll = 1,
+  ImGuiSelectionRequestType_SetRange = 2
+}
+ImGuiSelectionRequest = @record{
+  Type: ImGuiSelectionRequestType,
+  Selected: boolean,
+  RangeDirection: cschar,
+  RangeFirstItem: clonglong,
+  RangeLastItem: clonglong
+}
+ImDrawCmd = @record{
+  ClipRect: ImVec4,
+  TexRef: ImTextureRef,
+  VtxOffset: cuint,
+  IdxOffset: cuint,
+  ElemCount: cuint,
+  UserCallback: function(parent_list: *ImDrawList, cmd: *ImDrawCmd): void,
+  UserCallbackData: pointer,
+  UserCallbackDataSize: cint,
+  UserCallbackDataOffset: cint
+}
+ImDrawVert = @record{
+  pos: ImVec2,
+  uv: ImVec2,
+  col: cuint
+}
+ImDrawCmdHeader = @record{
+  ClipRect: ImVec4,
+  TexRef: ImTextureRef,
+  VtxOffset: cuint
+}
+ImDrawChannel = @record{
+  _CmdBuffer: ImVector_ImDrawCmd,
+  _IdxBuffer: ImVector_ImDrawIdx
+}
+ImDrawListSplitter = @record{
+  _Current: cint,
+  _Count: cint,
+  _Channels: ImVector_ImDrawChannel
+}
+ImDrawList = @record{
+  CmdBuffer: ImVector_ImDrawCmd,
+  IdxBuffer: ImVector_ImDrawIdx,
+  VtxBuffer: ImVector_ImDrawVert,
+  Flags: cint,
+  _VtxCurrentIdx: cuint,
+  _Data: *ImDrawListSharedData,
+  _VtxWritePtr: *ImDrawVert,
+  _IdxWritePtr: *cuint,
+  _Path: ImVector_ImVec2,
+  _CmdHeader: ImDrawCmdHeader,
+  _Splitter: ImDrawListSplitter,
+  _ClipRectStack: ImVector_ImVec4,
+  _TextureStack: ImVector_ImTextureRef,
+  _CallbacksDataBuf: ImVector_ImU8,
+  _FringeScale: float32,
+  _OwnerName: cstring
+}
+ImDrawData = @record{
+  Valid: boolean,
+  CmdListsCount: cint,
+  TotalIdxCount: cint,
+  TotalVtxCount: cint,
+  CmdLists: ImVector_ImDrawListPtr,
+  DisplayPos: ImVec2,
+  DisplaySize: ImVec2,
+  FramebufferScale: ImVec2,
+  OwnerViewport: *ImGuiViewport,
+  Textures: *ImVector_ImTextureDataPtr
+}
+global ImTextureFormat: type <cimport,nodecl,using> = @enum(cint){
+  ImTextureFormat_RGBA32 = 0,
+  ImTextureFormat_Alpha8 = 1
+}
+global ImTextureStatus: type <cimport,nodecl,using> = @enum(cint){
+  ImTextureStatus_OK = 0,
+  ImTextureStatus_Destroyed = 1,
+  ImTextureStatus_WantCreate = 2,
+  ImTextureStatus_WantUpdates = 3,
+  ImTextureStatus_WantDestroy = 4
+}
+ImTextureRect = @record{
+  x: cushort,
+  y: cushort,
+  w: cushort,
+  h: cushort
+}
+ImTextureData = @record{
+  UniqueID: cint,
+  Status: ImTextureStatus,
+  BackendUserData: pointer,
+  TexID: culonglong,
+  Format: ImTextureFormat,
+  Width: cint,
+  Height: cint,
+  BytesPerPixel: cint,
+  Pixels: *cuchar,
+  UsedRect: ImTextureRect,
+  UpdateRect: ImTextureRect,
+  Updates: ImVector_ImTextureRect,
+  UnusedFrames: cint,
+  RefCount: cushort,
+  UseColors: boolean,
+  WantDestroyNextFrame: boolean
+}
+ImFontConfig = @record{
+  Name: [40]cchar,
+  FontData: pointer,
+  FontDataSize: cint,
+  FontDataOwnedByAtlas: boolean,
+  MergeMode: boolean,
+  PixelSnapH: boolean,
+  PixelSnapV: boolean,
+  OversampleH: cschar,
+  OversampleV: cschar,
+  EllipsisChar: cushort,
+  SizePixels: float32,
+  GlyphRanges: *cushort,
+  GlyphExcludeRanges: *cushort,
+  GlyphOffset: ImVec2,
+  GlyphMinAdvanceX: float32,
+  GlyphMaxAdvanceX: float32,
+  GlyphExtraAdvanceX: float32,
+  FontNo: cuint,
+  FontLoaderFlags: cuint,
+  RasterizerMultiply: float32,
+  RasterizerDensity: float32,
+  Flags: cint,
+  DstFont: *ImFont,
+  FontLoader: *ImFontBuilderIO,
+  FontLoaderData: pointer
+}
+ImFontGlyph = @record{
+  Colored: cuint,
+  Visible: cuint,
+  SourceIdx: cuint,
+  Codepoint: cuint,
+  AdvanceX: float32,
+  X0: float32,
+  Y0: float32,
+  X1: float32,
+  Y1: float32,
+  U0: float32,
+  V0: float32,
+  U1: float32,
+  V1: float32,
+  PackId: cint
+}
+ImFontAtlasCustomRect = @record{
+  x: cushort,
+  y: cushort,
+  w: cushort,
+  h: cushort,
+  uv0: ImVec2,
+  uv1: ImVec2
+}
+ImFontAtlas = @record{
+  Flags: cint,
+  TexDesiredFormat: ImTextureFormat,
+  TexGlyphPadding: cint,
+  TexMinWidth: cint,
+  TexMinHeight: cint,
+  TexMaxWidth: cint,
+  TexMaxHeight: cint,
+  UserData: pointer,
+  __unnamed9: union{
+    TexRef: ImTextureRef,
+    TexID: ImTextureRef
+  },
+  TexData: *ImTextureData,
+  TexList: ImVector_ImTextureDataPtr,
+  Locked: boolean,
+  RendererHasTextures: boolean,
+  TexIsBuilt: boolean,
+  TexPixelsUseColors: boolean,
+  TexUvScale: ImVec2,
+  TexUvWhitePixel: ImVec2,
+  Fonts: ImVector_ImFontPtr,
+  Sources: ImVector_ImFontConfig,
+  TexUvLines: [33]ImVec4,
+  TexNextUniqueID: cint,
+  FontNextUniqueID: cint,
+  DrawListSharedDatas: ImVector_ImDrawListSharedDataPtr,
+  Builder: *ImFontAtlasBuilder,
+  FontLoader: *ImFontBuilderIO,
+  FontLoaderName: cstring,
+  FontLoaderData: pointer,
+  FontLoaderFlags: cuint,
+  RefCount: cint,
+  OwnerContext: *ImGuiContext,
+  TempRect: ImFontAtlasCustomRect
+}
+ImFontBaked = @record{
+  IndexAdvanceX: ImVector_float,
+  FallbackAdvanceX: float32,
+  Size: float32,
+  RasterizerDensity: float32,
+  IndexLookup: ImVector_ImU16,
+  Glyphs: ImVector_ImFontGlyph,
+  FallbackGlyphIndex: cint,
+  Ascent: float32,
+  Descent: float32,
+  MetricsTotalSurface: cuint,
+  WantDestroy: cuint,
+  LoadNoFallback: cuint,
+  LoadNoRenderOnLayout: cuint,
+  LastUsedFrame: cint,
+  BakedId: cuint,
+  ContainerFont: *ImFont,
+  FontLoaderDatas: pointer
+}
+ImFont = @record{
+  LastBaked: *ImFontBaked,
+  ContainerAtlas: *ImFontAtlas,
+  Flags: cint,
+  CurrentRasterizerDensity: float32,
+  FontId: cuint,
+  LegacySize: float32,
+  Sources: ImVector_ImFontConfigPtr,
+  EllipsisChar: cushort,
+  FallbackChar: cushort,
+  Used8kPagesMap: [1]cuchar,
+  EllipsisAutoBake: boolean,
+  RemapPairs: ImGuiStorage,
+  Scale: float32
+}
+ImGuiViewport = @record{
+  ID: cuint,
+  Flags: cint,
+  Pos: ImVec2,
+  Size: ImVec2,
+  FramebufferScale: ImVec2,
+  WorkPos: ImVec2,
+  WorkSize: ImVec2,
+  DpiScale: float32,
+  ParentViewportId: cuint,
+  DrawData: *ImDrawData,
+  RendererUserData: pointer,
+  PlatformUserData: pointer,
+  PlatformHandle: pointer,
+  PlatformHandleRaw: pointer,
+  PlatformWindowCreated: boolean,
+  PlatformRequestMove: boolean,
+  PlatformRequestResize: boolean,
+  PlatformRequestClose: boolean
+}
+ImGuiPlatformIO = @record{
+  Platform_GetClipboardTextFn: function(ctx: *ImGuiContext): cstring,
+  Platform_SetClipboardTextFn: function(ctx: *ImGuiContext, text: cstring): void,
+  Platform_ClipboardUserData: pointer,
+  Platform_OpenInShellFn: function(ctx: *ImGuiContext, path: cstring): boolean,
+  Platform_OpenInShellUserData: pointer,
+  Platform_SetImeDataFn: function(ctx: *ImGuiContext, viewport: *ImGuiViewport, data: *ImGuiPlatformImeData): void,
+  Platform_ImeUserData: pointer,
+  Platform_LocaleDecimalPoint: cushort,
+  Renderer_TextureMaxWidth: cint,
+  Renderer_TextureMaxHeight: cint,
+  Renderer_RenderState: pointer,
+  Platform_CreateWindow: function(vp: *ImGuiViewport): void,
+  Platform_DestroyWindow: function(vp: *ImGuiViewport): void,
+  Platform_ShowWindow: function(vp: *ImGuiViewport): void,
+  Platform_SetWindowPos: function(vp: *ImGuiViewport, pos: ImVec2): void,
+  Platform_GetWindowPos: function(vp: *ImGuiViewport): ImVec2,
+  Platform_SetWindowSize: function(vp: *ImGuiViewport, size: ImVec2): void,
+  Platform_GetWindowSize: function(vp: *ImGuiViewport): ImVec2,
+  Platform_GetWindowFramebufferScale: function(vp: *ImGuiViewport): ImVec2,
+  Platform_SetWindowFocus: function(vp: *ImGuiViewport): void,
+  Platform_GetWindowFocus: function(vp: *ImGuiViewport): boolean,
+  Platform_GetWindowMinimized: function(vp: *ImGuiViewport): boolean,
+  Platform_SetWindowTitle: function(vp: *ImGuiViewport, str: cstring): void,
+  Platform_SetWindowAlpha: function(vp: *ImGuiViewport, alpha: float32): void,
+  Platform_UpdateWindow: function(vp: *ImGuiViewport): void,
+  Platform_RenderWindow: function(vp: *ImGuiViewport, render_arg: pointer): void,
+  Platform_SwapBuffers: function(vp: *ImGuiViewport, render_arg: pointer): void,
+  Platform_GetWindowDpiScale: function(vp: *ImGuiViewport): float32,
+  Platform_OnChangedViewport: function(vp: *ImGuiViewport): void,
+  Platform_GetWindowWorkAreaInsets: function(vp: *ImGuiViewport): ImVec4,
+  Platform_CreateVkSurface: function(vp: *ImGuiViewport, vk_inst: culonglong, vk_allocators: pointer, out_vk_surface: *culonglong): cint,
+  Renderer_CreateWindow: function(vp: *ImGuiViewport): void,
+  Renderer_DestroyWindow: function(vp: *ImGuiViewport): void,
+  Renderer_SetWindowSize: function(vp: *ImGuiViewport, size: ImVec2): void,
+  Renderer_RenderWindow: function(vp: *ImGuiViewport, render_arg: pointer): void,
+  Renderer_SwapBuffers: function(vp: *ImGuiViewport, render_arg: pointer): void,
+  Monitors: ImVector_ImGuiPlatformMonitor,
+  Textures: ImVector_ImTextureDataPtr,
+  Viewports: ImVector_ImGuiViewportPtr
+}
+ImGuiPlatformMonitor = @record{
+  MainPos: ImVec2,
+  MainSize: ImVec2,
+  WorkPos: ImVec2,
+  WorkSize: ImVec2,
+  DpiScale: float32,
+  PlatformHandle: pointer
+}
+ImGuiPlatformImeData = @record{
+  WantVisible: boolean,
+  WantTextInput: boolean,
+  InputPos: ImVec2,
+  InputLineHeight: float32,
+  ViewportId: cuint
+}
+global ImVector_ImFontBakedPtr: type <cimport,nodecl> = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImFontBaked
+}
+global ImVector_ImFontAtlasPtr: type <cimport,nodecl> = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImFontAtlas
+}
+global FILE: type <cimport,nodecl,cincomplete> = @record{}
+global ImVec1: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVec2i: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVec2ih: type <cimport,nodecl,forwarddecl> = @record{}
+global ImSpan_ImGuiTableColumn: type <cimport,nodecl,forwarddecl> = @record{}
+global ImSpan_ImGuiTableColumnIdx: type <cimport,nodecl,forwarddecl> = @record{}
+global ImSpan_ImGuiTableCellData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImStableVector_ImFontBaked_32: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontStackData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImFontStackData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDataTypeStorage: type <cimport,nodecl,forwarddecl> = @record{}
+global ImChunkStream_ImGuiTableSettings: type <cimport,nodecl,forwarddecl> = @record{}
+global ImChunkStream_ImGuiWindowSettings: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_unsigned_char: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiWindowStackData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiWindowPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiViewportPPtr: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTreeNodeStackData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTableTempData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTableInstanceData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTableHeaderData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTableColumnSortSpecs: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTable: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTabItem: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiTabBar: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiStyleMod: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiStackLevelInfo: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiShrinkWidthItem: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiSettingsHandler: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiPtrOrIndex: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiPopupData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiOldColumns: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiOldColumnData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiMultiSelectTempData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiMultiSelectState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiListClipperRange: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiListClipperData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiKeyRoutingData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiItemFlags: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiInputEvent: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiID: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiGroupData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiFocusScopeData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiDockRequest: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiDockNodeSettings: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiContextHook: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImGuiColorMod: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_int: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPool_ImGuiMultiSelectState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPool_ImGuiTabBar: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPool_ImGuiTable: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTextIndex: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiComboPreviewData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputTextDeactivatedState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiWindowStackData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiShrinkWidthItem: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiPtrOrIndex: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEventMousePos: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEventMouseWheel: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEventMouseButton: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEventMouseViewport: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEventKey: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEventText: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEventAppFocused: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputEvent: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiKeyRoutingData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiKeyRoutingTable: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiKeyOwnerData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiListClipperRange: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiListClipperData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiFocusScopeData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiViewportP: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDebugAllocEntry: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDebugAllocInfo: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiStackLevelInfo: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiIDStackTool: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTableCellData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_ImFontAtlasRectEntry: type <cimport,nodecl,forwarddecl> = @record{}
+global ImVector_stbrp_node_im: type <cimport,nodecl,forwarddecl> = @record{}
+global stbrp_context_opaque: type <cimport,nodecl,forwarddecl> = @record{}
+global ImRect: type <cimport,nodecl,forwarddecl> = @record{}
+global ImDrawDataBuilder: type <cimport,nodecl,forwarddecl> = @record{}
+global ImFontAtlasRectEntry: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiBoxSelectState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiColorMod: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiContextHook: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDeactivatedItemData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDockContext: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDockRequest: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDockNode: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDockNodeSettings: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiErrorRecoveryState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiGroupData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiInputTextState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiLastItemData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiMenuColumns: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiMultiSelectState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiMultiSelectTempData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiNavItemData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiMetricsConfig: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiNextWindowData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiNextItemData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiOldColumnData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiOldColumns: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiPopupData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiSettingsHandler: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiStyleMod: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTabBar: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTabItem: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTable: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTableHeaderData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTableColumn: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTableInstanceData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTableTempData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTreeNodeStackData: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTypingSelectState: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiTypingSelectRequest: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiWindow: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiWindowDockStyle: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiWindowTempData: type <cimport,nodecl,forwarddecl> = @record{}
+ImVec1 = @record{
+  x: float32
+}
+ImVec2i = @record{
+  x: cint,
+  y: cint
+}
+ImVec2ih = @record{
+  x: cshort,
+  y: cshort
+}
+ImRect = @record{
+  Min: ImVec2,
+  Max: ImVec2
+}
+ImSpan_ImGuiTableColumn = @record{
+  Data: *ImGuiTableColumn,
+  DataEnd: *ImGuiTableColumn
+}
+ImSpan_ImGuiTableColumnIdx = @record{
+  Data: *cshort,
+  DataEnd: *cshort
+}
+ImSpan_ImGuiTableCellData = @record{
+  Data: *ImGuiTableCellData,
+  DataEnd: *ImGuiTableCellData
+}
+ImStableVector_ImFontBaked_32 = @record{
+  Size: cint,
+  Capacity: cint,
+  Blocks: ImVector_ImFontBakedPtr
+}
+ImDrawListSharedData = @record{
+  TexUvWhitePixel: ImVec2,
+  TexUvLines: *ImVec4,
+  FontAtlas: *ImFontAtlas,
+  Font: *ImFont,
+  FontSize: float32,
+  FontScale: float32,
+  CurveTessellationTol: float32,
+  CircleSegmentMaxError: float32,
+  InitialFringeScale: float32,
+  InitialFlags: cint,
+  ClipRectFullscreen: ImVec4,
+  TempBuffer: ImVector_ImVec2,
+  DrawLists: ImVector_ImDrawListPtr,
+  Context: *ImGuiContext,
+  ArcFastVtx: [48]ImVec2,
+  ArcFastRadiusCutoff: float32,
+  CircleSegmentCounts: [64]cuchar
+}
+ImDrawDataBuilder = @record{
+  Layers: [2]*ImVector_ImDrawListPtr,
+  LayerData1: ImVector_ImDrawListPtr
+}
+ImFontStackData = @record{
+  Font: *ImFont,
+  FontSizeBeforeScaling: float32,
+  FontSizeAfterScaling: float32
+}
+ImVector_ImFontStackData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImFontStackData
+}
+ImGuiColorMod = @record{
+  Col: cint,
+  BackupValue: ImVec4
+}
+ImGuiStyleMod = @record{
+  VarIdx: cint,
+  __unnamed2: union{
+    BackupInt: [2]cint,
+    BackupFloat: [2]float32
+  }
+}
+ImGuiDataTypeStorage = @record{
+  Data: [8]cuchar
+}
+ImChunkStream_ImGuiTableSettings = @record{
+  Buf: ImVector_char
+}
+ImChunkStream_ImGuiWindowSettings = @record{
+  Buf: ImVector_char
+}
+ImVector_unsigned_char = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cuchar
+}
+ImVector_ImGuiWindowStackData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiWindowStackData
+}
+ImVector_ImGuiWindowPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImGuiWindow
+}
+ImVector_ImGuiViewportPPtr = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: **ImGuiViewportP
+}
+ImVector_ImGuiTreeNodeStackData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTreeNodeStackData
+}
+ImVector_ImGuiTableTempData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTableTempData
+}
+ImVector_ImGuiTableInstanceData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTableInstanceData
+}
+ImVector_ImGuiTableHeaderData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTableHeaderData
+}
+ImVector_ImGuiTableColumnSortSpecs = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTableColumnSortSpecs
+}
+ImVector_ImGuiTable = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTable
+}
+ImVector_ImGuiTabItem = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTabItem
+}
+ImVector_ImGuiTabBar = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiTabBar
+}
+ImVector_ImGuiStyleMod = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiStyleMod
+}
+ImVector_ImGuiStackLevelInfo = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiStackLevelInfo
+}
+ImVector_ImGuiShrinkWidthItem = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiShrinkWidthItem
+}
+ImVector_ImGuiSettingsHandler = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiSettingsHandler
+}
+ImVector_ImGuiPtrOrIndex = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiPtrOrIndex
+}
+ImVector_ImGuiPopupData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiPopupData
+}
+ImVector_ImGuiOldColumns = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiOldColumns
+}
+ImVector_ImGuiOldColumnData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiOldColumnData
+}
+ImVector_ImGuiMultiSelectTempData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiMultiSelectTempData
+}
+ImVector_ImGuiMultiSelectState = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiMultiSelectState
+}
+ImVector_ImGuiListClipperRange = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiListClipperRange
+}
+ImVector_ImGuiListClipperData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiListClipperData
+}
+ImVector_ImGuiKeyRoutingData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiKeyRoutingData
+}
+ImVector_ImGuiItemFlags = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cint
+}
+ImVector_ImGuiInputEvent = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiInputEvent
+}
+ImVector_ImGuiID = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cuint
+}
+ImVector_ImGuiGroupData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiGroupData
+}
+ImVector_ImGuiFocusScopeData = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiFocusScopeData
+}
+ImVector_ImGuiDockRequest = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiDockRequest
+}
+ImVector_ImGuiDockNodeSettings = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiDockNodeSettings
+}
+ImVector_ImGuiContextHook = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiContextHook
+}
+ImVector_ImGuiColorMod = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImGuiColorMod
+}
+ImVector_int = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *cint
+}
+ImPool_ImGuiMultiSelectState = @record{
+  Buf: ImVector_ImGuiMultiSelectState,
+  Map: ImGuiStorage,
+  FreeIdx: cint,
+  AliveCount: cint
+}
+ImPool_ImGuiTabBar = @record{
+  Buf: ImVector_ImGuiTabBar,
+  Map: ImGuiStorage,
+  FreeIdx: cint,
+  AliveCount: cint
+}
+ImPool_ImGuiTable = @record{
+  Buf: ImVector_ImGuiTable,
+  Map: ImGuiStorage,
+  FreeIdx: cint,
+  AliveCount: cint
+}
+ImGuiTextIndex = @record{
+  LineOffsets: ImVector_int,
+  EndOffset: cint
+}
+global ImGuiAxis: type <cimport,nodecl,using> = @enum(cint){
+  ImGuiAxis_None = -1,
+  ImGuiAxis_X = 0,
+  ImGuiAxis_Y = 1
+}
+ImGuiComboPreviewData = @record{
+  PreviewRect: ImRect,
+  BackupCursorPos: ImVec2,
+  BackupCursorMaxPos: ImVec2,
+  BackupCursorPosPrevLine: ImVec2,
+  BackupPrevLineTextBaseOffset: float32,
+  BackupLayout: cint
+}
+ImGuiGroupData = @record{
+  WindowID: cuint,
+  BackupCursorPos: ImVec2,
+  BackupCursorMaxPos: ImVec2,
+  BackupCursorPosPrevLine: ImVec2,
+  BackupIndent: ImVec1,
+  BackupGroupOffset: ImVec1,
+  BackupCurrLineSize: ImVec2,
+  BackupCurrLineTextBaseOffset: float32,
+  BackupActiveIdIsAlive: cuint,
+  BackupDeactivatedIdIsAlive: boolean,
+  BackupHoveredIdIsAlive: boolean,
+  BackupIsSameLine: boolean,
+  EmitItem: boolean
+}
+ImGuiMenuColumns = @record{
+  TotalWidth: cuint,
+  NextTotalWidth: cuint,
+  Spacing: cushort,
+  OffsetIcon: cushort,
+  OffsetLabel: cushort,
+  OffsetShortcut: cushort,
+  OffsetMark: cushort,
+  Widths: [4]cushort
+}
+ImGuiInputTextDeactivatedState = @record{
+  ID: cuint,
+  TextA: ImVector_char
+}
+ImGuiInputTextState = @record{
+  Ctx: *ImGuiContext,
+  Stb: pointer,
+  Flags: cint,
+  ID: cuint,
+  TextLen: cint,
+  TextSrc: cstring,
+  TextA: ImVector_char,
+  TextToRevertTo: ImVector_char,
+  CallbackTextBackup: ImVector_char,
+  BufCapacity: cint,
+  Scroll: ImVec2,
+  CursorAnim: float32,
+  CursorFollow: boolean,
+  SelectedAllMouseLock: boolean,
+  Edited: boolean,
+  WantReloadUserBuf: boolean,
+  ReloadSelectionStart: cint,
+  ReloadSelectionEnd: cint
+}
+ImGuiNextWindowData = @record{
+  HasFlags: cint,
+  PosCond: cint,
+  SizeCond: cint,
+  CollapsedCond: cint,
+  DockCond: cint,
+  PosVal: ImVec2,
+  PosPivotVal: ImVec2,
+  SizeVal: ImVec2,
+  ContentSizeVal: ImVec2,
+  ScrollVal: ImVec2,
+  WindowFlags: cint,
+  ChildFlags: cint,
+  PosUndock: boolean,
+  CollapsedVal: boolean,
+  SizeConstraintRect: ImRect,
+  SizeCallback: function(data: *ImGuiSizeCallbackData): void,
+  SizeCallbackUserData: pointer,
+  BgAlphaVal: float32,
+  ViewportId: cuint,
+  DockId: cuint,
+  WindowClass: ImGuiWindowClass,
+  MenuBarOffsetMinVal: ImVec2,
+  RefreshFlagsVal: cint
+}
+ImGuiNextItemData = @record{
+  HasFlags: cint,
+  ItemFlags: cint,
+  FocusScopeId: cuint,
+  SelectionUserData: clonglong,
+  Width: float32,
+  Shortcut: cint,
+  ShortcutFlags: cint,
+  OpenVal: boolean,
+  OpenCond: cuchar,
+  RefVal: ImGuiDataTypeStorage,
+  StorageId: cuint
+}
+ImGuiLastItemData = @record{
+  ID: cuint,
+  ItemFlags: cint,
+  StatusFlags: cint,
+  Rect: ImRect,
+  NavRect: ImRect,
+  DisplayRect: ImRect,
+  ClipRect: ImRect,
+  Shortcut: cint
+}
+ImGuiTreeNodeStackData = @record{
+  ID: cuint,
+  TreeFlags: cint,
+  ItemFlags: cint,
+  NavRect: ImRect,
+  DrawLinesX1: float32,
+  DrawLinesToNodesY2: float32,
+  DrawLinesTableColumn: cshort
+}
+ImGuiErrorRecoveryState = @record{
+  SizeOfWindowStack: cshort,
+  SizeOfIDStack: cshort,
+  SizeOfTreeStack: cshort,
+  SizeOfColorStack: cshort,
+  SizeOfStyleVarStack: cshort,
+  SizeOfFontStack: cshort,
+  SizeOfFocusScopeStack: cshort,
+  SizeOfGroupStack: cshort,
+  SizeOfItemFlagsStack: cshort,
+  SizeOfBeginPopupStack: cshort,
+  SizeOfDisabledStack: cshort
+}
+ImGuiWindowStackData = @record{
+  Window: *ImGuiWindow,
+  ParentLastItemDataBackup: ImGuiLastItemData,
+  StackSizesInBegin: ImGuiErrorRecoveryState,
+  DisabledOverrideReenable: boolean,
+  DisabledOverrideReenableAlphaBackup: float32
+}
+ImGuiShrinkWidthItem = @record{
+  Index: cint,
+  Width: float32,
+  InitialWidth: float32
+}
+ImGuiPtrOrIndex = @record{
+  Ptr: pointer,
+  Index: cint
+}
+ImGuiDeactivatedItemData = @record{
+  ID: cuint,
+  ElapseFrame: cint,
+  HasBeenEditedBefore: boolean,
+  IsAlive: boolean
+}
+ImGuiPopupData = @record{
+  PopupId: cuint,
+  Window: *ImGuiWindow,
+  RestoreNavWindow: *ImGuiWindow,
+  ParentNavLayer: cint,
+  OpenFrameCount: cint,
+  OpenParentId: cuint,
+  OpenPopupPos: ImVec2,
+  OpenMousePos: ImVec2
+}
+global ImBitArrayForNamedKeys: type <cimport,nodecl> = @record{
+  __dummy: [20]cchar
+}
+global ImGuiInputEventType: type <cimport,nodecl,using> = @enum(cint){
+  ImGuiInputEventType_None = 0,
+  ImGuiInputEventType_MousePos = 1,
+  ImGuiInputEventType_MouseWheel = 2,
+  ImGuiInputEventType_MouseButton = 3,
+  ImGuiInputEventType_MouseViewport = 4,
+  ImGuiInputEventType_Key = 5,
+  ImGuiInputEventType_Text = 6,
+  ImGuiInputEventType_Focus = 7,
+  ImGuiInputEventType_COUNT = 8
+}
+global ImGuiInputSource: type <cimport,nodecl,using> = @enum(cint){
+  ImGuiInputSource_None = 0,
+  ImGuiInputSource_Mouse = 1,
+  ImGuiInputSource_Keyboard = 2,
+  ImGuiInputSource_Gamepad = 3,
+  ImGuiInputSource_COUNT = 4
+}
+ImGuiInputEventMousePos = @record{
+  PosX: float32,
+  PosY: float32,
+  MouseSource: cint
+}
+ImGuiInputEventMouseWheel = @record{
+  WheelX: float32,
+  WheelY: float32,
+  MouseSource: cint
+}
+ImGuiInputEventMouseButton = @record{
+  Button: cint,
+  Down: boolean,
+  MouseSource: cint
+}
+ImGuiInputEventMouseViewport = @record{
+  HoveredViewportID: cuint
+}
+ImGuiInputEventKey = @record{
+  Key: cint,
+  Down: boolean,
+  AnalogValue: float32
+}
+ImGuiInputEventText = @record{
+  Char: cuint
+}
+ImGuiInputEventAppFocused = @record{
+  Focused: boolean
+}
+ImGuiInputEvent = @record{
+  Type: ImGuiInputEventType,
+  Source: ImGuiInputSource,
+  EventId: cuint,
+  __unnamed4: union{
+    MousePos: ImGuiInputEventMousePos,
+    MouseWheel: ImGuiInputEventMouseWheel,
+    MouseButton: ImGuiInputEventMouseButton,
+    MouseViewport: ImGuiInputEventMouseViewport,
+    Key: ImGuiInputEventKey,
+    Text: ImGuiInputEventText,
+    AppFocused: ImGuiInputEventAppFocused
+  },
+  AddedByTestEngine: boolean
+}
+ImGuiKeyRoutingData = @record{
+  NextEntryIndex: cshort,
+  Mods: cushort,
+  RoutingCurrScore: cuchar,
+  RoutingNextScore: cuchar,
+  RoutingCurr: cuint,
+  RoutingNext: cuint
+}
+ImGuiKeyRoutingTable = @record{
+  Index: [155]cshort,
+  Entries: ImVector_ImGuiKeyRoutingData,
+  EntriesNext: ImVector_ImGuiKeyRoutingData
+}
+ImGuiKeyOwnerData = @record{
+  OwnerCurr: cuint,
+  OwnerNext: cuint,
+  LockThisFrame: boolean,
+  LockUntilRelease: boolean
+}
+ImGuiListClipperRange = @record{
+  Min: cint,
+  Max: cint,
+  PosToIndexConvert: boolean,
+  PosToIndexOffsetMin: cschar,
+  PosToIndexOffsetMax: cschar
+}
+ImGuiListClipperData = @record{
+  ListClipper: *ImGuiListClipper,
+  LossynessOffset: float32,
+  StepNo: cint,
+  ItemsFrozen: cint,
+  Ranges: ImVector_ImGuiListClipperRange
+}
+global ImGuiNavLayer: type <cimport,nodecl,using> = @enum(cint){
+  ImGuiNavLayer_Main = 0,
+  ImGuiNavLayer_Menu = 1,
+  ImGuiNavLayer_COUNT = 2
+}
+ImGuiNavItemData = @record{
+  Window: *ImGuiWindow,
+  ID: cuint,
+  FocusScopeId: cuint,
+  RectRel: ImRect,
+  ItemFlags: cint,
+  DistBox: float32,
+  DistCenter: float32,
+  DistAxial: float32,
+  SelectionUserData: clonglong
+}
+ImGuiFocusScopeData = @record{
+  ID: cuint,
+  WindowID: cuint
+}
+ImGuiTypingSelectRequest = @record{
+  Flags: cint,
+  SearchBufferLen: cint,
+  SearchBuffer: cstring,
+  SelectRequest: boolean,
+  SingleCharMode: boolean,
+  SingleCharSize: cschar
+}
+ImGuiTypingSelectState = @record{
+  Request: ImGuiTypingSelectRequest,
+  SearchBuffer: [64]cchar,
+  FocusScope: cuint,
+  LastRequestFrame: cint,
+  LastRequestTime: float32,
+  SingleCharModeLock: boolean
+}
+ImGuiOldColumnData = @record{
+  OffsetNorm: float32,
+  OffsetNormBeforeResize: float32,
+  Flags: cint,
+  ClipRect: ImRect
+}
+ImGuiOldColumns = @record{
+  ID: cuint,
+  Flags: cint,
+  IsFirstFrame: boolean,
+  IsBeingResized: boolean,
+  Current: cint,
+  Count: cint,
+  OffMinX: float32,
+  OffMaxX: float32,
+  LineMinY: float32,
+  LineMaxY: float32,
+  HostCursorPosY: float32,
+  HostCursorMaxPosX: float32,
+  HostInitialClipRect: ImRect,
+  HostBackupClipRect: ImRect,
+  HostBackupParentWorkRect: ImRect,
+  Columns: ImVector_ImGuiOldColumnData,
+  Splitter: ImDrawListSplitter
+}
+ImGuiBoxSelectState = @record{
+  ID: cuint,
+  IsActive: boolean,
+  IsStarting: boolean,
+  IsStartedFromVoid: boolean,
+  IsStartedSetNavIdOnce: boolean,
+  RequestClear: boolean,
+  KeyMods: cint,
+  StartPosRel: ImVec2,
+  EndPosRel: ImVec2,
+  ScrollAccum: ImVec2,
+  Window: *ImGuiWindow,
+  UnclipMode: boolean,
+  UnclipRect: ImRect,
+  BoxSelectRectPrev: ImRect,
+  BoxSelectRectCurr: ImRect
+}
+ImGuiMultiSelectTempData = @record{
+  IO: ImGuiMultiSelectIO,
+  Storage: *ImGuiMultiSelectState,
+  FocusScopeId: cuint,
+  Flags: cint,
+  ScopeRectMin: ImVec2,
+  BackupCursorMaxPos: ImVec2,
+  LastSubmittedItem: clonglong,
+  BoxSelectId: cuint,
+  KeyMods: cint,
+  LoopRequestSetAll: cschar,
+  IsEndIO: boolean,
+  IsFocused: boolean,
+  IsKeyboardSetRange: boolean,
+  NavIdPassedBy: boolean,
+  RangeSrcPassedBy: boolean,
+  RangeDstPassedBy: boolean
+}
+ImGuiMultiSelectState = @record{
+  Window: *ImGuiWindow,
+  ID: cuint,
+  LastFrameActive: cint,
+  LastSelectionSize: cint,
+  RangeSelected: cschar,
+  NavIdSelected: cschar,
+  RangeSrcItem: clonglong,
+  NavIdItem: clonglong
+}
+global ImGuiDockNodeState: type <cimport,nodecl,using> = @enum(cint){
+  ImGuiDockNodeState_Unknown = 0,
+  ImGuiDockNodeState_HostWindowHiddenBecauseSingleWindow = 1,
+  ImGuiDockNodeState_HostWindowHiddenBecauseWindowsAreResizing = 2,
+  ImGuiDockNodeState_HostWindowVisible = 3
+}
+ImGuiDockNode = @record{
+  ID: cuint,
+  SharedFlags: cint,
+  LocalFlags: cint,
+  LocalFlagsInWindows: cint,
+  MergedFlags: cint,
+  State: ImGuiDockNodeState,
+  ParentNode: *ImGuiDockNode,
+  ChildNodes: [2]*ImGuiDockNode,
+  Windows: ImVector_ImGuiWindowPtr,
+  TabBar: *ImGuiTabBar,
+  Pos: ImVec2,
+  Size: ImVec2,
+  SizeRef: ImVec2,
+  SplitAxis: ImGuiAxis,
+  WindowClass: ImGuiWindowClass,
+  LastBgColor: cuint,
+  HostWindow: *ImGuiWindow,
+  VisibleWindow: *ImGuiWindow,
+  CentralNode: *ImGuiDockNode,
+  OnlyNodeWithWindows: *ImGuiDockNode,
+  CountNodeWithWindows: cint,
+  LastFrameAlive: cint,
+  LastFrameActive: cint,
+  LastFrameFocused: cint,
+  LastFocusedNodeId: cuint,
+  SelectedTabId: cuint,
+  WantCloseTabId: cuint,
+  RefViewportId: cuint,
+  AuthorityForPos: cint,
+  AuthorityForSize: cint,
+  AuthorityForViewport: cint,
+  IsVisible: boolean,
+  IsFocused: boolean,
+  IsBgDrawnThisFrame: boolean,
+  HasCloseButton: boolean,
+  HasWindowMenuButton: boolean,
+  HasCentralNodeChild: boolean,
+  WantCloseAll: boolean,
+  WantLockSizeOnce: boolean,
+  WantMouseMove: boolean,
+  WantHiddenTabBarUpdate: boolean,
+  WantHiddenTabBarToggle: boolean
+}
+ImGuiWindowDockStyle = @record{
+  Colors: [8]cuint
+}
+ImGuiDockContext = @record{
+  Nodes: ImGuiStorage,
+  Requests: ImVector_ImGuiDockRequest,
+  NodesSettings: ImVector_ImGuiDockNodeSettings,
+  WantFullRebuild: boolean
+}
+ImGuiViewportP = @record{
+  ID: cuint,
+  Flags: cint,
+  Pos: ImVec2,
+  Size: ImVec2,
+  FramebufferScale: ImVec2,
+  WorkPos: ImVec2,
+  WorkSize: ImVec2,
+  DpiScale: float32,
+  ParentViewportId: cuint,
+  DrawData: *ImDrawData,
+  RendererUserData: pointer,
+  PlatformUserData: pointer,
+  PlatformHandle: pointer,
+  PlatformHandleRaw: pointer,
+  PlatformWindowCreated: boolean,
+  PlatformRequestMove: boolean,
+  PlatformRequestResize: boolean,
+  PlatformRequestClose: boolean,
+  Window: *ImGuiWindow,
+  Idx: cint,
+  LastFrameActive: cint,
+  LastFocusedStampCount: cint,
+  LastNameHash: cuint,
+  LastPos: ImVec2,
+  LastSize: ImVec2,
+  Alpha: float32,
+  LastAlpha: float32,
+  LastFocusedHadNavWindow: boolean,
+  PlatformMonitor: cshort,
+  BgFgDrawListsLastFrame: [2]cint,
+  BgFgDrawLists: [2]*ImDrawList,
+  DrawDataP: ImDrawData,
+  DrawDataBuilder: ImDrawDataBuilder,
+  LastPlatformPos: ImVec2,
+  LastPlatformSize: ImVec2,
+  LastRendererSize: ImVec2,
+  WorkInsetMin: ImVec2,
+  WorkInsetMax: ImVec2,
+  BuildWorkInsetMin: ImVec2,
+  BuildWorkInsetMax: ImVec2
+}
+ImGuiSettingsHandler = @record{
+  TypeName: cstring,
+  TypeHash: cuint,
+  ClearAllFn: function(ctx: *ImGuiContext, handler: *ImGuiSettingsHandler): void,
+  ReadInitFn: function(ctx: *ImGuiContext, handler: *ImGuiSettingsHandler): void,
+  ReadOpenFn: function(ctx: *ImGuiContext, handler: *ImGuiSettingsHandler, name: cstring): pointer,
+  ReadLineFn: function(ctx: *ImGuiContext, handler: *ImGuiSettingsHandler, entry: pointer, line: cstring): void,
+  ApplyAllFn: function(ctx: *ImGuiContext, handler: *ImGuiSettingsHandler): void,
+  WriteAllFn: function(ctx: *ImGuiContext, handler: *ImGuiSettingsHandler, out_buf: *ImGuiTextBuffer): void,
+  UserData: pointer
+}
+ImGuiDebugAllocEntry = @record{
+  FrameCount: cint,
+  AllocCount: cshort,
+  FreeCount: cshort
+}
+ImGuiDebugAllocInfo = @record{
+  TotalAllocCount: cint,
+  TotalFreeCount: cint,
+  LastEntriesIdx: cshort,
+  LastEntriesBuf: [6]ImGuiDebugAllocEntry
+}
+ImGuiMetricsConfig = @record{
+  ShowDebugLog: boolean,
+  ShowIDStackTool: boolean,
+  ShowWindowsRects: boolean,
+  ShowWindowsBeginOrder: boolean,
+  ShowTablesRects: boolean,
+  ShowDrawCmdMesh: boolean,
+  ShowDrawCmdBoundingBoxes: boolean,
+  ShowTextEncodingViewer: boolean,
+  ShowTextureUsedRect: boolean,
+  ShowDockingNodes: boolean,
+  ShowWindowsRectsType: cint,
+  ShowTablesRectsType: cint,
+  HighlightMonitorIdx: cint,
+  HighlightViewportID: cuint,
+  ShowFontPreview: boolean
+}
+ImGuiStackLevelInfo = @record{
+  ID: cuint,
+  QueryFrameCount: cschar,
+  QuerySuccess: boolean,
+  DataType: cint,
+  Desc: [57]cchar
+}
+ImGuiIDStackTool = @record{
+  LastActiveFrame: cint,
+  StackLevel: cint,
+  QueryId: cuint,
+  Results: ImVector_ImGuiStackLevelInfo,
+  CopyToClipboardOnCtrlC: boolean,
+  CopyToClipboardLastTime: float32,
+  ResultPathBuf: ImGuiTextBuffer
+}
+global ImGuiContextHookType: type <cimport,nodecl,using> = @enum(cint){
+  ImGuiContextHookType_NewFramePre = 0,
+  ImGuiContextHookType_NewFramePost = 1,
+  ImGuiContextHookType_EndFramePre = 2,
+  ImGuiContextHookType_EndFramePost = 3,
+  ImGuiContextHookType_RenderPre = 4,
+  ImGuiContextHookType_RenderPost = 5,
+  ImGuiContextHookType_Shutdown = 6,
+  ImGuiContextHookType_PendingRemoval_ = 7
+}
+ImGuiContextHook = @record{
+  HookId: cuint,
+  Type: ImGuiContextHookType,
+  Owner: cuint,
+  Callback: function(ctx: *ImGuiContext, hook: *ImGuiContextHook): void,
+  UserData: pointer
+}
+ImGuiContext = @record{
+  Initialized: boolean,
+  IO: ImGuiIO,
+  PlatformIO: ImGuiPlatformIO,
+  Style: ImGuiStyle,
+  ConfigFlagsCurrFrame: cint,
+  ConfigFlagsLastFrame: cint,
+  FontAtlases: ImVector_ImFontAtlasPtr,
+  Font: *ImFont,
+  FontBaked: *ImFontBaked,
+  FontSize: float32,
+  FontSizeBase: float32,
+  FontBakedScale: float32,
+  FontRasterizerDensity: float32,
+  CurrentDpiScale: float32,
+  DrawListSharedData: ImDrawListSharedData,
+  Time: float64,
+  FrameCount: cint,
+  FrameCountEnded: cint,
+  FrameCountPlatformEnded: cint,
+  FrameCountRendered: cint,
+  WithinEndChildID: cuint,
+  WithinFrameScope: boolean,
+  WithinFrameScopeWithImplicitWindow: boolean,
+  GcCompactAll: boolean,
+  TestEngineHookItems: boolean,
+  TestEngine: pointer,
+  ContextName: [16]cchar,
+  InputEventsQueue: ImVector_ImGuiInputEvent,
+  InputEventsTrail: ImVector_ImGuiInputEvent,
+  InputEventsNextMouseSource: cint,
+  InputEventsNextEventId: cuint,
+  Windows: ImVector_ImGuiWindowPtr,
+  WindowsFocusOrder: ImVector_ImGuiWindowPtr,
+  WindowsTempSortBuffer: ImVector_ImGuiWindowPtr,
+  CurrentWindowStack: ImVector_ImGuiWindowStackData,
+  WindowsById: ImGuiStorage,
+  WindowsActiveCount: cint,
+  WindowsBorderHoverPadding: float32,
+  DebugBreakInWindow: cuint,
+  CurrentWindow: *ImGuiWindow,
+  HoveredWindow: *ImGuiWindow,
+  HoveredWindowUnderMovingWindow: *ImGuiWindow,
+  HoveredWindowBeforeClear: *ImGuiWindow,
+  MovingWindow: *ImGuiWindow,
+  WheelingWindow: *ImGuiWindow,
+  WheelingWindowRefMousePos: ImVec2,
+  WheelingWindowStartFrame: cint,
+  WheelingWindowScrolledFrame: cint,
+  WheelingWindowReleaseTimer: float32,
+  WheelingWindowWheelRemainder: ImVec2,
+  WheelingAxisAvg: ImVec2,
+  DebugDrawIdConflictsId: cuint,
+  DebugHookIdInfo: cuint,
+  HoveredId: cuint,
+  HoveredIdPreviousFrame: cuint,
+  HoveredIdPreviousFrameItemCount: cint,
+  HoveredIdTimer: float32,
+  HoveredIdNotActiveTimer: float32,
+  HoveredIdAllowOverlap: boolean,
+  HoveredIdIsDisabled: boolean,
+  ItemUnclipByLog: boolean,
+  ActiveId: cuint,
+  ActiveIdIsAlive: cuint,
+  ActiveIdTimer: float32,
+  ActiveIdIsJustActivated: boolean,
+  ActiveIdAllowOverlap: boolean,
+  ActiveIdNoClearOnFocusLoss: boolean,
+  ActiveIdHasBeenPressedBefore: boolean,
+  ActiveIdHasBeenEditedBefore: boolean,
+  ActiveIdHasBeenEditedThisFrame: boolean,
+  ActiveIdFromShortcut: boolean,
+  ActiveIdDisabledId: cuint,
+  ActiveIdMouseButton: cint,
+  ActiveIdClickOffset: ImVec2,
+  ActiveIdWindow: *ImGuiWindow,
+  ActiveIdSource: ImGuiInputSource,
+  ActiveIdPreviousFrame: cuint,
+  DeactivatedItemData: ImGuiDeactivatedItemData,
+  ActiveIdValueOnActivation: ImGuiDataTypeStorage,
+  LastActiveId: cuint,
+  LastActiveIdTimer: float32,
+  LastKeyModsChangeTime: float64,
+  LastKeyModsChangeFromNoneTime: float64,
+  LastKeyboardKeyPressTime: float64,
+  KeysMayBeCharInput: ImBitArrayForNamedKeys,
+  KeysOwnerData: [155]ImGuiKeyOwnerData,
+  KeysRoutingTable: ImGuiKeyRoutingTable,
+  ActiveIdUsingNavDirMask: cuint,
+  ActiveIdUsingAllKeyboardKeys: boolean,
+  DebugBreakInShortcutRouting: cint,
+  CurrentFocusScopeId: cuint,
+  CurrentItemFlags: cint,
+  DebugLocateId: cuint,
+  NextItemData: ImGuiNextItemData,
+  LastItemData: ImGuiLastItemData,
+  NextWindowData: ImGuiNextWindowData,
+  DebugShowGroupRects: boolean,
+  DebugFlashStyleColorIdx: cint,
+  ColorStack: ImVector_ImGuiColorMod,
+  StyleVarStack: ImVector_ImGuiStyleMod,
+  FontStack: ImVector_ImFontStackData,
+  FocusScopeStack: ImVector_ImGuiFocusScopeData,
+  ItemFlagsStack: ImVector_ImGuiItemFlags,
+  GroupStack: ImVector_ImGuiGroupData,
+  OpenPopupStack: ImVector_ImGuiPopupData,
+  BeginPopupStack: ImVector_ImGuiPopupData,
+  TreeNodeStack: ImVector_ImGuiTreeNodeStackData,
+  Viewports: ImVector_ImGuiViewportPPtr,
+  CurrentViewport: *ImGuiViewportP,
+  MouseViewport: *ImGuiViewportP,
+  MouseLastHoveredViewport: *ImGuiViewportP,
+  PlatformLastFocusedViewportId: cuint,
+  FallbackMonitor: ImGuiPlatformMonitor,
+  PlatformMonitorsFullWorkRect: ImRect,
+  ViewportCreatedCount: cint,
+  PlatformWindowsCreatedCount: cint,
+  ViewportFocusedStampCount: cint,
+  NavCursorVisible: boolean,
+  NavHighlightItemUnderNav: boolean,
+  NavMousePosDirty: boolean,
+  NavIdIsAlive: boolean,
+  NavId: cuint,
+  NavWindow: *ImGuiWindow,
+  NavFocusScopeId: cuint,
+  NavLayer: ImGuiNavLayer,
+  NavActivateId: cuint,
+  NavActivateDownId: cuint,
+  NavActivatePressedId: cuint,
+  NavActivateFlags: cint,
+  NavFocusRoute: ImVector_ImGuiFocusScopeData,
+  NavHighlightActivatedId: cuint,
+  NavHighlightActivatedTimer: float32,
+  NavNextActivateId: cuint,
+  NavNextActivateFlags: cint,
+  NavInputSource: ImGuiInputSource,
+  NavLastValidSelectionUserData: clonglong,
+  NavCursorHideFrames: cschar,
+  NavAnyRequest: boolean,
+  NavInitRequest: boolean,
+  NavInitRequestFromMove: boolean,
+  NavInitResult: ImGuiNavItemData,
+  NavMoveSubmitted: boolean,
+  NavMoveScoringItems: boolean,
+  NavMoveForwardToNextFrame: boolean,
+  NavMoveFlags: cint,
+  NavMoveScrollFlags: cint,
+  NavMoveKeyMods: cint,
+  NavMoveDir: cint,
+  NavMoveDirForDebug: cint,
+  NavMoveClipDir: cint,
+  NavScoringRect: ImRect,
+  NavScoringNoClipRect: ImRect,
+  NavScoringDebugCount: cint,
+  NavTabbingDir: cint,
+  NavTabbingCounter: cint,
+  NavMoveResultLocal: ImGuiNavItemData,
+  NavMoveResultLocalVisible: ImGuiNavItemData,
+  NavMoveResultOther: ImGuiNavItemData,
+  NavTabbingResultFirst: ImGuiNavItemData,
+  NavJustMovedFromFocusScopeId: cuint,
+  NavJustMovedToId: cuint,
+  NavJustMovedToFocusScopeId: cuint,
+  NavJustMovedToKeyMods: cint,
+  NavJustMovedToIsTabbing: boolean,
+  NavJustMovedToHasSelectionData: boolean,
+  ConfigNavWindowingWithGamepad: boolean,
+  ConfigNavWindowingKeyNext: cint,
+  ConfigNavWindowingKeyPrev: cint,
+  NavWindowingTarget: *ImGuiWindow,
+  NavWindowingTargetAnim: *ImGuiWindow,
+  NavWindowingListWindow: *ImGuiWindow,
+  NavWindowingTimer: float32,
+  NavWindowingHighlightAlpha: float32,
+  NavWindowingInputSource: ImGuiInputSource,
+  NavWindowingToggleLayer: boolean,
+  NavWindowingToggleKey: cint,
+  NavWindowingAccumDeltaPos: ImVec2,
+  NavWindowingAccumDeltaSize: ImVec2,
+  DimBgRatio: float32,
+  DragDropActive: boolean,
+  DragDropWithinSource: boolean,
+  DragDropWithinTarget: boolean,
+  DragDropSourceFlags: cint,
+  DragDropSourceFrameCount: cint,
+  DragDropMouseButton: cint,
+  DragDropPayload: ImGuiPayload,
+  DragDropTargetRect: ImRect,
+  DragDropTargetClipRect: ImRect,
+  DragDropTargetId: cuint,
+  DragDropAcceptFlags: cint,
+  DragDropAcceptIdCurrRectSurface: float32,
+  DragDropAcceptIdCurr: cuint,
+  DragDropAcceptIdPrev: cuint,
+  DragDropAcceptFrameCount: cint,
+  DragDropHoldJustPressedId: cuint,
+  DragDropPayloadBufHeap: ImVector_unsigned_char,
+  DragDropPayloadBufLocal: [16]cuchar,
+  ClipperTempDataStacked: cint,
+  ClipperTempData: ImVector_ImGuiListClipperData,
+  CurrentTable: *ImGuiTable,
+  DebugBreakInTable: cuint,
+  TablesTempDataStacked: cint,
+  TablesTempData: ImVector_ImGuiTableTempData,
+  Tables: ImPool_ImGuiTable,
+  TablesLastTimeActive: ImVector_float,
+  DrawChannelsTempMergeBuffer: ImVector_ImDrawChannel,
+  CurrentTabBar: *ImGuiTabBar,
+  TabBars: ImPool_ImGuiTabBar,
+  CurrentTabBarStack: ImVector_ImGuiPtrOrIndex,
+  ShrinkWidthBuffer: ImVector_ImGuiShrinkWidthItem,
+  BoxSelectState: ImGuiBoxSelectState,
+  CurrentMultiSelect: *ImGuiMultiSelectTempData,
+  MultiSelectTempDataStacked: cint,
+  MultiSelectTempData: ImVector_ImGuiMultiSelectTempData,
+  MultiSelectStorage: ImPool_ImGuiMultiSelectState,
+  HoverItemDelayId: cuint,
+  HoverItemDelayIdPreviousFrame: cuint,
+  HoverItemDelayTimer: float32,
+  HoverItemDelayClearTimer: float32,
+  HoverItemUnlockedStationaryId: cuint,
+  HoverWindowUnlockedStationaryId: cuint,
+  MouseCursor: cint,
+  MouseStationaryTimer: float32,
+  MouseLastValidPos: ImVec2,
+  InputTextState: ImGuiInputTextState,
+  InputTextDeactivatedState: ImGuiInputTextDeactivatedState,
+  InputTextPasswordFontBackupBaked: ImFontBaked,
+  InputTextPasswordFontBackupFlags: cint,
+  TempInputId: cuint,
+  DataTypeZeroValue: ImGuiDataTypeStorage,
+  BeginMenuDepth: cint,
+  BeginComboDepth: cint,
+  ColorEditOptions: cint,
+  ColorEditCurrentID: cuint,
+  ColorEditSavedID: cuint,
+  ColorEditSavedHue: float32,
+  ColorEditSavedSat: float32,
+  ColorEditSavedColor: cuint,
+  ColorPickerRef: ImVec4,
+  ComboPreviewData: ImGuiComboPreviewData,
+  WindowResizeBorderExpectedRect: ImRect,
+  WindowResizeRelativeMode: boolean,
+  ScrollbarSeekMode: cshort,
+  ScrollbarClickDeltaToGrabCenter: float32,
+  SliderGrabClickOffset: float32,
+  SliderCurrentAccum: float32,
+  SliderCurrentAccumDirty: boolean,
+  DragCurrentAccumDirty: boolean,
+  DragCurrentAccum: float32,
+  DragSpeedDefaultRatio: float32,
+  DisabledAlphaBackup: float32,
+  DisabledStackSize: cshort,
+  TooltipOverrideCount: cshort,
+  TooltipPreviousWindow: *ImGuiWindow,
+  ClipboardHandlerData: ImVector_char,
+  MenusIdSubmittedThisFrame: ImVector_ImGuiID,
+  TypingSelectState: ImGuiTypingSelectState,
+  PlatformImeData: ImGuiPlatformImeData,
+  PlatformImeDataPrev: ImGuiPlatformImeData,
+  UserTextures: ImVector_ImTextureDataPtr,
+  DockContext: ImGuiDockContext,
+  DockNodeWindowMenuHandler: function(ctx: *ImGuiContext, node: *ImGuiDockNode, tab_bar: *ImGuiTabBar): void,
+  SettingsLoaded: boolean,
+  SettingsDirtyTimer: float32,
+  SettingsIniData: ImGuiTextBuffer,
+  SettingsHandlers: ImVector_ImGuiSettingsHandler,
+  SettingsWindows: ImChunkStream_ImGuiWindowSettings,
+  SettingsTables: ImChunkStream_ImGuiTableSettings,
+  Hooks: ImVector_ImGuiContextHook,
+  HookIdNext: cuint,
+  LocalizationTable: [13]cstring,
+  LogEnabled: boolean,
+  LogFlags: cint,
+  LogWindow: *ImGuiWindow,
+  LogFile: *FILE,
+  LogBuffer: ImGuiTextBuffer,
+  LogNextPrefix: cstring,
+  LogNextSuffix: cstring,
+  LogLinePosY: float32,
+  LogLineFirstItem: boolean,
+  LogDepthRef: cint,
+  LogDepthToExpand: cint,
+  LogDepthToExpandDefault: cint,
+  ErrorCallback: function(ctx: *ImGuiContext, user_data: pointer, msg: cstring): void,
+  ErrorCallbackUserData: pointer,
+  ErrorTooltipLockedPos: ImVec2,
+  ErrorFirst: boolean,
+  ErrorCountCurrentFrame: cint,
+  StackSizesInNewFrame: ImGuiErrorRecoveryState,
+  StackSizesInBeginForCurrentWindow: *ImGuiErrorRecoveryState,
+  DebugDrawIdConflictsCount: cint,
+  DebugLogFlags: cint,
+  DebugLogBuf: ImGuiTextBuffer,
+  DebugLogIndex: ImGuiTextIndex,
+  DebugLogSkippedErrors: cint,
+  DebugLogAutoDisableFlags: cint,
+  DebugLogAutoDisableFrames: cuchar,
+  DebugLocateFrames: cuchar,
+  DebugBreakInLocateId: boolean,
+  DebugBreakKeyChord: cint,
+  DebugBeginReturnValueCullDepth: cschar,
+  DebugItemPickerActive: boolean,
+  DebugItemPickerMouseButton: cuchar,
+  DebugItemPickerBreakId: cuint,
+  DebugFlashStyleColorTime: float32,
+  DebugFlashStyleColorBackup: ImVec4,
+  DebugMetricsConfig: ImGuiMetricsConfig,
+  DebugIDStackTool: ImGuiIDStackTool,
+  DebugAllocInfo: ImGuiDebugAllocInfo,
+  DebugHoveredDockNode: *ImGuiDockNode,
+  FramerateSecPerFrame: [60]float32,
+  FramerateSecPerFrameIdx: cint,
+  FramerateSecPerFrameCount: cint,
+  FramerateSecPerFrameAccum: float32,
+  WantCaptureMouseNextFrame: cint,
+  WantCaptureKeyboardNextFrame: cint,
+  WantTextInputNextFrame: cint,
+  TempBuffer: ImVector_char,
+  TempKeychordName: [64]cchar
+}
+ImGuiWindowTempData = @record{
+  CursorPos: ImVec2,
+  CursorPosPrevLine: ImVec2,
+  CursorStartPos: ImVec2,
+  CursorMaxPos: ImVec2,
+  IdealMaxPos: ImVec2,
+  CurrLineSize: ImVec2,
+  PrevLineSize: ImVec2,
+  CurrLineTextBaseOffset: float32,
+  PrevLineTextBaseOffset: float32,
+  IsSameLine: boolean,
+  IsSetPos: boolean,
+  Indent: ImVec1,
+  ColumnsOffset: ImVec1,
+  GroupOffset: ImVec1,
+  CursorStartPosLossyness: ImVec2,
+  NavLayerCurrent: ImGuiNavLayer,
+  NavLayersActiveMask: cshort,
+  NavLayersActiveMaskNext: cshort,
+  NavIsScrollPushableX: boolean,
+  NavHideHighlightOneFrame: boolean,
+  NavWindowHasScrollY: boolean,
+  MenuBarAppending: boolean,
+  MenuBarOffset: ImVec2,
+  MenuColumns: ImGuiMenuColumns,
+  TreeDepth: cint,
+  TreeHasStackDataDepthMask: cuint,
+  TreeRecordsClippedNodesY2Mask: cuint,
+  ChildWindows: ImVector_ImGuiWindowPtr,
+  StateStorage: *ImGuiStorage,
+  CurrentColumns: *ImGuiOldColumns,
+  CurrentTableIdx: cint,
+  LayoutType: cint,
+  ParentLayoutType: cint,
+  ModalDimBgColor: cuint,
+  WindowItemStatusFlags: cint,
+  ChildItemStatusFlags: cint,
+  DockTabItemStatusFlags: cint,
+  DockTabItemRect: ImRect,
+  ItemWidth: float32,
+  TextWrapPos: float32,
+  ItemWidthStack: ImVector_float,
+  TextWrapPosStack: ImVector_float
+}
+ImGuiWindow = @record{
+  Ctx: *ImGuiContext,
+  Name: cstring,
+  ID: cuint,
+  Flags: cint,
+  FlagsPreviousFrame: cint,
+  ChildFlags: cint,
+  WindowClass: ImGuiWindowClass,
+  Viewport: *ImGuiViewportP,
+  ViewportId: cuint,
+  ViewportPos: ImVec2,
+  ViewportAllowPlatformMonitorExtend: cint,
+  Pos: ImVec2,
+  Size: ImVec2,
+  SizeFull: ImVec2,
+  ContentSize: ImVec2,
+  ContentSizeIdeal: ImVec2,
+  ContentSizeExplicit: ImVec2,
+  WindowPadding: ImVec2,
+  WindowRounding: float32,
+  WindowBorderSize: float32,
+  TitleBarHeight: float32,
+  MenuBarHeight: float32,
+  DecoOuterSizeX1: float32,
+  DecoOuterSizeY1: float32,
+  DecoOuterSizeX2: float32,
+  DecoOuterSizeY2: float32,
+  DecoInnerSizeX1: float32,
+  DecoInnerSizeY1: float32,
+  NameBufLen: cint,
+  MoveId: cuint,
+  TabId: cuint,
+  ChildId: cuint,
+  PopupId: cuint,
+  Scroll: ImVec2,
+  ScrollMax: ImVec2,
+  ScrollTarget: ImVec2,
+  ScrollTargetCenterRatio: ImVec2,
+  ScrollTargetEdgeSnapDist: ImVec2,
+  ScrollbarSizes: ImVec2,
+  ScrollbarX: boolean,
+  ScrollbarY: boolean,
+  ScrollbarXStabilizeEnabled: boolean,
+  ScrollbarXStabilizeToggledHistory: cuchar,
+  ViewportOwned: boolean,
+  Active: boolean,
+  WasActive: boolean,
+  WriteAccessed: boolean,
+  Collapsed: boolean,
+  WantCollapseToggle: boolean,
+  SkipItems: boolean,
+  SkipRefresh: boolean,
+  Appearing: boolean,
+  Hidden: boolean,
+  IsFallbackWindow: boolean,
+  IsExplicitChild: boolean,
+  HasCloseButton: boolean,
+  ResizeBorderHovered: cschar,
+  ResizeBorderHeld: cschar,
+  BeginCount: cshort,
+  BeginCountPreviousFrame: cshort,
+  BeginOrderWithinParent: cshort,
+  BeginOrderWithinContext: cshort,
+  FocusOrder: cshort,
+  AutoFitFramesX: cschar,
+  AutoFitFramesY: cschar,
+  AutoFitOnlyGrows: boolean,
+  AutoPosLastDirection: cint,
+  HiddenFramesCanSkipItems: cschar,
+  HiddenFramesCannotSkipItems: cschar,
+  HiddenFramesForRenderOnly: cschar,
+  DisableInputsFrames: cschar,
+  SetWindowPosAllowFlags: cint,
+  SetWindowSizeAllowFlags: cint,
+  SetWindowCollapsedAllowFlags: cint,
+  SetWindowDockAllowFlags: cint,
+  SetWindowPosVal: ImVec2,
+  SetWindowPosPivot: ImVec2,
+  IDStack: ImVector_ImGuiID,
+  DC: ImGuiWindowTempData,
+  OuterRectClipped: ImRect,
+  InnerRect: ImRect,
+  InnerClipRect: ImRect,
+  WorkRect: ImRect,
+  ParentWorkRect: ImRect,
+  ClipRect: ImRect,
+  ContentRegionRect: ImRect,
+  HitTestHoleSize: ImVec2ih,
+  HitTestHoleOffset: ImVec2ih,
+  LastFrameActive: cint,
+  LastFrameJustFocused: cint,
+  LastTimeActive: float32,
+  ItemWidthDefault: float32,
+  StateStorage: ImGuiStorage,
+  ColumnsStorage: ImVector_ImGuiOldColumns,
+  FontWindowScale: float32,
+  FontWindowScaleParents: float32,
+  FontRefSize: float32,
+  SettingsOffset: cint,
+  DrawList: *ImDrawList,
+  DrawListInst: ImDrawList,
+  ParentWindow: *ImGuiWindow,
+  ParentWindowInBeginStack: *ImGuiWindow,
+  RootWindow: *ImGuiWindow,
+  RootWindowPopupTree: *ImGuiWindow,
+  RootWindowDockTree: *ImGuiWindow,
+  RootWindowForTitleBarHighlight: *ImGuiWindow,
+  RootWindowForNav: *ImGuiWindow,
+  ParentWindowForFocusRoute: *ImGuiWindow,
+  NavLastChildNavWindow: *ImGuiWindow,
+  NavLastIds: [2]cuint,
+  NavRectRel: [2]ImRect,
+  NavPreferredScoringPosRel: [2]ImVec2,
+  NavRootFocusScopeId: cuint,
+  MemoryDrawListIdxCapacity: cint,
+  MemoryDrawListVtxCapacity: cint,
+  MemoryCompacted: boolean,
+  DockIsActive: boolean,
+  DockNodeIsVisible: boolean,
+  DockTabIsVisible: boolean,
+  DockTabWantClose: boolean,
+  DockOrder: cshort,
+  DockStyle: ImGuiWindowDockStyle,
+  DockNode: *ImGuiDockNode,
+  DockNodeAsHost: *ImGuiDockNode,
+  DockId: cuint
+}
+ImGuiTabItem = @record{
+  ID: cuint,
+  Flags: cint,
+  Window: *ImGuiWindow,
+  LastFrameVisible: cint,
+  LastFrameSelected: cint,
+  Offset: float32,
+  Width: float32,
+  ContentWidth: float32,
+  RequestedWidth: float32,
+  NameOffset: cint,
+  BeginOrder: cshort,
+  IndexDuringLayout: cshort,
+  WantClose: boolean
+}
+ImGuiTabBar = @record{
+  Window: *ImGuiWindow,
+  Tabs: ImVector_ImGuiTabItem,
+  Flags: cint,
+  ID: cuint,
+  SelectedTabId: cuint,
+  NextSelectedTabId: cuint,
+  VisibleTabId: cuint,
+  CurrFrameVisible: cint,
+  PrevFrameVisible: cint,
+  BarRect: ImRect,
+  BarRectPrevWidth: float32,
+  CurrTabsContentsHeight: float32,
+  PrevTabsContentsHeight: float32,
+  WidthAllTabs: float32,
+  WidthAllTabsIdeal: float32,
+  ScrollingAnim: float32,
+  ScrollingTarget: float32,
+  ScrollingTargetDistToVisibility: float32,
+  ScrollingSpeed: float32,
+  ScrollingRectMinX: float32,
+  ScrollingRectMaxX: float32,
+  SeparatorMinX: float32,
+  SeparatorMaxX: float32,
+  ReorderRequestTabId: cuint,
+  ReorderRequestOffset: cshort,
+  BeginCount: cschar,
+  WantLayout: boolean,
+  VisibleTabWasSubmitted: boolean,
+  TabsAddedNew: boolean,
+  ScrollButtonEnabled: boolean,
+  TabsActiveCount: cshort,
+  LastTabItemIdx: cshort,
+  ItemSpacingY: float32,
+  FramePadding: ImVec2,
+  BackupCursorPos: ImVec2,
+  TabsNames: ImGuiTextBuffer
+}
+ImGuiTableColumn = @record{
+  Flags: cint,
+  WidthGiven: float32,
+  MinX: float32,
+  MaxX: float32,
+  WidthRequest: float32,
+  WidthAuto: float32,
+  WidthMax: float32,
+  StretchWeight: float32,
+  InitStretchWeightOrWidth: float32,
+  ClipRect: ImRect,
+  UserID: cuint,
+  WorkMinX: float32,
+  WorkMaxX: float32,
+  ItemWidth: float32,
+  ContentMaxXFrozen: float32,
+  ContentMaxXUnfrozen: float32,
+  ContentMaxXHeadersUsed: float32,
+  ContentMaxXHeadersIdeal: float32,
+  NameOffset: cshort,
+  DisplayOrder: cshort,
+  IndexWithinEnabledSet: cshort,
+  PrevEnabledColumn: cshort,
+  NextEnabledColumn: cshort,
+  SortOrder: cshort,
+  DrawChannelCurrent: cushort,
+  DrawChannelFrozen: cushort,
+  DrawChannelUnfrozen: cushort,
+  IsEnabled: boolean,
+  IsUserEnabled: boolean,
+  IsUserEnabledNextFrame: boolean,
+  IsVisibleX: boolean,
+  IsVisibleY: boolean,
+  IsRequestOutput: boolean,
+  IsSkipItems: boolean,
+  IsPreserveWidthAuto: boolean,
+  NavLayerCurrent: cschar,
+  AutoFitQueue: cuchar,
+  CannotSkipItemsQueue: cuchar,
+  SortDirection: cuchar,
+  SortDirectionsAvailCount: cuchar,
+  SortDirectionsAvailMask: cuchar,
+  SortDirectionsAvailList: cuchar
+}
+ImGuiTableCellData = @record{
+  BgColor: cuint,
+  Column: cshort
+}
+ImGuiTableHeaderData = @record{
+  Index: cshort,
+  TextColor: cuint,
+  BgColor0: cuint,
+  BgColor1: cuint
+}
+ImGuiTableInstanceData = @record{
+  TableInstanceID: cuint,
+  LastOuterHeight: float32,
+  LastTopHeadersRowHeight: float32,
+  LastFrozenHeight: float32,
+  HoveredRowLast: cint,
+  HoveredRowNext: cint
+}
+ImGuiTable = @record{
+  ID: cuint,
+  Flags: cint,
+  RawData: pointer,
+  TempData: *ImGuiTableTempData,
+  Columns: ImSpan_ImGuiTableColumn,
+  DisplayOrderToIndex: ImSpan_ImGuiTableColumnIdx,
+  RowCellData: ImSpan_ImGuiTableCellData,
+  EnabledMaskByDisplayOrder: *cuint,
+  EnabledMaskByIndex: *cuint,
+  VisibleMaskByIndex: *cuint,
+  SettingsLoadedFlags: cint,
+  SettingsOffset: cint,
+  LastFrameActive: cint,
+  ColumnsCount: cint,
+  CurrentRow: cint,
+  CurrentColumn: cint,
+  InstanceCurrent: cshort,
+  InstanceInteracted: cshort,
+  RowPosY1: float32,
+  RowPosY2: float32,
+  RowMinHeight: float32,
+  RowCellPaddingY: float32,
+  RowTextBaseline: float32,
+  RowIndentOffsetX: float32,
+  RowFlags: cint,
+  LastRowFlags: cint,
+  RowBgColorCounter: cint,
+  RowBgColor: [2]cuint,
+  BorderColorStrong: cuint,
+  BorderColorLight: cuint,
+  BorderX1: float32,
+  BorderX2: float32,
+  HostIndentX: float32,
+  MinColumnWidth: float32,
+  OuterPaddingX: float32,
+  CellPaddingX: float32,
+  CellSpacingX1: float32,
+  CellSpacingX2: float32,
+  InnerWidth: float32,
+  ColumnsGivenWidth: float32,
+  ColumnsAutoFitWidth: float32,
+  ColumnsStretchSumWeights: float32,
+  ResizedColumnNextWidth: float32,
+  ResizeLockMinContentsX2: float32,
+  RefScale: float32,
+  AngledHeadersHeight: float32,
+  AngledHeadersSlope: float32,
+  OuterRect: ImRect,
+  InnerRect: ImRect,
+  WorkRect: ImRect,
+  InnerClipRect: ImRect,
+  BgClipRect: ImRect,
+  Bg0ClipRectForDrawCmd: ImRect,
+  Bg2ClipRectForDrawCmd: ImRect,
+  HostClipRect: ImRect,
+  HostBackupInnerClipRect: ImRect,
+  OuterWindow: *ImGuiWindow,
+  InnerWindow: *ImGuiWindow,
+  ColumnsNames: ImGuiTextBuffer,
+  DrawSplitter: *ImDrawListSplitter,
+  InstanceDataFirst: ImGuiTableInstanceData,
+  InstanceDataExtra: ImVector_ImGuiTableInstanceData,
+  SortSpecsSingle: ImGuiTableColumnSortSpecs,
+  SortSpecsMulti: ImVector_ImGuiTableColumnSortSpecs,
+  SortSpecs: ImGuiTableSortSpecs,
+  SortSpecsCount: cshort,
+  ColumnsEnabledCount: cshort,
+  ColumnsEnabledFixedCount: cshort,
+  DeclColumnsCount: cshort,
+  AngledHeadersCount: cshort,
+  HoveredColumnBody: cshort,
+  HoveredColumnBorder: cshort,
+  HighlightColumnHeader: cshort,
+  AutoFitSingleColumn: cshort,
+  ResizedColumn: cshort,
+  LastResizedColumn: cshort,
+  HeldHeaderColumn: cshort,
+  ReorderColumn: cshort,
+  ReorderColumnDir: cshort,
+  LeftMostEnabledColumn: cshort,
+  RightMostEnabledColumn: cshort,
+  LeftMostStretchedColumn: cshort,
+  RightMostStretchedColumn: cshort,
+  ContextPopupColumn: cshort,
+  FreezeRowsRequest: cshort,
+  FreezeRowsCount: cshort,
+  FreezeColumnsRequest: cshort,
+  FreezeColumnsCount: cshort,
+  RowCellDataCurrent: cshort,
+  DummyDrawChannel: cushort,
+  Bg2DrawChannelCurrent: cushort,
+  Bg2DrawChannelUnfrozen: cushort,
+  NavLayer: cschar,
+  IsLayoutLocked: boolean,
+  IsInsideRow: boolean,
+  IsInitializing: boolean,
+  IsSortSpecsDirty: boolean,
+  IsUsingHeaders: boolean,
+  IsContextPopupOpen: boolean,
+  DisableDefaultContextMenu: boolean,
+  IsSettingsRequestLoad: boolean,
+  IsSettingsDirty: boolean,
+  IsDefaultDisplayOrder: boolean,
+  IsResetAllRequest: boolean,
+  IsResetDisplayOrderRequest: boolean,
+  IsUnfrozenRows: boolean,
+  IsDefaultSizingPolicy: boolean,
+  IsActiveIdAliveBeforeTable: boolean,
+  IsActiveIdInTable: boolean,
+  HasScrollbarYCurr: boolean,
+  HasScrollbarYPrev: boolean,
+  MemoryCompacted: boolean,
+  HostSkipItems: boolean
+}
+ImGuiTableTempData = @record{
+  TableIndex: cint,
+  LastTimeActive: float32,
+  AngledHeadersExtraWidth: float32,
+  AngledHeadersRequests: ImVector_ImGuiTableHeaderData,
+  UserOuterSize: ImVec2,
+  DrawSplitter: ImDrawListSplitter,
+  HostBackupWorkRect: ImRect,
+  HostBackupParentWorkRect: ImRect,
+  HostBackupPrevLineSize: ImVec2,
+  HostBackupCurrLineSize: ImVec2,
+  HostBackupCursorMaxPos: ImVec2,
+  HostBackupColumnsOffset: ImVec1,
+  HostBackupItemWidth: float32,
+  HostBackupItemWidthStackSize: cint
+}
+ImFontBuilderIO = @record{
+  Name: cstring,
+  LoaderInit: function(atlas: *ImFontAtlas): boolean,
+  LoaderShutdown: function(atlas: *ImFontAtlas): void,
+  FontSrcInit: function(atlas: *ImFontAtlas, src: *ImFontConfig): boolean,
+  FontSrcDestroy: function(atlas: *ImFontAtlas, src: *ImFontConfig): void,
+  FontSrcContainsGlyph: function(atlas: *ImFontAtlas, src: *ImFontConfig, codepoint: cushort): boolean,
+  FontBakedInit: function(atlas: *ImFontAtlas, src: *ImFontConfig, baked: *ImFontBaked, loader_data_for_baked_src: pointer): boolean,
+  FontBakedDestroy: function(atlas: *ImFontAtlas, src: *ImFontConfig, baked: *ImFontBaked, loader_data_for_baked_src: pointer): void,
+  FontBakedLoadGlyph: function(atlas: *ImFontAtlas, src: *ImFontConfig, baked: *ImFontBaked, loader_data_for_baked_src: pointer, codepoint: cushort, out_glyph: *ImFontGlyph, out_advance_x: *float32): boolean,
+  FontBakedSrcLoaderDataSize: csize
+}
+ImFontAtlasRectEntry = @record{
+  TargetIndex: cint,
+  Generation: cint,
+  IsUsed: cuint
+}
+ImVector_ImFontAtlasRectEntry = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *ImFontAtlasRectEntry
+}
+global stbrp_node_im: type <cimport,nodecl,forwarddecl> = @record{}
+ImVector_stbrp_node_im = @record{
+  Size: cint,
+  Capacity: cint,
+  Data: *stbrp_node_im
+}
+stbrp_context_opaque = @record{
+  data: [80]cchar
+}
+ImFontAtlasBuilder = @record{
+  PackContext: stbrp_context_opaque,
+  PackNodes: ImVector_stbrp_node_im,
+  Rects: ImVector_ImTextureRect,
+  RectsIndex: ImVector_ImFontAtlasRectEntry,
+  TempBuffer: ImVector_unsigned_char,
+  RectsIndexFreeListStart: cint,
+  RectsPackedCount: cint,
+  RectsPackedSurface: cint,
+  RectsDiscardedCount: cint,
+  RectsDiscardedSurface: cint,
+  FrameCount: cint,
+  MaxRectSize: ImVec2i,
+  MaxRectBounds: ImVec2i,
+  LockDisableResize: boolean,
+  PreloadedAllGlyphsRanges: boolean,
+  BakedPool: ImStableVector_ImFontBaked_32,
+  BakedMap: ImGuiStorage,
+  BakedDiscardedCount: cint,
+  PackIdMouseCursors: cint,
+  PackIdLinesTexData: cint
+}
+global ImPlot3DContext: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DStyle: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DPoint: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DRay: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DPlane: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DBox: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DRange: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DQuat: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlot3DCond: type <cimport,nodecl> = @cint
+global ImPlot3DCol: type <cimport,nodecl> = @cint
+global ImPlot3DStyleVar: type <cimport,nodecl> = @cint
+global ImPlot3DMarker: type <cimport,nodecl> = @cint
+global ImPlot3DLocation: type <cimport,nodecl> = @cint
+global ImAxis3D: type <cimport,nodecl> = @cint
+global ImPlot3DColormap: type <cimport,nodecl> = @cint
+global ImPlot3DFlags: type <cimport,nodecl> = @cint
+global ImPlot3DItemFlags: type <cimport,nodecl> = @cint
+global ImPlot3DScatterFlags: type <cimport,nodecl> = @cint
+global ImPlot3DLineFlags: type <cimport,nodecl> = @cint
+global ImPlot3DTriangleFlags: type <cimport,nodecl> = @cint
+global ImPlot3DQuadFlags: type <cimport,nodecl> = @cint
+global ImPlot3DSurfaceFlags: type <cimport,nodecl> = @cint
+global ImPlot3DMeshFlags: type <cimport,nodecl> = @cint
+global ImPlot3DImageFlags: type <cimport,nodecl> = @cint
+global ImPlot3DLegendFlags: type <cimport,nodecl> = @cint
+global ImPlot3DAxisFlags: type <cimport,nodecl> = @cint
+global ImPlot3DFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DFlags_None = 0,
+  ImPlot3DFlags_NoTitle = 1,
+  ImPlot3DFlags_NoLegend = 2,
+  ImPlot3DFlags_NoMouseText = 4,
+  ImPlot3DFlags_NoClip = 8,
+  ImPlot3DFlags_NoMenus = 16,
+  ImPlot3DFlags_CanvasOnly = 7
+}
+global ImPlot3DCond_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DCond_None = 0,
+  ImPlot3DCond_Always = 1,
+  ImPlot3DCond_Once = 2
+}
+global ImPlot3DCol_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DCol_Line = 0,
+  ImPlot3DCol_Fill = 1,
+  ImPlot3DCol_MarkerOutline = 2,
+  ImPlot3DCol_MarkerFill = 3,
+  ImPlot3DCol_TitleText = 4,
+  ImPlot3DCol_InlayText = 5,
+  ImPlot3DCol_FrameBg = 6,
+  ImPlot3DCol_PlotBg = 7,
+  ImPlot3DCol_PlotBorder = 8,
+  ImPlot3DCol_LegendBg = 9,
+  ImPlot3DCol_LegendBorder = 10,
+  ImPlot3DCol_LegendText = 11,
+  ImPlot3DCol_AxisText = 12,
+  ImPlot3DCol_AxisGrid = 13,
+  ImPlot3DCol_AxisTick = 14,
+  ImPlot3DCol_COUNT = 15
+}
+global ImPlot3DStyleVar_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DStyleVar_LineWeight = 0,
+  ImPlot3DStyleVar_Marker = 1,
+  ImPlot3DStyleVar_MarkerSize = 2,
+  ImPlot3DStyleVar_MarkerWeight = 3,
+  ImPlot3DStyleVar_FillAlpha = 4,
+  ImPlot3DStyleVar_PlotDefaultSize = 5,
+  ImPlot3DStyleVar_PlotMinSize = 6,
+  ImPlot3DStyleVar_PlotPadding = 7,
+  ImPlot3DStyleVar_LabelPadding = 8,
+  ImPlot3DStyleVar_LegendPadding = 9,
+  ImPlot3DStyleVar_LegendInnerPadding = 10,
+  ImPlot3DStyleVar_LegendSpacing = 11,
+  ImPlot3DStyleVar_COUNT = 12
+}
+global ImPlot3DMarker_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DMarker_None = -1,
+  ImPlot3DMarker_Circle = 0,
+  ImPlot3DMarker_Square = 1,
+  ImPlot3DMarker_Diamond = 2,
+  ImPlot3DMarker_Up = 3,
+  ImPlot3DMarker_Down = 4,
+  ImPlot3DMarker_Left = 5,
+  ImPlot3DMarker_Right = 6,
+  ImPlot3DMarker_Cross = 7,
+  ImPlot3DMarker_Plus = 8,
+  ImPlot3DMarker_Asterisk = 9,
+  ImPlot3DMarker_COUNT = 10
+}
+global ImPlot3DItemFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DItemFlags_None = 0,
+  ImPlot3DItemFlags_NoLegend = 1,
+  ImPlot3DItemFlags_NoFit = 2
+}
+global ImPlot3DScatterFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DScatterFlags_None = 0,
+  ImPlot3DScatterFlags_NoLegend = 1,
+  ImPlot3DScatterFlags_NoFit = 2
+}
+global ImPlot3DLineFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DLineFlags_None = 0,
+  ImPlot3DLineFlags_NoLegend = 1,
+  ImPlot3DLineFlags_NoFit = 2,
+  ImPlot3DLineFlags_Segments = 1024,
+  ImPlot3DLineFlags_Loop = 2048,
+  ImPlot3DLineFlags_SkipNaN = 4096
+}
+global ImPlot3DTriangleFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DTriangleFlags_None = 0,
+  ImPlot3DTriangleFlags_NoLegend = 1,
+  ImPlot3DTriangleFlags_NoFit = 2,
+  ImPlot3DTriangleFlags_NoLines = 1024,
+  ImPlot3DTriangleFlags_NoFill = 2048,
+  ImPlot3DTriangleFlags_NoMarkers = 4096
+}
+global ImPlot3DQuadFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DQuadFlags_None = 0,
+  ImPlot3DQuadFlags_NoLegend = 1,
+  ImPlot3DQuadFlags_NoFit = 2,
+  ImPlot3DQuadFlags_NoLines = 1024,
+  ImPlot3DQuadFlags_NoFill = 2048,
+  ImPlot3DQuadFlags_NoMarkers = 4096
+}
+global ImPlot3DSurfaceFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DSurfaceFlags_None = 0,
+  ImPlot3DSurfaceFlags_NoLegend = 1,
+  ImPlot3DSurfaceFlags_NoFit = 2,
+  ImPlot3DSurfaceFlags_NoLines = 1024,
+  ImPlot3DSurfaceFlags_NoFill = 2048,
+  ImPlot3DSurfaceFlags_NoMarkers = 4096
+}
+global ImPlot3DMeshFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DMeshFlags_None = 0,
+  ImPlot3DMeshFlags_NoLegend = 1,
+  ImPlot3DMeshFlags_NoFit = 2,
+  ImPlot3DMeshFlags_NoLines = 1024,
+  ImPlot3DMeshFlags_NoFill = 2048,
+  ImPlot3DMeshFlags_NoMarkers = 4096
+}
+global ImPlot3DImageFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DImageFlags_None = 0,
+  ImPlot3DImageFlags_NoLegend = 1,
+  ImPlot3DImageFlags_NoFit = 2
+}
+global ImPlot3DLegendFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DLegendFlags_None = 0,
+  ImPlot3DLegendFlags_NoButtons = 1,
+  ImPlot3DLegendFlags_NoHighlightItem = 2,
+  ImPlot3DLegendFlags_Horizontal = 4
+}
+global ImPlot3DLocation_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DLocation_Center = 0,
+  ImPlot3DLocation_North = 1,
+  ImPlot3DLocation_South = 2,
+  ImPlot3DLocation_West = 4,
+  ImPlot3DLocation_East = 8,
+  ImPlot3DLocation_NorthWest = 5,
+  ImPlot3DLocation_NorthEast = 9,
+  ImPlot3DLocation_SouthWest = 6,
+  ImPlot3DLocation_SouthEast = 10
+}
+global ImPlot3DAxisFlags_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DAxisFlags_None = 0,
+  ImPlot3DAxisFlags_NoLabel = 1,
+  ImPlot3DAxisFlags_NoGridLines = 2,
+  ImPlot3DAxisFlags_NoTickMarks = 4,
+  ImPlot3DAxisFlags_NoTickLabels = 8,
+  ImPlot3DAxisFlags_LockMin = 16,
+  ImPlot3DAxisFlags_LockMax = 32,
+  ImPlot3DAxisFlags_AutoFit = 64,
+  ImPlot3DAxisFlags_Invert = 128,
+  ImPlot3DAxisFlags_PanStretch = 256,
+  ImPlot3DAxisFlags_Lock = 48,
+  ImPlot3DAxisFlags_NoDecorations = 11
+}
+global ImAxis3D_: type <cimport,nodecl,using> = @enum(cint){
+  ImAxis3D_X = 0,
+  ImAxis3D_Y = 1,
+  ImAxis3D_Z = 2,
+  ImAxis3D_COUNT = 3
+}
+global ImPlot3DColormap_: type <cimport,nodecl,using> = @enum(cint){
+  ImPlot3DColormap_Deep = 0,
+  ImPlot3DColormap_Dark = 1,
+  ImPlot3DColormap_Pastel = 2,
+  ImPlot3DColormap_Paired = 3,
+  ImPlot3DColormap_Viridis = 4,
+  ImPlot3DColormap_Plasma = 5,
+  ImPlot3DColormap_Hot = 6,
+  ImPlot3DColormap_Cool = 7,
+  ImPlot3DColormap_Pink = 8,
+  ImPlot3DColormap_Jet = 9,
+  ImPlot3DColormap_Twilight = 10,
+  ImPlot3DColormap_RdBu = 11,
+  ImPlot3DColormap_BrBG = 12,
+  ImPlot3DColormap_PiYG = 13,
+  ImPlot3DColormap_Spectral = 14,
+  ImPlot3DColormap_Greys = 15
+}
+global ImPlot3DFormatter: type <cimport,nodecl> = @function(value: float32, buff: cstring, size: cint, user_data: pointer): cint
+ImPlot3DPoint = @record{
+  x: float32,
+  y: float32,
+  z: float32
+}
+ImPlot3DRay = @record{
+  Origin: ImPlot3DPoint,
+  Direction: ImPlot3DPoint
+}
+ImPlot3DPlane = @record{
+  Point: ImPlot3DPoint,
+  Normal: ImPlot3DPoint
+}
+ImPlot3DBox = @record{
+  Min: ImPlot3DPoint,
+  Max: ImPlot3DPoint
+}
+ImPlot3DRange = @record{
+  Min: float32,
+  Max: float32
+}
+ImPlot3DQuat = @record{
+  x: float32,
+  y: float32,
+  z: float32,
+  w: float32
+}
+ImPlot3DStyle = @record{
+  LineWeight: float32,
+  Marker: cint,
+  MarkerSize: float32,
+  MarkerWeight: float32,
+  FillAlpha: float32,
+  PlotDefaultSize: ImVec2,
+  PlotMinSize: ImVec2,
+  PlotPadding: ImVec2,
+  LabelPadding: ImVec2,
+  LegendPadding: ImVec2,
+  LegendInnerPadding: ImVec2,
+  LegendSpacing: ImVec2,
+  Colors: [15]ImVec4,
+  Colormap: ImPlot3DColormap
+}
+global function ImPlot3D_CreateContext(): *ImPlot3DContext <cimport,nodecl> end
+global function ImPlot3D_DestroyContext(ctx: *ImPlot3DContext): void <cimport,nodecl> end
+global function ImPlot3D_GetCurrentContext(): *ImPlot3DContext <cimport,nodecl> end
+global function ImPlot3D_SetCurrentContext(ctx: *ImPlot3DContext): void <cimport,nodecl> end
+global function ImPlot3D_BeginPlot(title_id: cstring, size: ImVec2, flags: ImPlot3DFlags): boolean <cimport,nodecl> end
+global function ImPlot3D_EndPlot(): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxis(axis: ImAxis3D, label: cstring, flags: ImPlot3DAxisFlags): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxisLimits(axis: ImAxis3D, v_min: float64, v_max: float64, cond: ImPlot3DCond): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxisFormat(axis: ImAxis3D, formatter: ImPlot3DFormatter, data: pointer): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxisTicks_doublePtr(axis: ImAxis3D, values: *float64, n_ticks: cint, labels: *[0]cstring, keep_default: boolean): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxisTicks_double(axis: ImAxis3D, v_min: float64, v_max: float64, n_ticks: cint, labels: *[0]cstring, keep_default: boolean): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxisLimitsConstraints(axis: ImAxis3D, v_min: float64, v_max: float64): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxisZoomConstraints(axis: ImAxis3D, z_min: float64, z_max: float64): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxes(x_label: cstring, y_label: cstring, z_label: cstring, x_flags: ImPlot3DAxisFlags, y_flags: ImPlot3DAxisFlags, z_flags: ImPlot3DAxisFlags): void <cimport,nodecl> end
+global function ImPlot3D_SetupAxesLimits(x_min: float64, x_max: float64, y_min: float64, y_max: float64, z_min: float64, z_max: float64, cond: ImPlot3DCond): void <cimport,nodecl> end
+global function ImPlot3D_SetupBoxRotation_Float(elevation: float32, azimuth: float32, animate: boolean, cond: ImPlot3DCond): void <cimport,nodecl> end
+global function ImPlot3D_SetupBoxRotation_Plot3DQuat(rotation: ImPlot3DQuat, animate: boolean, cond: ImPlot3DCond): void <cimport,nodecl> end
+global function ImPlot3D_SetupBoxInitialRotation_Float(elevation: float32, azimuth: float32): void <cimport,nodecl> end
+global function ImPlot3D_SetupBoxInitialRotation_Plot3DQuat(rotation: ImPlot3DQuat): void <cimport,nodecl> end
+global function ImPlot3D_SetupBoxScale(x: float32, y: float32, z: float32): void <cimport,nodecl> end
+global function ImPlot3D_SetupLegend(location: ImPlot3DLocation, flags: ImPlot3DLegendFlags): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, zs: *float32, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_doublePtr(label_id: cstring, xs: *float64, ys: *float64, zs: *float64, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, zs: *cschar, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_U8Ptr(label_id: cstring, xs: *cuchar, ys: *cuchar, zs: *cuchar, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_S16Ptr(label_id: cstring, xs: *cshort, ys: *cshort, zs: *cshort, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_U16Ptr(label_id: cstring, xs: *cushort, ys: *cushort, zs: *cushort, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_S32Ptr(label_id: cstring, xs: *cint, ys: *cint, zs: *cint, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_U32Ptr(label_id: cstring, xs: *cuint, ys: *cuint, zs: *cuint, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, zs: *clonglong, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotScatter_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, zs: *culonglong, count: cint, flags: ImPlot3DScatterFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, zs: *float32, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_doublePtr(label_id: cstring, xs: *float64, ys: *float64, zs: *float64, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, zs: *cschar, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_U8Ptr(label_id: cstring, xs: *cuchar, ys: *cuchar, zs: *cuchar, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_S16Ptr(label_id: cstring, xs: *cshort, ys: *cshort, zs: *cshort, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_U16Ptr(label_id: cstring, xs: *cushort, ys: *cushort, zs: *cushort, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_S32Ptr(label_id: cstring, xs: *cint, ys: *cint, zs: *cint, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_U32Ptr(label_id: cstring, xs: *cuint, ys: *cuint, zs: *cuint, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, zs: *clonglong, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotLine_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, zs: *culonglong, count: cint, flags: ImPlot3DLineFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, zs: *float32, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_doublePtr(label_id: cstring, xs: *float64, ys: *float64, zs: *float64, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, zs: *cschar, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_U8Ptr(label_id: cstring, xs: *cuchar, ys: *cuchar, zs: *cuchar, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_S16Ptr(label_id: cstring, xs: *cshort, ys: *cshort, zs: *cshort, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_U16Ptr(label_id: cstring, xs: *cushort, ys: *cushort, zs: *cushort, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_S32Ptr(label_id: cstring, xs: *cint, ys: *cint, zs: *cint, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_U32Ptr(label_id: cstring, xs: *cuint, ys: *cuint, zs: *cuint, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, zs: *clonglong, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotTriangle_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, zs: *culonglong, count: cint, flags: ImPlot3DTriangleFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, zs: *float32, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_doublePtr(label_id: cstring, xs: *float64, ys: *float64, zs: *float64, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, zs: *cschar, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_U8Ptr(label_id: cstring, xs: *cuchar, ys: *cuchar, zs: *cuchar, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_S16Ptr(label_id: cstring, xs: *cshort, ys: *cshort, zs: *cshort, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_U16Ptr(label_id: cstring, xs: *cushort, ys: *cushort, zs: *cushort, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_S32Ptr(label_id: cstring, xs: *cint, ys: *cint, zs: *cint, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_U32Ptr(label_id: cstring, xs: *cuint, ys: *cuint, zs: *cuint, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, zs: *clonglong, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotQuad_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, zs: *culonglong, count: cint, flags: ImPlot3DQuadFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, zs: *float32, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_doublePtr(label_id: cstring, xs: *float64, ys: *float64, zs: *float64, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, zs: *cschar, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_U8Ptr(label_id: cstring, xs: *cuchar, ys: *cuchar, zs: *cuchar, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_S16Ptr(label_id: cstring, xs: *cshort, ys: *cshort, zs: *cshort, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_U16Ptr(label_id: cstring, xs: *cushort, ys: *cushort, zs: *cushort, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_S32Ptr(label_id: cstring, xs: *cint, ys: *cint, zs: *cint, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_U32Ptr(label_id: cstring, xs: *cuint, ys: *cuint, zs: *cuint, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, zs: *clonglong, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotSurface_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, zs: *culonglong, x_count: cint, y_count: cint, scale_min: float64, scale_max: float64, flags: ImPlot3DSurfaceFlags, offset: cint, stride: cint): void <cimport,nodecl> end
+global function ImPlot3D_PlotMesh(label_id: cstring, vtx: *ImPlot3DPoint, idx: *cuint, vtx_count: cint, idx_count: cint, flags: ImPlot3DMeshFlags): void <cimport,nodecl> end
+global function ImPlot3D_PlotImage_Vec2(label_id: cstring, tex_ref: ImTextureRef, center: ImPlot3DPoint, axis_u: ImPlot3DPoint, axis_v: ImPlot3DPoint, uv0: ImVec2, uv1: ImVec2, tint_col: ImVec4, flags: ImPlot3DImageFlags): void <cimport,nodecl> end
+global function ImPlot3D_PlotImage_Plot3DPoInt(label_id: cstring, tex_ref: ImTextureRef, p0: ImPlot3DPoint, p1: ImPlot3DPoint, p2: ImPlot3DPoint, p3: ImPlot3DPoint, uv0: ImVec2, uv1: ImVec2, uv2: ImVec2, uv3: ImVec2, tint_col: ImVec4, flags: ImPlot3DImageFlags): void <cimport,nodecl> end
+global function ImPlot3D_PlotText(text: cstring, x: float32, y: float32, z: float32, angle: float32, pix_offset: ImVec2): void <cimport,nodecl> end
+global function ImPlot3D_PlotToPixels_Plot3DPoInt(pOut: *ImVec2, point: ImPlot3DPoint): void <cimport,nodecl> end
+global function ImPlot3D_PlotToPixels_double(pOut: *ImVec2, x: float64, y: float64, z: float64): void <cimport,nodecl> end
+global function ImPlot3D_PixelsToPlotRay_Vec2(pix: ImVec2): ImPlot3DRay <cimport,nodecl> end
+global function ImPlot3D_PixelsToPlotRay_double(x: float64, y: float64): ImPlot3DRay <cimport,nodecl> end
+global function ImPlot3D_PixelsToPlotPlane_Vec2(pOut: *ImPlot3DPoint, pix: ImVec2, plane: cint, mask: boolean): void <cimport,nodecl> end
+global function ImPlot3D_PixelsToPlotPlane_double(pOut: *ImPlot3DPoint, x: float64, y: float64, plane: cint, mask: boolean): void <cimport,nodecl> end
+global function ImPlot3D_GetPlotPos(pOut: *ImVec2): void <cimport,nodecl> end
+global function ImPlot3D_GetPlotSize(pOut: *ImVec2): void <cimport,nodecl> end
+global function ImPlot3D_GetPlotDrawList(): *ImDrawList <cimport,nodecl> end
+global function ImPlot3D_GetStyle(): *ImPlot3DStyle <cimport,nodecl> end
+global function ImPlot3D_SetStyle(style: ImPlot3DStyle): void <cimport,nodecl> end
+global function ImPlot3D_StyleColorsAuto(dst: *ImPlot3DStyle): void <cimport,nodecl> end
+global function ImPlot3D_StyleColorsDark(dst: *ImPlot3DStyle): void <cimport,nodecl> end
+global function ImPlot3D_StyleColorsLight(dst: *ImPlot3DStyle): void <cimport,nodecl> end
+global function ImPlot3D_StyleColorsClassic(dst: *ImPlot3DStyle): void <cimport,nodecl> end
+global function ImPlot3D_PushStyleColor_U32(idx: ImPlot3DCol, col: cuint): void <cimport,nodecl> end
+global function ImPlot3D_PushStyleColor_Vec4(idx: ImPlot3DCol, col: ImVec4): void <cimport,nodecl> end
+global function ImPlot3D_PopStyleColor(count: cint): void <cimport,nodecl> end
+global function ImPlot3D_PushStyleVar_Float(idx: ImPlot3DStyleVar, val: float32): void <cimport,nodecl> end
+global function ImPlot3D_PushStyleVar_Int(idx: ImPlot3DStyleVar, val: cint): void <cimport,nodecl> end
+global function ImPlot3D_PushStyleVar_Vec2(idx: ImPlot3DStyleVar, val: ImVec2): void <cimport,nodecl> end
+global function ImPlot3D_PopStyleVar(count: cint): void <cimport,nodecl> end
+global function ImPlot3D_SetNextLineStyle(col: ImVec4, weight: float32): void <cimport,nodecl> end
+global function ImPlot3D_SetNextFillStyle(col: ImVec4, alpha_mod: float32): void <cimport,nodecl> end
+global function ImPlot3D_SetNextMarkerStyle(marker: ImPlot3DMarker, size: float32, fill: ImVec4, weight: float32, outline: ImVec4): void <cimport,nodecl> end
+global function ImPlot3D_GetStyleColorVec4(pOut: *ImVec4, idx: ImPlot3DCol): void <cimport,nodecl> end
+global function ImPlot3D_GetStyleColorU32(idx: ImPlot3DCol): cuint <cimport,nodecl> end
+global function ImPlot3D_AddColormap_Vec4Ptr(name: cstring, cols: *ImVec4, size: cint, qual: boolean): ImPlot3DColormap <cimport,nodecl> end
+global function ImPlot3D_AddColormap_U32Ptr(name: cstring, cols: *cuint, size: cint, qual: boolean): ImPlot3DColormap <cimport,nodecl> end
+global function ImPlot3D_GetColormapCount(): cint <cimport,nodecl> end
+global function ImPlot3D_GetColormapName(cmap: ImPlot3DColormap): cstring <cimport,nodecl> end
+global function ImPlot3D_GetColormapIndex(name: cstring): ImPlot3DColormap <cimport,nodecl> end
+global function ImPlot3D_PushColormap_Plot3DColormap(cmap: ImPlot3DColormap): void <cimport,nodecl> end
+global function ImPlot3D_PushColormap_Str(name: cstring): void <cimport,nodecl> end
+global function ImPlot3D_PopColormap(count: cint): void <cimport,nodecl> end
+global function ImPlot3D_NextColormapColor(pOut: *ImVec4): void <cimport,nodecl> end
+global function ImPlot3D_GetColormapSize(cmap: ImPlot3DColormap): cint <cimport,nodecl> end
+global function ImPlot3D_GetColormapColor(pOut: *ImVec4, idx: cint, cmap: ImPlot3DColormap): void <cimport,nodecl> end
+global function ImPlot3D_SampleColormap(pOut: *ImVec4, t: float32, cmap: ImPlot3DColormap): void <cimport,nodecl> end
+global function ImPlot3D_ShowDemoWindow(p_open: *boolean): void <cimport,nodecl> end
+global function ImPlot3D_ShowAllDemos(): void <cimport,nodecl> end
+global function ImPlot3D_ShowStyleEditor(ref: *ImPlot3DStyle): void <cimport,nodecl> end
+global function ImPlot3D_ShowMetricsWindow(p_popen: *boolean): void <cimport,nodecl> end
+global function ImPlot3DPoint_ImPlot3DPoint_Nil(): *ImPlot3DPoint <cimport,nodecl> end
+global function ImPlot3DPoint_destroy(self: *ImPlot3DPoint): void <cimport,nodecl> end
+global function ImPlot3DPoint_ImPlot3DPoint_Float(_x: float32, _y: float32, _z: float32): *ImPlot3DPoint <cimport,nodecl> end
+global function ImPlot3DPoint_Dot(self: *ImPlot3DPoint, rhs: ImPlot3DPoint): float32 <cimport,nodecl> end
+global function ImPlot3DPoint_Cross(pOut: *ImPlot3DPoint, self: *ImPlot3DPoint, rhs: ImPlot3DPoint): void <cimport,nodecl> end
+global function ImPlot3DPoint_Length(self: *ImPlot3DPoint): float32 <cimport,nodecl> end
+global function ImPlot3DPoint_LengthSquared(self: *ImPlot3DPoint): float32 <cimport,nodecl> end
+global function ImPlot3DPoint_Normalize(self: *ImPlot3DPoint): void <cimport,nodecl> end
+global function ImPlot3DPoint_Normalized(pOut: *ImPlot3DPoint, self: *ImPlot3DPoint): void <cimport,nodecl> end
+global function ImPlot3DPoint_IsNaN(self: *ImPlot3DPoint): boolean <cimport,nodecl> end
+global function ImPlot3DBox_ImPlot3DBox_Nil(): *ImPlot3DBox <cimport,nodecl> end
+global function ImPlot3DBox_destroy(self: *ImPlot3DBox): void <cimport,nodecl> end
+global function ImPlot3DBox_ImPlot3DBox_Plot3DPoInt(min: ImPlot3DPoint, max: ImPlot3DPoint): *ImPlot3DBox <cimport,nodecl> end
+global function ImPlot3DBox_Expand(self: *ImPlot3DBox, point: ImPlot3DPoint): void <cimport,nodecl> end
+global function ImPlot3DBox_Contains(self: *ImPlot3DBox, point: ImPlot3DPoint): boolean <cimport,nodecl> end
+global function ImPlot3DBox_ClipLineSegment(self: *ImPlot3DBox, p0: ImPlot3DPoint, p1: ImPlot3DPoint, p0_clipped: *ImPlot3DPoint, p1_clipped: *ImPlot3DPoint): boolean <cimport,nodecl> end
+global function ImPlot3DRange_ImPlot3DRange_Nil(): *ImPlot3DRange <cimport,nodecl> end
+global function ImPlot3DRange_destroy(self: *ImPlot3DRange): void <cimport,nodecl> end
+global function ImPlot3DRange_ImPlot3DRange_Float(min: float32, max: float32): *ImPlot3DRange <cimport,nodecl> end
+global function ImPlot3DRange_Expand(self: *ImPlot3DRange, value: float32): void <cimport,nodecl> end
+global function ImPlot3DRange_Contains(self: *ImPlot3DRange, value: float32): boolean <cimport,nodecl> end
+global function ImPlot3DRange_Size(self: *ImPlot3DRange): float32 <cimport,nodecl> end
+global function ImPlot3DQuat_ImPlot3DQuat_Nil(): *ImPlot3DQuat <cimport,nodecl> end
+global function ImPlot3DQuat_destroy(self: *ImPlot3DQuat): void <cimport,nodecl> end
+global function ImPlot3DQuat_ImPlot3DQuat_FloatFloat(_x: float32, _y: float32, _z: float32, _w: float32): *ImPlot3DQuat <cimport,nodecl> end
+global function ImPlot3DQuat_ImPlot3DQuat_FloatPlot3DPoInt(_angle: float32, _axis: ImPlot3DPoint): *ImPlot3DQuat <cimport,nodecl> end
+global function ImPlot3DQuat_FromTwoVectors(pOut: *ImPlot3DQuat, v0: ImPlot3DPoint, v1: ImPlot3DPoint): void <cimport,nodecl> end
+global function ImPlot3DQuat_FromElAz(pOut: *ImPlot3DQuat, elevation: float32, azimuth: float32): void <cimport,nodecl> end
+global function ImPlot3DQuat_Length(self: *ImPlot3DQuat): float32 <cimport,nodecl> end
+global function ImPlot3DQuat_Normalized(pOut: *ImPlot3DQuat, self: *ImPlot3DQuat): void <cimport,nodecl> end
+global function ImPlot3DQuat_Conjugate(pOut: *ImPlot3DQuat, self: *ImPlot3DQuat): void <cimport,nodecl> end
+global function ImPlot3DQuat_Inverse(pOut: *ImPlot3DQuat, self: *ImPlot3DQuat): void <cimport,nodecl> end
+global function ImPlot3DQuat_Normalize(self: *ImPlot3DQuat): *ImPlot3DQuat <cimport,nodecl> end
+global function ImPlot3DQuat_Slerp(pOut: *ImPlot3DQuat, q1: ImPlot3DQuat, q2: ImPlot3DQuat, t: float32): void <cimport,nodecl> end
+global function ImPlot3DQuat_Dot(self: *ImPlot3DQuat, rhs: ImPlot3DQuat): float32 <cimport,nodecl> end
+global function ImPlot3DStyle_GetColor(pOut: *ImVec4, self: *ImPlot3DStyle, idx: ImPlot3DCol): void <cimport,nodecl> end
+global function ImPlot3DStyle_SetColor(self: *ImPlot3DStyle, idx: ImPlot3DCol, col: ImVec4): void <cimport,nodecl> end
+global function ImPlot3DStyle_ImPlot3DStyle_Nil(): *ImPlot3DStyle <cimport,nodecl> end
+global function ImPlot3DStyle_destroy(self: *ImPlot3DStyle): void <cimport,nodecl> end
+global function ImPlot3DStyle_ImPlot3DStyle_Plot3DStyle(other: ImPlot3DStyle): *ImPlot3DStyle <cimport,nodecl> end

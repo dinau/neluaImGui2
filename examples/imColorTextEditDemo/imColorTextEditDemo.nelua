@@ -1,0 +1,268 @@
+-- Refer to :
+--            https://github.com/sonoro1234/LuaJIT-ImGui/blob/docking_inter/examples/CTE_sample.lua
+--            https://github.com/sonoro1234/LuaJIT-ImGui
+--            https://github.com/BalazsJako/ColorTextEditorDemo/blob/master/main.cpp
+--            https://github.com/BalazsJako/ColorTextEditorDemo
+require 'os'
+require'math'
+--
+require'cimgui'
+require'simple'
+require'imgui_backend_opengl3'
+require'imgui_backend_glfw'
+require'loadImage'
+require'utils'
+require'IconsFontAwesome6'
+--
+require'imcolortextedit'
+
+--- External functions
+local function setupFonts() <cimport> end                -- from utils/setupFonts.c
+local function point2px(point:float32): float32 <cimport> end
+
+--- Initial Window size
+local MainWinWidth <const>  = 1024
+local MainWinHeight <const> =  900
+
+--- Constants
+
+--- Global vars
+local versions : [][2]int32 = {{4, 6} ,{4, 5} ,{4, 4} ,{4, 3} ,{4, 2} ,{4, 1} ,{4, 0} ,{3, 3} }
+
+---------
+--- main
+---------
+local main = function()
+  glfwInit()
+  defer glfwTerminate()  end
+  local glfwWin: *GLFWwindow = nilptr
+  local glsl_version:cstring -- = "#version 330"
+  for _, ver in ipairs(versions) do
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, ver[0])
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, ver[1])
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE)
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
+
+    glfwWin = glfwCreateWindow(MainWinWidth, MainWinHeight, "ImGui with Nelua 2025/05", nilptr, nilptr)
+    if nilptr ~= glfwWin then
+      glsl_version = "#version " .. tostring( ver[0] * 100 + ver[1] * 10)
+      break
+    end
+  end
+  if nilptr == glfwWin then
+    print("Could not create window")
+    os.exit(false)
+  end
+  defer glfwDestroyWindow(glfwWin) end
+
+  glfwMakeContextCurrent(glfwWin)
+  glfwSwapInterval(1) -- # Enable vsync
+
+  ------------------------
+  --- Load title bar icon
+  ------------------------
+  local IconName = "res/img/nl.png"
+  LoadTitleBarIcon(glfwWin, IconName)
+
+  if gladLoadGL(glfwGetProcAddress) == 0 then
+    error 'Could not initialize GLAD'
+  end
+  print('OpenGL loaded:', (@cstring)(glGetString(GL_VERSION)))
+
+  local context = ImGui_CreateContext()
+  defer ImGui_DestroyContext(context) end
+
+  ImGui_ImplGlfw_InitForOpenGL(glfwWin, true)
+  defer ImGui_ImplGlfw_Shutdown() end
+
+  ImGui_ImplOpenGL3_Init(glsl_version)
+  defer ImGui_ImplOpenGL3_Shutdown() end
+
+  setupFonts()
+
+  --igStyleColorsDark()
+  ImGui_StyleColorsClassic()
+
+  local showDemoWindow = false
+  local showInfoWindow = true
+  local showWindowDelay = 1 -- TODO : Avoid flickering window at start up.
+  local clearColor: [3]cfloat = {0.25,0.65,0.85}
+
+  local pio = ImGui_GetIO()
+
+  -- This is a programing font. https://github.com/yuru7/NOTONOTO
+  local fontFullPath = "./fonts/notonoto_v0.0.3/NOTONOTO-Regular.ttf"
+  local fileName = "main.cpp"
+
+  local fp = filestream.open(fileName)
+  local strText:string = fp:read("a")
+  fp:close()
+  local editor = TextEditor_TextEditor()
+  TextEditor_SetLanguageDefinition(editor, LanguageDefinitionId.Cpp)
+  TextEditor_SetText(editor, strText)
+
+  TextEditor_SetPalette(editor, Light)
+
+  local mLine:cint
+  local mColumn:cint
+  local fQuit = false
+
+  -- Setup programing fonts
+  local textPoint = 14.5
+  local textFont  = ImFontAtlas_AddFontFromFileTTF(pio.Fonts
+                                                  ,fontFullPath
+                                                  ,point2px(textPoint)
+                                                  ,nilptr
+                                                  ,nilptr)
+  --------------------
+  --- Main while loop
+  --------------------
+  while glfwWindowShouldClose(glfwWin) == 0 and not fQuit do
+    glfwPollEvents()
+
+    ImGui_ImplOpenGL3_NewFrame() -- # start imgui frame
+    ImGui_ImplGlfw_NewFrame()
+    ImGui_NewFrame()
+
+    if showDemoWindow then
+      ImGui_ShowDemoWindow(&showDemoWindow)
+    end
+
+    --------------------------
+    -- Show information window
+    --------------------------
+    do
+      ImGui_Begin("Nelua: Dear ImGui info", &showInfoWindow, 0)
+      defer ImGui_End() end
+      local s = "GLFW v" .. tostring(glfwGetVersionString())
+      s = ICON_FA_COMMENT .. " " .. s
+      ImGui_Text(s)
+      s = "OpenGL v" .. tostring((@cstring)(glGetString(GL_VERSION)))
+      s = ICON_FA_COMMENT_SMS .. " " .. s
+      ImGui_Text(s)
+      ImGui_Text(ICON_FA_COMMENT_DOTS .. " Dear ImGui")   ImGui_SameLine()
+      ImGui_Text(ImGui_GetVersion())
+      ImGui_Text(ICON_FA_COMMENT_MEDICAL .. " ")   ImGui_SameLine()
+      ImGui_Text(_VERSION)
+
+      ImGui_Checkbox("Demo window", &showDemoWindow)
+      ImGui_ColorEdit3("Background color", &clearColor, 0)
+
+      ImGui_Text("Application average %.3f ms/frame (%.1f FPS)", (1000.0 / pio.Framerate), pio.Framerate)
+    end
+
+    ---------------------------------
+    --- Show ImGuiColorTextEdit demo
+    ---------------------------------
+    TextEditor_GetCursorPosition(editor,  &mLine, &mColumn)
+    do
+      ImGui_Begin("ImGuiColorTextEdit with Nelua lang. " .. ICON_FA_DOG, nilptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar)
+        defer ImGui_End() end
+        ImGui_SetWindowSize(ImVec2{800, 600}, ImGuiCond_FirstUseEver)
+        if ImGui_BeginMenuBar() then
+          defer ImGui_EndMenuBar() end
+          -------------
+          -- Menu File
+          -------------
+          if ImGui_BeginMenu("File") then
+            defer ImGui_EndMenu() end
+            if ImGui_MenuItemBoolPtr("Save", "Ctrl-S", nilptr, true) then
+              strText = TextEditor_GetText(editor)
+              --writeFile("main.cpp", strText)
+              print"saved"
+            end
+            if ImGui_MenuItemEx("Quit", "Alt-F4", false ,true) then
+              fQuit = true
+              print"quit"
+            end
+          end
+          -------------
+          -- Menu Edit
+          -------------
+          if ImGui_BeginMenu("Edit") then
+            defer ImGui_EndMenu() end
+            local ro = TextEditor_IsReadOnlyEnabled(editor)
+            if ImGui_MenuItemBoolPtr("Read-only mode", nilptr, &ro, true) then
+              TextEditor_SetReadOnlyEnabled(editor, ro)
+            end
+            ImGui_Separator()
+            --
+            if ImGui_MenuItemBoolPtr("Undo", "ALT-Backspace", nilptr, not ro and TextEditor_CanUndo(editor)) then
+              TextEditor_Undo(editor,1)
+            end
+            if ImGui_MenuItemBoolPtr("Redo", "Ctrl-Y"       , nilptr, not ro and TextEditor_CanRedo(editor)) then
+              TextEditor_Redo(editor,1)
+            end
+            ImGui_Separator()
+            --
+            if ImGui_MenuItemBoolPtr("Copy", "Ctrl-C",        nilptr, TextEditor_AnyCursorHasSelection(editor)) then
+              TextEditor_Copy(editor)
+            end
+            if ImGui_MenuItemBoolPtr("Cut", "Ctrl-X",         nilptr, not ro and TextEditor_AnyCursorHasSelection(editor)) then
+              TextEditor_Cut(editor)
+            end
+            if ImGui_MenuItemBoolPtr("Paste", "Ctrl-V",       nilptr, not ro and ImGui_GetClipboardText() ~= nilptr) then
+              TextEditor_Paste(editor)
+            end
+            ImGui_Separator();
+            if ImGui_MenuItemEx("Select all", "Ctrl-A",     nilptr, true) then
+              TextEditor_SelectAll(editor)
+            end
+          end
+          -------------
+          -- Menu Theme
+          -------------
+          if ImGui_BeginMenu("Theme") then
+            defer ImGui_EndMenu() end
+            if ImGui_MenuItemEx("Dark palette", nilptr, nilptr, true ) then
+              TextEditor_SetPalette(editor, Dark)
+            end
+            if ImGui_MenuItemEx("Light palette", nilptr, nilptr, true) then
+              TextEditor_SetPalette(editor,Light)
+            end
+            if ImGui_MenuItemEx("Mariana palette", nilptr, nilptr, true) then
+              TextEditor_SetPalette(editor,Mariana)
+            end
+            if ImGui_MenuItemEx("Retro blue palette", "Ctrl-B", nilptr, true) then
+              TextEditor_SetPalette(editor,RetroBlue)
+            end
+          end
+        end -- menubar end
+
+        local langNames: []string = {"None", "Cpp", "C", "Cs", "Python", "Lua", "Json", "Sql", "AngelScript", "Glsl", "Hlsl"}
+        local str1:string = "Ins"
+        if TextEditor_IsOverwriteEnabled(editor) then
+          str1 = "Ovr"
+        end
+        local str2:string = ""
+        if TextEditor_CanUndo(editor) then
+          str2 = "*"
+        end
+        ImGui_Text("%6d/%-6d %6d lines  | %s | %s | %s | %s" , mLine + 1, mColumn + 1, TextEditor_GetLineCount(editor), str1, str2
+               ,langNames[TextEditor_GetLanguageDefinition(editor)], fileName)
+
+        ImGui_PushFont(textFont)
+        TextEditor_Render(editor, "texteditor", false, ImVec2{0,0}, false)
+        ImGui_PopFont()
+    end -- do ImGui_Begin end
+
+    ImGui_Render()
+    glClearColor(clearColor[0], clearColor[1], clearColor[2], 1.0)
+    glClear(GL_COLOR_BUFFER_BIT)
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui_GetDrawData())
+
+    glfwSwapBuffers(glfwWin)
+
+    if showWindowDelay > 0 then
+      showWindowDelay = showWindowDelay - 1
+    elseif showWindowDelay == 0 then
+      showWindowDelay = -1
+      glfwShowWindow(glfwWin)
+    end
+  end -- main while loop end
+
+end -- main() end
+
+main()

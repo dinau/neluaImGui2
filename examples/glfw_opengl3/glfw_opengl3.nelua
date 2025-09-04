@@ -1,0 +1,254 @@
+require 'os'
+require'math'
+--
+require'cimgui'
+require'simple'
+require'imgui_backend_opengl3'
+require'imgui_backend_glfw'
+require'loadImage'
+require'saveImage'
+require'utils'
+require'IconsFontAwesome6'
+
+
+--- External functions
+local function setupFonts() <cimport> end                -- from utils/setupFonts.c
+
+--- Initial Window size
+local MainWinWidth <const>  = 1024
+local MainWinHeight <const> =  900
+
+--- Constants
+local SaveImageName = "ImageSaved"
+
+--- Global vars
+local imageExt:string
+local recImageFormat = @record{kind: string, ext:string}
+local imageFormatTbl : [4]recImageFormat = {{"JPEG 90%",".jpg"}, {"PNG",".png"}, {"BMP",".bmp"}, {"TGA",".tga"}}
+local cbItemIndex = 0
+local versions : [][2]int32 = {{4, 6} ,{4, 5} ,{4, 4} ,{4, 3} ,{4, 2} ,{4, 1} ,{4, 0} ,{3, 3} }
+
+---------
+--- main
+---------
+local main = function()
+  glfwInit()
+  defer glfwTerminate()  end
+  local glfwWin: *GLFWwindow = nilptr
+  local glsl_version:cstring -- = "#version 330"
+  for _, ver in ipairs(versions) do
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, ver[0])
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, ver[1])
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE)
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
+
+    glfwWin = glfwCreateWindow(MainWinWidth, MainWinHeight, "ImGui with Nelua ", nilptr, nilptr)
+    if nilptr ~= glfwWin then
+      glsl_version = "#version " .. tostring( ver[0] * 100 + ver[1] * 10)
+      break
+    end
+  end
+  if nilptr == glfwWin then
+    print("Could not create window")
+    os.exit(false)
+  end
+  defer glfwDestroyWindow(glfwWin) end
+
+  glfwMakeContextCurrent(glfwWin)
+  glfwSwapInterval(1) -- # Enable vsync
+
+  ------------------------
+  --- Load title bar icon
+  ------------------------
+  local IconName = "res/img/nl.png"
+  LoadTitleBarIcon(glfwWin, IconName)
+
+  if gladLoadGL(glfwGetProcAddress) == 0 then
+    error 'Could not initialize GLAD'
+  end
+  print('OpenGL loaded:', (@cstring)(glGetString(GL_VERSION)))
+
+  local context = ImGui_CreateContext()
+  defer ImGui_DestroyContext(context) end
+
+  ImGui_ImplGlfw_InitForOpenGL(glfwWin, true)
+  defer ImGui_ImplGlfw_Shutdown() end
+
+  ImGui_ImplOpenGL3_Init(glsl_version)
+  defer ImGui_ImplOpenGL3_Shutdown() end
+
+  setupFonts()
+
+  --igStyleColorsDark()
+  ImGui_StyleColorsClassic()
+
+  ---------------
+  --- Load image
+  ---------------
+  local textureId: GLuint
+  local textureWidth:  int32 = 0
+  local textureHeight: int32 = 0
+  local ImageName = "fuji-hokusai-480.png"
+  if fileExists(ImageName) then
+    if not loadTextureFromFile(ImageName, &textureId, &textureWidth, &textureHeight) then
+      print("Error!: Image load error:  ", ImageName)
+    end
+  else
+    print("Error!: Image file not found  error:  ", ImageName)
+  end
+  defer glDeleteTextures(1, &textureId) end
+
+  local showDemoWindow = true
+  local showFirstWindow = true
+  local fval:cfloat = 0.5
+  local showWindowDelay = 1 -- TODO : Avoid flickering window at start up.
+  local counter = 0
+  local sBuf:string = string.create(100)
+  sBuf[1] = 0
+  local clearColor: [3]cfloat = {0.25,0.65,0.85}
+
+  local zoomTextureID: GLuint = 0  -- # Must be == 0 at first
+  defer glDeleteTextures(1, &zoomTextureID) end
+
+  local pio = ImGui_GetIO()
+
+  --------------------
+  --- Main while loop
+  --------------------
+  while glfwWindowShouldClose(glfwWin) == 0 do
+    glfwPollEvents()
+
+    ImGui_ImplOpenGL3_NewFrame() -- # start imgui frame
+    ImGui_ImplGlfw_NewFrame()
+    ImGui_NewFrame()
+
+    if showDemoWindow then
+      ImGui_ShowDemoWindow(&showDemoWindow)
+    end
+
+    do
+      ImGui_Begin("Nelua: Dear ImGui demo", &showFirstWindow, 0)
+      defer ImGui_End() end
+      local s = "GLFW v" .. tostring(glfwGetVersionString())
+      s = ICON_FA_COMMENT .. " " .. s
+      ImGui_Text(s)
+      s = "OpenGL v" .. tostring((@cstring)(glGetString(GL_VERSION)))
+      s = ICON_FA_COMMENT_SMS .. " " .. s
+      ImGui_Text(s)
+      ImGui_Text(ICON_FA_COMMENT_DOTS .. " Dear ImGui")   ImGui_SameLine()
+      ImGui_Text(ImGui_GetVersion())
+      ImGui_Text(ICON_FA_COMMENT_MEDICAL .. " ")   ImGui_SameLine()
+      ImGui_Text(_VERSION)
+      ImGui_InputTextWithHint("InputText" ,"Input text here" ,sBuf, #sBuf, 0)
+      s = "Input result:" .. sBuf
+      ImGui_Text(s)
+
+      if ImGui_Button("Open file") then
+      end
+
+      ImGui_SameLine()
+      if ImGui_IsItemHovered(ImGuiHoveredFlags_DelayShort) and ImGui_BeginTooltip() then
+        defer ImGui_EndTooltip() end
+        ImGui_Text("[Open file]")
+        local ary: [7]cfloat = {0.6, 0.1, 1.0, 0.5, 0.92, 0.1, 0.2}
+        ImGui_PlotLinesEx("Curve", &ary, 7, 0, "Overlay string",FLT_MIN, FLT_MAX, ImVec2{0,0}, #cfloat)
+        ImGui_Text("Sin(time) = %.2f", math.sin(ImGui_GetTime()));
+      end
+
+      ImGui_Checkbox("Demo window", &showDemoWindow)
+      ImGui_SliderFloat("Float", &fval, 0.0, 1.0)
+      ImGui_ColorEdit3("Background color", &clearColor, 0)
+
+      -- Save button for capturing window image
+      ImGui_PushIDInt(0)
+      ImGui_PushStyleColorImVec4(ImGuiCol_Button,        ImVec4{0.7, 0.7, 0.0, 1.0})
+      ImGui_PushStyleColorImVec4(ImGuiCol_ButtonHovered, ImVec4{0.8, 0.8, 0.0, 1.0})
+      ImGui_PushStyleColorImVec4(ImGuiCol_ButtonActive,  ImVec4{0.9, 0.9, 0.0, 1.0})
+      ImGui_PushStyleColorImVec4(ImGuiCol_Text,          ImVec4{0.0, 0.0, 0.0, 1.0})
+
+      -- Image save button
+      imageExt = imageFormatTbl[cbItemIndex].ext
+      local svName = string.format("%s_%05d%s", SaveImageName, counter,imageExt)
+      if ImGui_Button("Save window image") then
+        local wkSize = ImGui_GetMainViewport().WorkSize
+        saveImage(svName,0, 0, wkSize.x, wkSize.y, 3)  --- Save Image !
+      end
+      ImGui_PopStyleColorEx(4)
+      ImGui_PopID()
+
+      -- Show tooltip help
+      setTooltip(string.format("Save to %s" , svName), ImGuiHoveredFlags_DelayNone, ImVec4{0.0, 1.0, 1.0, 1.0})
+      counter = counter + 1
+      ImGui_SameLine()
+
+      -- ComboBox: Select save image format
+      ImGui_SetNextItemWidth(100)
+      if ImGui_BeginCombo("##combo", imageFormatTbl[cbItemIndex].kind, 0) then
+        defer ImGui_EndCombo() end
+        for n,val in ipairs(imageFormatTbl) do
+          local is_selected = (cbItemIndex == n)
+          if ImGui_SelectableEx(val.kind, &is_selected, 0, ImVec2{0.0, 0.0}) then
+            if is_selected then
+              ImGui_SetItemDefaultFocus()
+            end
+            cbItemIndex = n
+          end
+        end
+      end
+      setTooltip("Select image format", ImGuiHoveredFlags_DelayNone, ImVec4{0.0, 1.0, 0.0, 1.0})
+      ImGui_Text("counter = %d", counter)
+
+      ImGui_Text("Application average %.3f ms/frame (%.1f FPS)", (1000.0 / pio.Framerate), pio.Framerate)
+
+      ImGui_SeparatorText(ICON_FA_WRENCH .. " Icon font test ")
+      ImGui_Text(ICON_FA_TRASH_CAN .. " Trash")
+      ImGui_Text(ICON_FA_MAGNIFYING_GLASS_PLUS ..
+        " " .. ICON_FA_POWER_OFF ..
+        " " .. ICON_FA_MICROPHONE ..
+        " " .. ICON_FA_MICROCHIP ..
+        " " .. ICON_FA_VOLUME_HIGH ..
+        " " .. ICON_FA_SCISSORS ..
+        " " .. ICON_FA_SCREWDRIVER_WRENCH ..
+        " " .. ICON_FA_BLOG)
+    end
+
+    -- # Show image load window
+    do
+      ImGui_Begin("Image load test", nilptr, 0)
+      defer ImGui_End() end
+      -- # Load image
+      local size = ImVec2{textureWidth, textureHeight}
+      local imageBoxPosTop:ImVec2
+      local imageBoxPosEnd:ImVec2
+      local imageBoxPosTop = ImGui_GetCursorScreenPos() -- # Get absolute pos.
+      local texRef = ImTextureRef{nilptr, textureId}
+      ImGui_Image(texRef, size)
+      local imageBoxPosEnd = ImGui_GetCursorScreenPos() -- # Get absolute pos.
+      -- #
+      if ImGui_IsItemHovered(ImGuiHoveredFlags_DelayNone) then
+        zoomGlass(&zoomTextureID, textureWidth, imageBoxPosTop, imageBoxPosEnd)
+      end
+    end
+
+    --- ImGui GUI program end
+
+    ImGui_Render()
+    glClearColor(clearColor[0], clearColor[1], clearColor[2], 1.0)
+    glClear(GL_COLOR_BUFFER_BIT)
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui_GetDrawData())
+
+    glfwSwapBuffers(glfwWin)
+
+    if showWindowDelay > 0 then
+      showWindowDelay = showWindowDelay - 1
+    elseif showWindowDelay == 0 then
+      showWindowDelay = -1
+      glfwShowWindow(glfwWin)
+    end
+  end -- main while loop end
+
+end -- main() end
+
+main()

@@ -1,0 +1,76 @@
+require'io'
+require'IconsFontAwesome6'
+require'cimgui'
+
+## cinclude '<float.h>'
+global FLT_MAX: cfloat <cimport,nodecl>
+global FLT_MIN: cfloat <cimport,nodecl>
+
+----------------
+--- existFile()
+----------------
+global existsFile = function(path: string): boolean
+  local fp = io.open(path, "r")
+  if fp == "" then return false end
+  io.close(fp)
+  return true
+end
+
+--------------
+--- zoomGlass
+--------------
+global wkSize: ImVec2
+global zoomGlass = function(pTextureID: *GLuint, itemWidth: int32, itemPosTop:ImVec2, itemPosEnd:ImVec2)
+  -- return
+  -- # itemPosTop and itemPosEnd are absolute position in main window.
+  if ImGui_BeginItemTooltip() then
+    defer ImGui_EndTooltip() end
+    local itemHeight = itemPosEnd.y- itemPosTop.y
+    local my_tex_w = itemWidth -- .float
+    local my_tex_h = itemHeight-- .float
+
+    -- let wkSize = ImGui_GetMainViewport().Worksize
+    local wkSize = ImGui_GetMainViewport().WorkSize
+    loadTextureFromBuffer(pTextureID                        -- # TextureID
+                        , itemPosTop.x                 -- # x start pos
+                        , wkSize.y - itemPosEnd.y  -- # y start pos
+                        , itemWidth ,itemHeight)           -- # Image width and height must be 2^n.
+    -- #igText("lbp: (%.2f, %.2f)", pio.MousePos.x, pio.MousePos.y)
+    local MousePos  = ImGui_GetIO().MousePos
+    local region_sz = 32.0
+    local  region_x = MousePos.x - itemPosTop.x - region_sz * 0.5
+    local  region_y = MousePos.y - itemPosTop.y - region_sz * 0.5
+    local zoom = 4.0
+    if region_x < 0.0 then
+      region_x = 0.0
+    elseif region_x > (my_tex_w - region_sz) then
+      region_x = my_tex_w - region_sz
+    end
+    if region_y < 0.0 then
+      region_y = 0.0
+    elseif region_y > my_tex_h - region_sz then
+      region_y = my_tex_h - region_sz
+    end
+    local uv0 = ImVec2{(region_x) / my_tex_w, (region_y) / my_tex_h}
+    local uv1 = ImVec2{(region_x + region_sz) / my_tex_w, (region_y + region_sz) / my_tex_h}
+    local tint_col   = ImVec4{ 1.0, 1.0, 1.0, 1.0}  -- #// No tint
+    local border_col = ImVec4{0.22, 0.56, 0.22, 1.0} -- # Green
+    ImGui_Text(ICON_FA_MAGNIFYING_GLASS ..  " 4 x")
+    local texRef = ImTextureRef{nilptr, $pTextureID}
+    ImGui_ImageEx(texRef, ImVec2{region_sz * zoom, region_sz * zoom}, uv0, uv1) -- tint_col, border_col)
+  end
+end
+
+---------------
+--- setTooltip
+---------------
+global setTooltip = function(str:string, flags:ImGuiHoveredFlags, color:ImVec4)
+  if ImGui_IsItemHovered(flags) then
+    if ImGui_BeginTooltip() then
+      defer ImGui_EndTooltip() end
+      ImGui_PushStyleColorImVec4(ImGuiCol_Text, color)
+      ImGui_Text(str)
+      ImGui_PopStyleColorEx(1)
+      end
+  end
+end

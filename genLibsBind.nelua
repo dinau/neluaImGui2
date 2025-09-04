@@ -1,0 +1,356 @@
+--
+-- Notice:
+--   Before generating nelua wrapper for libaries, comment out a line 1600 in nelua-lang/lualib/nelua/plugins/nldecl.nelua
+--   https://github.com/edubart/nelua-lang/blob/a69a12d1e1e5ee0bfab299350e5d707ff7b2e744/lualib/nelua/plugins/nldecl.lua#L1600
+--        else
+--          -- TODO: handle typeof?
+--          --error('unhandled '..typespecifier.tag)   <--- Comment out this line
+--
+--
+require'io'
+local strWarning = [[
+--
+-- This file has been auto generated. Don't edit this file.
+--
+
+]]
+local function prependStr(outfile:string, str:string): void
+  local fp
+  local content
+  do fp  = io.open(outfile, "r")
+    defer fp:close() end
+    content = fp:read("a")
+  end
+  do fp = io.open(outfile, "w")
+    defer fp:close() end
+    fp:write(strWarning)
+    fp:write("##[==[\n" .. str .. "]==]\n")
+    fp:write(content)
+  end
+  print("Generated " .. "[" .. outfile .."]")
+end
+
+-----------------
+--- dcimgui.nelua
+-----------------
+##[==[
+-- import Nelua Decl plugin and filesystem utils.
+local nldecl = require 'nelua.plugins.nldecl'
+local fs = require 'nelua.utils.fs'
+
+-- Generate nelua bindings file. (It will be always regenerated)
+  local outfile = 'libs/nelua/imgui/cimgui.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'dcimgui.h','dcimgui_internal.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^Im'},
+    include_dirs = {'libs/dcimgui','libs/imgui'}
+  }
+]==]
+local str = [[
+cinclude 'dcimgui.h'
+]]
+prependStr(#[outfile]#, str)
+
+--------------------
+--- imspinner.nelua
+--------------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/imspinner.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimspinner.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^Spinner','demoSpinners'},
+    include_dirs = {'libs/dcimgui','libs/imgui','libs/cimspinner/imspinner'}
+  }
+]==]
+str = [[
+cinclude "cimspinner.h"
+]]
+prependStr(#[outfile]#, str)
+
+-----------------
+-- imKnobs.nelua
+-----------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/imknobs.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimgui-knobs.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^IgKnob'},
+    include_dirs = {'libs/dcimgui','libs/cimgui-knobs'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cinclude "cimgui-knobs.h"
+]]
+prependStr(#[outfile]#, str)
+
+-------------------
+--- imtoggle.nelua
+-------------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/imtoggle.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimgui_toggle.h','cimgui_toggle_palette.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^ImGuiToggle','^Toggle'},
+    include_dirs = {'libs/dcimgui','libs/cimgui','libs/imgui','libs/cimgui_toggle'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cinclude "cimgui_toggle.h"
+]]
+prependStr(#[outfile]#, str)
+
+--------------------------
+--- imcolortextedit.nelua
+--------------------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/imcolortextedit.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'CIMGUI_DEFINE_ENUMS_AND_STRUCTS'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimCTE.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^TextEditor'},
+    include_dirs = {'libs/dcimgui','libs/cimgui','libs/imgui','libs/cimCTE'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cdefine "CIMGUI_DEFINE_ENUMS_AND_STRUCTS"
+cinclude "cimCTE.h"
+]]
+prependStr(#[outfile]#, str)
+
+-------------------
+--- imguizmo.nelua
+-------------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/imguizmo.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'CIMGUI_DEFINE_ENUMS_AND_STRUCTS'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimguizmo.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^Im'},
+    include_dirs = {'libs/dcimgui','libs/cimgui','libs/imgui','libs/cimguizmo'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cdefine "CIMGUI_DEFINE_ENUMS_AND_STRUCTS"
+cinclude "cimguizmo.h"
+]]
+prependStr(#[outfile]#, str)
+
+------------------
+--- imnodes.nelua
+------------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/imnodes.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'CIMGUI_DEFINE_ENUMS_AND_STRUCTS'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimnodes.h','cimnodes_template.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^ImNodes','^imnodes_','getIOKeyCtrlPtr','^Im'},
+    include_dirs = {'libs/dcimgui','libs/cimgui','libs/imgui','libs/cimnodes','libs/cimnodes/generator'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cdefine "CIMGUI_DEFINE_ENUMS_AND_STRUCTS"
+cinclude "cimnodes.h"
+]]
+prependStr(#[outfile]#, str)
+
+-----------------------
+--- imfiledialog.nelua
+-----------------------
+-- It needs to add '#include "cimgui.h"' line to the top of libs/CImGuiFileDialog/libs/ImGuiFileDialog/ImGuiFileDialog.h.
+
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/imfiledialog.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'CIMGUI_DEFINE_ENUMS_AND_STRUCTS'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+               ,'CUSTOM_IMGUIFILEDIALOG_CONFIG "customIconFont.h"'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'ImGuiFileDialog.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^IGFD','^ImGuiFileDialog'},
+    include_dirs = {'libs/dcimgui'
+                   ,'libs/cimgui'
+                   ,'libs/imgui'
+                   ,'libs/CImGuiFileDialog'
+                   ,'libs/CImGuiFileDialog/libs/ImGuiFileDialog'
+                   ,'examples/utils/fonticon'
+                   }
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cdefine "CIMGUI_DEFINE_ENUMS_AND_STRUCTS"
+cinclude "cimgui.h"
+cinclude "ImGuiFileDialog.h"
+]]
+prependStr(#[outfile]#, str)
+
+------------------
+--- cmplot.nelua
+------------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/cimplot.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'CIMGUI_DEFINE_ENUMS_AND_STRUCTS'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimplot.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^ImPlot','^ImAxis'},
+    include_dirs = {'libs/dcimgui','libs/cimgui','libs/imgui','libs/cimplot'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cdefine "CIMGUI_DEFINE_ENUMS_AND_STRUCTS"
+cinclude "cimgui.h"
+cinclude "cimplot.h"
+]]
+prependStr(#[outfile]#, str)
+
+------------------
+--- cmplot3d.nelua
+------------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/imgui/cimplot3d.nelua'
+  nldecl.generate_bindings_file{
+    defines = { 'NELUA_GEN'
+               ,'CIMGUI_DEFINE_ENUMS_AND_STRUCTS'
+               ,'bool _Bool'
+               ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
+               ,'ImDrawIdx unsigned int'
+              },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'cimplot3d.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^ImPlot','^ImAxis'},
+    include_dirs = {'libs/dcimgui','libs/cimgui','libs/imgui','libs/cimplot','libs/cimplot3d','libs/cimplot3d/implot3d'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cinclude "cimgui.h"
+cinclude "cimplot3d.h"
+]]
+prependStr(#[outfile]#, str)
+
+-----------------
+-- sdl3.nelua
+-----------------
+##[==[
+-- Generate nelua bindings file. (It will be always regenerated)
+  outfile = 'libs/nelua/sdl3/sdl3.nelua'
+  nldecl.generate_bindings_file{
+    defines = {'bool _Bool' },
+    output_file = outfile,
+    -- what C file we should generate bindings for and parse?
+    parse_includes = {'SDL.h'},
+    -- what symbol name prefix should we import from that file?
+    include_names = {'^SDL_'},
+    include_dirs = {'libs/sdl3/SDL3/x86_64-w64-mingw32/include'
+                   ,'libs/sdl3/SDL3/x86_64-w64-mingw32/include/SDL3'}
+  }
+
+if ccinfo.is_windows then
+end
+]==]
+str = [[
+cinclude "SDL.h"
+]]
+prependStr(#[outfile]#, str)

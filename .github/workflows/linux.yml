@@ -15,7 +15,10 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           sudo apt-get update
-          sudo apt-get install -y lua5.4 git gcc clang build-essential libopengl-dev libgl1-mesa-dev libglfw3 libglfw3-dev libsdl2-dev
+          sudo apt-get install -y lua5.4 git gcc clang build-essential libopengl-dev libgl1-mesa-dev libglfw3 libglfw3-dev libsdl2-dev ccache
+          sudo ln -s /usr/bin/ccache /usr/local/bin/gcc
+          sudo ln -s /usr/bin/ccache /usr/local/bin/g++
+          export PATH=/usr/local/bin:$PATH
           git clone https://github.com/edubart/nelua-lang.git
           cd nelua-lang
           make

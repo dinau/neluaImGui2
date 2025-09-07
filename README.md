@@ -5,7 +5,8 @@
   - [Currently highly work in progress](#currently-highly-work-in-progress)
   - [Versions](#versions)
   - [Prerequisites](#prerequisites)
-  - [Build and run on Windows OS](#build-and-run-on-windows-os)
+  - [Build and run](#build-and-run)
+  - [Available libraries list at this moment](#available-libraries-list-at-this-moment)
   - [Examples](#examples)
     - [imGuiToggleDemo](#imguitoggledemo)
     - [imKnobsDemo](#imknobsdemo)
@@ -19,8 +20,7 @@
     - [imPlot3DDemo](#implot3ddemo)
     - [glfw_opengl3, sdl2_opengl3](#glfw_opengl3-sdl2_opengl3)
     - [glfw_opengl3_jp](#glfw_opengl3_jp)
-  - [Available libraries list at this moment](#available-libraries-list-at-this-moment)
-  - [Update NeluaImGui](#update-neluaimgui)
+  - [Update NeluaImGui2](#update-neluaimgui2)
   - [SDL2 / GLFW / STB headers for Nelua](#sdl2--glfw--stb-headers-for-nelua)
   - [My tools version](#my-tools-version)
   - [History](#history)
@@ -40,7 +40,7 @@
 ---
 
 This project aims to simply and easily build [Dear ImGui](https://github.com/ocornut/imgui) examples with **Nelua language** using [Dear_Bindings](https://github.com/dearimgui/dear_bindings) as first step.  
-(**Dear ImGui + CImGui** version is [NeluaImGui](https://github.com/dinau/NeluaImGui)
+(Dear ImGui + [CImGui](https://github.com/cimgui/cimgui)) version is [NeluaImGui](https://github.com/dinau/NeluaImGui).
 
 #### Versions
 
@@ -63,17 +63,14 @@ This project aims to simply and easily build [Dear ImGui](https://github.com/oco
       pacman -S mingw-w64-x86_64-{gcc,clang,glfw,pkgconf,SDL2,SDL2_image} make
       ```
 
-- Linux: Ubuntu / Debian families  
+- Linux: Ubuntu 24.04 / Debian13 families  
    1. Install libraries
 
       ```sh
       $ sudo apt install gcc clang lib{opengl-dev,gl1-mesa-dev,glfw3-dev,sdl2-dev} make
       ```
 
-- C/C++ Compiler  
-GCC (/ Clang)
-
-#### Build and run on Windows OS
+#### Build and run
 
 ---
 
@@ -82,12 +79,30 @@ GCC (/ Clang)
    ```sh
    git clone https://github.com/dinau/neluaImGui2
    ```
-1. Open **MSys2 console** and go to one of the examples folder ,
+1. Go to one of the examples folder for instance,
 
    ```sh
    cd neluaImGui2/examples/glfw_opengl3
    make run 
    ```
+
+#### Available libraries list at this moment
+
+---
+
+Library name / C lang. wrapper
+
+- [x] [ImGui](https://github.com/ocornut/imgui) / [Dear_Bindings](https://github.com/dinau/dear_bindings_build) (2025/09)
+- [x] [ImPlot](https://github.com/epezent/implot) / [CImPlot](https://github.com/cimgui/cimplot) (2025/09)
+- [x] [ImPlot3d](https://github.com/brenocq/implot3d) / [CImPlot3d](https://github.com/cimgui/cimplot3d) (2025/09)
+- [x] [ImNodes](https://github.com/Nelarius/imnodes) / [CImNodes](https://github.com/cimgui/cimnodes) (2025/09)
+- [x] [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) / [CImGuizmo](https://github.com/cimgui/cimguizmo) (2025/09)
+- [x] [ImGui-Knobs](https://github.com/altschuler/imgui-knobs) / [CImGui-Knobs](https://github.com/dinau/imguin/tree/main/src/imguin/private/cimgui-knobs) (2025/09)
+- [x] [ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog) / [CImGuiFileDialog](https://github.com/dinau/CImGuiFileDialog) (2025/09)
+- [x] [ImGui_Toggle](https://github.com/cmdwtf/imgui_toggle) / [CimGui_Toggle](https://github.com/dinau/cimgui_toggle) (2025/09)
+- [x] [ImSpinner](https://github.com/dalerank/imspinner) / [CImSpinner](https://github.com/dinau/cimspinner) (2025/09)
+- [x] [ImGuiColorTextEdit](https://github.com/santaclose/ImGuiColorTextEdit) / [cimCTE](https://github.com/cimgui/cimCTE) (2025/09)
+
 
 ####  Examples
 
@@ -191,10 +206,8 @@ Note: Use Clang compiler (see Makefile)
 [sdl2_opengl3.nelua](examples/sdl2_opengl3/sdl2_opengl3.nelua)
 
 - [x]  Icon fonts
-- [x]  Image loader and saving **jpg, bmp, png and tga** format
+- [x]  Image loading and saving [ **jpg, bmp, png, tga** ] format
 - [x]  Magnifying glass  
-- [x]  glfw_opengl3: Static link [^dllWindows]
-- [x]  sdl2_opengl3: Dynamic link
 
    ![glfw_opengl3.png](img/glfw_opengl3.png)
 
@@ -208,25 +221,8 @@ Showing multibyte fonts(UTF-8, CJK fonts) and IME(Input method)
 
 ![glfw_opengl3_jp.png](https://github.com/dinau/neluaImGui/raw/main/img/glfw_opengl3_jp.png)
 
-#### Available libraries list at this moment
 
----
-
-Library name / C lang. wrapper
-
-- [x] [ImGui](https://github.com/ocornut/imgui) / [Dear_Bindings](https://github.com/dinau/dear_bindings_build) (2025/09)
-- [x] [ImPlot](https://github.com/epezent/implot) / [CImPlot](https://github.com/cimgui/cimplot) (2025/09)
-- [x] [ImPlot3d](https://github.com/brenocq/implot3d) / [CImPlot3d](https://github.com/cimgui/cimplot3d) (2025/09)
-- [x] [ImNodes](https://github.com/Nelarius/imnodes) / [CImNodes](https://github.com/cimgui/cimnodes) (2025/09)
-- [x] [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) / [CImGuizmo](https://github.com/cimgui/cimguizmo) (2025/09)
-- [x] [ImGui-Knobs](https://github.com/altschuler/imgui-knobs) / [CImGui-Knobs](https://github.com/dinau/imguin/tree/main/src/imguin/private/cimgui-knobs) (2025/09)
-- [x] [ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog) / [CImGuiFileDialog](https://github.com/dinau/CImGuiFileDialog) (2025/09)
-- [x] [ImGui_Toggle](https://github.com/cmdwtf/imgui_toggle) / [CimGui_Toggle](https://github.com/dinau/cimgui_toggle) (2025/09)
-- [x] [ImSpinner](https://github.com/dalerank/imspinner) / [CImSpinner](https://github.com/dinau/cimspinner) (2025/09)
-- [x] [ImGuiColorTextEdit](https://github.com/santaclose/ImGuiColorTextEdit) / [cimCTE](https://github.com/cimgui/cimCTE) (2025/09)
-
-
-#### Update NeluaImGui
+#### Update NeluaImGui2
 
 ---
 
@@ -235,7 +231,7 @@ make copylibs
 make gen
 ```
 
-See ./Makefile and libs/libs_hash/Makefile
+See `./Makefile` and `libs/libs_hash/Makefile`
 
 
 #### SDL2 / GLFW / STB headers for Nelua
@@ -259,23 +255,21 @@ These header files [libs/nelua/glfw](libs/nelua/glfw), [libs/nelua/sdl2](libs/ne
 
 ---
 
-- Started project at 2025/09 from NeLua-0.2.0-dev : ImGui/CImGui 1.92.2b
+- Started project at 2025/09 with NeLua-0.2.0-dev and ImGui/CImGui 1.92.2b inherited from [NeLuaImGui](https://github.com/dinau/neluaImGui) project.
 
 #### Other ImGui / CImGui project
 
 ---
 
-
-| Language [^order]    |          | Project                                                                                                                                         |
+| Language             |          | Project                                                                                                                                         |
 | -------------------: | :---:    | :----------------------------------------------------------------:                                                                              |
 | **Lua**              | Script   | [LuaJITImGui](https://github.com/dinau/luajitImGui)                                                                                             |
-| **NeLua**            | Compiler | [NeLuaImGui](https://github.com/dinau/neluaImGui), [NeLuaImGui2](https://github.com/dinau/neluaImGui2)                                                                                                |
+| **NeLua**            | Compiler | [NeLuaImGui](https://github.com/dinau/neluaImGui), [NeLuaImGui2](https://github.com/dinau/neluaImGui2)                                          |
 | **Nim**              | Compiler | [ImGuin](https://github.com/dinau/imguin), [Nimgl_test](https://github.com/dinau/nimgl_test), [Nim_implot](https://github.com/dinau/nim_implot) |
 | **Python**           | Script   | [DearPyGui for 32bit WindowsOS Binary](https://github.com/dinau/DearPyGui32/tree/win32)                                                         |
 | **Ruby**             | Script   | [igRuby_Examples](https://github.com/dinau/igruby_examples)                                                                                     |
 | **Zig**, C lang.     | Compiler | [Dear_Bindings_Build](https://github.com/dinau/dear_bindings_build)                                                                             |
 | **Zig**              | Compiler | [ImGuinZ](https://github.com/dinau/imguinz)                                                                                                     |
-
 
 #### SDL game tutorial Platfromer
 
@@ -283,13 +277,10 @@ These header files [libs/nelua/glfw](libs/nelua/glfw), [libs/nelua/sdl2](libs/ne
 
 ![ald](https://github.com/dinau/nelua-platformer/raw/main/img/platformer-nelua-sdl2.gif)
 
-
-| Language    [^order] |          | SDL         | Project                                                                                                                                               |
+| Language             |          | SDL         | Project                                                                                                                                               |
 | -------------------: | :---:    | :---:       | :----------------------------------------------------------------:                                                                                    |
 | **LuaJIT**           | Script   | SDL2        | [LuaJIT-Platformer](https://github.com/dinau/luajit-platformer)
 | **Nelua**            | Compiler | SDL2        | [NeLua-Platformer](https://github.com/dinau/nelua-platformer)
 | **Nim**              | Compiler | SDL3 / SDL2 | [Nim-Platformer-sdl2](https://github.com/def-/nim-platformer)/ [Nim-Platformer-sdl3](https://github.com/dinau/sdl3_nim/tree/main/examples/platformer) |
 | **Ruby**             | Script   | SDL3        | [Ruby-Platformer](https://github.com/dinau/ruby-platformer)                                                                                           |
 | **Zig**              | Compiler | SDL3 / SDL2 | [Zig-Platformer](https://github.com/dinau/zig-platformer)                                                                                             |
-
-[^order]: Alphabectial order

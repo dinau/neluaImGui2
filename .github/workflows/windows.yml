@@ -25,7 +25,8 @@ jobs:
       - name: Build
         shell: msys2 {0}
         run: |
-          pacman -S --needed --noconfirm base-devel git mingw-w64-x86_64-{gcc,clang,glfw,SDL2,SDL2_image,lua} make
+          pacman -S --needed --noconfirm base-devel git mingw-w64-x86_64-{gcc,clang,glfw,SDL2,SDL2_image,lua,ccache} make
+          export PATH="/usr/lib/ccache/bin:$PATH"
           git clone https://github.com/edubart/nelua-lang.git
           cd nelua-lang
           make

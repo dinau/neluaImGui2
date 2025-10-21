@@ -250,6 +250,7 @@ ImGuiStyle = @record{
   ColumnsMinSpacing: float32,
   ScrollbarSize: float32,
   ScrollbarRounding: float32,
+  ScrollbarPadding: float32,
   GrabMinSize: float32,
   GrabRounding: float32,
   LogSliderDeadzone: float32,
@@ -275,6 +276,7 @@ ImGuiStyle = @record{
   SeparatorTextPadding: ImVec2,
   DisplayWindowPadding: ImVec2,
   DisplaySafeAreaPadding: ImVec2,
+  DockingNodeHasCloseButton: boolean,
   DockingSeparatorSize: float32,
   MouseCursorScale: float32,
   AntiAliasedLines: boolean,
@@ -282,7 +284,7 @@ ImGuiStyle = @record{
   AntiAliasedFill: boolean,
   CurveTessellationTol: float32,
   CircleTessellationMaxError: float32,
-  Colors: [60]ImVec4,
+  Colors: [61]ImVec4,
   HoverStationaryDelay: float32,
   HoverDelayShort: float32,
   HoverDelayNormal: float32,
@@ -325,7 +327,7 @@ ImGuiIO = @record{
   ConfigViewportsNoTaskBarIcon: boolean,
   ConfigViewportsNoDecoration: boolean,
   ConfigViewportsNoDefaultParent: boolean,
-  ConfigViewportPlatformFocusSetsImGuiFocus: boolean,
+  ConfigViewportsPlatformFocusSetsImGuiFocus: boolean,
   ConfigDpiScaleFonts: boolean,
   ConfigDpiScaleViewports: boolean,
   MouseDrawCursor: boolean,
@@ -463,7 +465,8 @@ ImGuiListClipper = @record{
   ItemsHeight: float32,
   StartPosY: float64,
   StartSeekOffsetY: float64,
-  TempData: pointer
+  TempData: pointer,
+  Flags: cint
 }
 ImGuiMultiSelectIO = @record{
   Requests: ImVector_ImGuiSelectionRequest,
@@ -711,6 +714,7 @@ ImGuiViewport = @record{
   WorkSize: ImVec2,
   DpiScale: float32,
   ParentViewportId: cuint,
+  ParentViewport: *ImGuiViewport,
   DrawData: *ImDrawData,
   RendererUserData: pointer,
   PlatformUserData: pointer,
@@ -1186,7 +1190,7 @@ ImPool_ImGuiTable = @record{
   AliveCount: cint
 }
 ImGuiTextIndex = @record{
-  LineOffsets: ImVector_int,
+  Offsets: ImVector_int,
   EndOffset: cint
 }
 global ImGuiAxis: type <cimport,nodecl,using> = @enum(cint){
@@ -1243,11 +1247,15 @@ ImGuiInputTextState = @record{
   CallbackTextBackup: ImVector_char,
   BufCapacity: cint,
   Scroll: ImVec2,
+  LineCount: cint,
+  WrapWidth: float32,
   CursorAnim: float32,
   CursorFollow: boolean,
+  CursorCenterY: boolean,
   SelectedAllMouseLock: boolean,
   Edited: boolean,
   WantReloadUserBuf: boolean,
+  LastMoveDirectionLR: cschar,
   ReloadSelectionStart: cint,
   ReloadSelectionEnd: cint
 }
@@ -1421,8 +1429,8 @@ ImGuiInputEvent = @record{
 ImGuiKeyRoutingData = @record{
   NextEntryIndex: cshort,
   Mods: cushort,
-  RoutingCurrScore: cuchar,
-  RoutingNextScore: cuchar,
+  RoutingCurrScore: cushort,
+  RoutingNextScore: cushort,
   RoutingCurr: cuint,
   RoutingNext: cuint
 }
@@ -1626,6 +1634,7 @@ ImGuiViewportP = @record{
   WorkSize: ImVec2,
   DpiScale: float32,
   ParentViewportId: cuint,
+  ParentViewport: *ImGuiViewport,
   DrawData: *ImDrawData,
   RendererUserData: pointer,
   PlatformUserData: pointer,
@@ -1701,17 +1710,20 @@ ImGuiStackLevelInfo = @record{
   ID: cuint,
   QueryFrameCount: cschar,
   QuerySuccess: boolean,
-  DataType: cint,
-  Desc: [57]cchar
+  DataType: cschar,
+  DescOffset: cint
 }
 ImGuiIDStackTool = @record{
   LastActiveFrame: cint,
   StackLevel: cint,
-  QueryId: cuint,
+  QueryMainId: cuint,
   Results: ImVector_ImGuiStackLevelInfo,
-  CopyToClipboardOnCtrlC: boolean,
+  QueryHookActive: boolean,
+  OptHexEncodeNonAsciiChars: boolean,
+  OptCopyToClipboardOnCtrlC: boolean,
   CopyToClipboardLastTime: float32,
-  ResultPathBuf: ImGuiTextBuffer
+  ResultPathsBuf: ImGuiTextBuffer,
+  ResultTempBuf: ImGuiTextBuffer
 }
 global ImGuiContextHookType: type <cimport,nodecl,using> = @enum(cint){
   ImGuiContextHookType_NewFramePre = 0,
@@ -1783,7 +1795,7 @@ ImGuiContext = @record{
   WheelingWindowWheelRemainder: ImVec2,
   WheelingAxisAvg: ImVec2,
   DebugDrawIdConflictsId: cuint,
-  DebugHookIdInfo: cuint,
+  DebugHookIdInfoId: cuint,
   HoveredId: cuint,
   HoveredIdPreviousFrame: cuint,
   HoveredIdPreviousFrameItemCount: cint,
@@ -1920,6 +1932,7 @@ ImGuiContext = @record{
   DragDropTargetRect: ImRect,
   DragDropTargetClipRect: ImRect,
   DragDropTargetId: cuint,
+  DragDropTargetFullViewport: cuint,
   DragDropAcceptFlags: cint,
   DragDropAcceptIdCurrRectSurface: float32,
   DragDropAcceptIdCurr: cuint,
@@ -1956,6 +1969,7 @@ ImGuiContext = @record{
   MouseStationaryTimer: float32,
   MouseLastValidPos: ImVec2,
   InputTextState: ImGuiInputTextState,
+  InputTextLineIndex: ImGuiTextIndex,
   InputTextDeactivatedState: ImGuiInputTextDeactivatedState,
   InputTextPasswordFontBackupBaked: ImFontBaked,
   InputTextPasswordFontBackupFlags: cint,
@@ -2482,7 +2496,7 @@ ImFontBuilderIO = @record{
 }
 ImFontAtlasRectEntry = @record{
   TargetIndex: cint,
-  Generation: cint,
+  Generation: cuint,
   IsUsed: cuint
 }
 ImVector_ImFontAtlasRectEntry = @record{

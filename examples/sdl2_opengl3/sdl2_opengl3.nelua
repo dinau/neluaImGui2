@@ -26,7 +26,11 @@ local imageExt:string
 local recImageFormat = @record{kind: string, ext:string}
 local imageFormatTbl : [4]recImageFormat = {{"JPEG 90%",".jpg"}, {"PNG",".png"}, {"BMP",".bmp"}, {"TGA",".tga"}}
 local cbItemIndex = 0
-local versions : [][2]int32 = {{4, 6} ,{4, 5} ,{4, 4} ,{4, 3} ,{4, 2} ,{4, 1} ,{4, 0} ,{3, 3} }
+##if ccinfo.is_windows then
+  local versions : [][2]int32 = {{4, 6} ,{4, 5} ,{4, 4} ,{4, 3} ,{4, 2} ,{4, 1} ,{4, 0} ,{3, 3} }
+##else
+  local versions : [][2]int32 = {{3, 3} }
+##end
 
 ---------
 --- main

@@ -168,12 +168,12 @@ local main = function()
           -------------
           if ImGui_BeginMenu("File") then
             defer ImGui_EndMenu() end
-            if ImGui_MenuItemBoolPtr("Save", "Ctrl-S", nilptr, true) then
+            if ImGui_MenuItemBoolPtr(ICON_FA_FLOPPY_DISK .. " Save", "Ctrl-S", nilptr, true) then
               strText = TextEditor_GetText(editor)
               --writeFile("main.cpp", strText)
               print"saved"
             end
-            if ImGui_MenuItemEx("Quit", "Alt-F4", false ,true) then
+            if ImGui_MenuItemEx(ICON_FA_SQUARE .. " Quit", "Alt-F4", false ,true) then
               fQuit = true
               print"quit"
             end
@@ -184,30 +184,30 @@ local main = function()
           if ImGui_BeginMenu("Edit") then
             defer ImGui_EndMenu() end
             local ro = TextEditor_IsReadOnlyEnabled(editor)
-            if ImGui_MenuItemBoolPtr("Read-only mode", nilptr, &ro, true) then
+            if ImGui_MenuItemBoolPtr(ICON_FA_LOCK .. " Read-only mode", nilptr, &ro, true) then
               TextEditor_SetReadOnlyEnabled(editor, ro)
             end
             ImGui_Separator()
             --
-            if ImGui_MenuItemBoolPtr("Undo", "ALT-Backspace", nilptr, not ro and TextEditor_CanUndo(editor)) then
+            if ImGui_MenuItemBoolPtr(ICON_FA_ARROW_ROTATE_LEFT .. " Undo", "ALT-Backspace", nilptr, not ro and TextEditor_CanUndo(editor)) then
               TextEditor_Undo(editor,1)
             end
-            if ImGui_MenuItemBoolPtr("Redo", "Ctrl-Y"       , nilptr, not ro and TextEditor_CanRedo(editor)) then
+            if ImGui_MenuItemBoolPtr(ICON_FA_ARROW_ROTATE_RIGHT .. " Redo", "Ctrl-Y"       , nilptr, not ro and TextEditor_CanRedo(editor)) then
               TextEditor_Redo(editor,1)
             end
             ImGui_Separator()
             --
-            if ImGui_MenuItemBoolPtr("Copy", "Ctrl-C",        nilptr, TextEditor_AnyCursorHasSelection(editor)) then
+            if ImGui_MenuItemBoolPtr(ICON_FA_COPY .. " Copy", "Ctrl-C",        nilptr, TextEditor_AnyCursorHasSelection(editor)) then
               TextEditor_Copy(editor)
             end
-            if ImGui_MenuItemBoolPtr("Cut", "Ctrl-X",         nilptr, not ro and TextEditor_AnyCursorHasSelection(editor)) then
+            if ImGui_MenuItemBoolPtr(ICON_FA_SCISSORS .. " Cut", "Ctrl-X",         nilptr, not ro and TextEditor_AnyCursorHasSelection(editor)) then
               TextEditor_Cut(editor)
             end
-            if ImGui_MenuItemBoolPtr("Paste", "Ctrl-V",       nilptr, not ro and ImGui_GetClipboardText() ~= nilptr) then
+            if ImGui_MenuItemBoolPtr(ICON_FA_PASTE .. " Paste", "Ctrl-V",       nilptr, not ro and ImGui_GetClipboardText() ~= nilptr) then
               TextEditor_Paste(editor)
             end
             ImGui_Separator();
-            if ImGui_MenuItemEx("Select all", "Ctrl-A",     nilptr, true) then
+            if ImGui_MenuItemEx(ICON_FA_SQUARE .. " Select all", "Ctrl-A",     nilptr, true) then
               TextEditor_SelectAll(editor)
             end
           end
@@ -216,16 +216,16 @@ local main = function()
           -------------
           if ImGui_BeginMenu("Theme") then
             defer ImGui_EndMenu() end
-            if ImGui_MenuItemEx("Dark palette", nilptr, nilptr, true ) then
+            if ImGui_MenuItemEx(ICON_FA_STAR_AND_CRESCENT .. " Dark palette", nilptr, nilptr, true ) then
               TextEditor_SetPalette(editor, Dark)
             end
-            if ImGui_MenuItemEx("Light palette", nilptr, nilptr, true) then
+            if ImGui_MenuItemEx(ICON_FA_SUN .. " Light palette", nilptr, nilptr, true) then
               TextEditor_SetPalette(editor,Light)
             end
-            if ImGui_MenuItemEx("Mariana palette", nilptr, nilptr, true) then
+            if ImGui_MenuItemEx(ICON_FA_M .. " Mariana palette", nilptr, nilptr, true) then
               TextEditor_SetPalette(editor,Mariana)
             end
-            if ImGui_MenuItemEx("Retro blue palette", "Ctrl-B", nilptr, true) then
+            if ImGui_MenuItemEx(ICON_FA_CAMERA_RETRO .. " Retro blue palette", "Ctrl-B", nilptr, true) then
               TextEditor_SetPalette(editor,RetroBlue)
             end
           end

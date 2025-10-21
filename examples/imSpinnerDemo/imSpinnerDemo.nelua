@@ -128,19 +128,20 @@ local main = function()
     do
       ImGui_Begin ("CImSpinner with Nelua lang. " .. ICON_FA_CAT, nilptr, 0)
       defer ImGui_End() end
-      local red = ImColor{ImVec4{1.0, 0.0, 0.0, 1.0}}
-      local blue= ImColor{ImVec4{0.0, 0.0, 1.0, 1.0}}
+      local red  = ImColor{ImVec4{1.0, 0.0, 0.0, 1.0}}
+      local blue = ImColor{ImVec4{0.0, 0.0, 1.0, 1.0}}
+      local blue1= ImColor{ImVec4{0.0, 1.0, 1.0, 1.0}}
       ----
       --- See ./Makefile to add further spinner widgets.
-      SpinnerDnaDotsEx(      "DnaDotsV"     ,16, 2, red, 1.2 , 8, 0.25, true); ImGui_SameLine()
-      SpinnerRainbowMix(     "Rmix"         ,16, 2, blue, 2)                 ; ImGui_SameLine()
-      SpinnerAng8(           "Ang"          ,16, 2)                          ; ImGui_SameLine()
-      SpinnerPulsar(         "Pulsar"       ,16, 2)                          ; ImGui_SameLine()
-      SpinnerClock(          "Clock"        ,16, 2)                          ; ImGui_SameLine()
-      SpinnerAtom(           "atom"         ,16, 2)                          ; ImGui_SameLine()
-      SpinnerSwingDots(      "wheel"        ,16, 6)                          ; ImGui_SameLine()
-      SpinnerDotsToBar(      "tobar"        ,16, 2, 0.5)                     ; ImGui_SameLine()
-      SpinnerBarChartRainbow("rainbow"      ,16, 4, red, 4)                  ; ImGui_SameLine()
+      SpinnerDnaDotsEx(      "DnaDotsV"     ,16, 2, blue1, 1.2 , 8, 0.25, true); ImGui_SameLine()
+      SpinnerRainbowMix(     "Rmix"         ,16, 2, blue1, 2)                  ; ImGui_SameLine()
+      SpinnerAng8(           "Ang"          ,16, 2)                            ; ImGui_SameLine()
+      SpinnerPulsar(         "Pulsar"       ,16, 2)                            ; ImGui_SameLine()
+      SpinnerClock(          "Clock"        ,16, 2)                            ; ImGui_SameLine()
+      SpinnerAtom(           "atom"         ,16, 2)                            ; ImGui_SameLine()
+      SpinnerSwingDots(      "wheel"        ,16, 6)                            ; ImGui_SameLine()
+      SpinnerDotsToBar(      "tobar"        ,16, 2, 0.5)                       ; ImGui_SameLine()
+      SpinnerBarChartRainbow("rainbow"      ,16, 4, red, 4)                    ; ImGui_SameLine()
       SpinnerScaleSquares(   "ScaleSquares" ,16, 8, blue, 4)
       ImGui_Text("Application average %.3f ms/frame (%.1f FPS)", (1000.0 / pio.Framerate), pio.Framerate)
     end

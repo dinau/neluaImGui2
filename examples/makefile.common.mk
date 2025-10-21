@@ -23,6 +23,8 @@ ifeq ($(OS),Windows_NT)
 		HIDE_CONSOLE = -mwindows
 	endif
 	IMM32LIB = -limm32
+else
+	LINUX_LIBS += -lX11
 endif
 
 
@@ -78,6 +80,7 @@ NELUA_LDFLAGS += $(STATIC_OPT)
 NELUA_LDFLAGS += -lcimgui
 NELUA_LDFLAGS += -lstdc++
 NELUA_LDFLAGS += $(IMM32LIB)
+NELUA_LDFLAGS += $(LINUX_LIBS)
 
 OPT += --cflags="$(NELUA_CFLAGS)"
 OPT += --ldflags="$(NELUA_LDFLAGS)"

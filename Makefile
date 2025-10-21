@@ -15,21 +15,6 @@ EXAMPLE_DIRS := \
 							imSpinnerDemo \
 							sdl2_opengl3
 
-xEXAMPLE_DIRS := \
-							glfw_opengl3 \
-							glfw_opengl3_jp \
-							iconFontViewer \
-							imColorTextEditDemo \
-							imFileDialogDemo \
-							imGuiToggleDemo \
-							imGuizmoDemo \
-							imKnobsDemo \
-							imNodesDemo \
-							imPlot3DDemo \
-							imPlotDemo \
-							imSpinnerDemo \
-							sdl2_opengl3
-
 
 ifeq ($(OS),Windows_NT)
 	#EXAMPLE_DIRS +=  examples/sdl3_opengl3
@@ -152,7 +137,7 @@ SAVE_H = ImGuiFileDialog.h.org
 NELUA_IMGUI_DIR = libs/nelua/imgui
 
 # To update libs
-#    1. make copylib
+#    1. make copylibs
 #    2. make gen
 gen: imspinner_patch
 	@cp -f $(ORG_H) $(SAVE_H)

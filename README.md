@@ -46,8 +46,7 @@ This project aims to simply and easily build [Dear ImGui](https://github.com/oco
 
 ---
 
-[DearBindings](https://github.com/dearimgui/dear_bindings): dear_bindings_v0.17_ImGui_v1.92.2b-docking  
-[Dear ImGui](https://github.com/ocornut/imgui) version **1.92.2b** (2025/08)  
+[DearBindings](https://github.com/dearimgui/dear_bindings): dear_bindings_v0.17_ImGui_v1.92.4-docking  
 
 
 #### Prerequisites
@@ -67,7 +66,7 @@ This project aims to simply and easily build [Dear ImGui](https://github.com/oco
    1. Install libraries
 
       ```sh
-      $ sudo apt install gcc clang lib{opengl-dev,gl1-mesa-dev,glfw3-dev,sdl2-dev} make
+      $ sudo apt install gcc clang lib{opengl-dev,gl1-mesa-dev,glfw3-dev,xcursor-dev,xinerama-dev,xi-dev,sdl2-dev} 
       ```
 
 #### Build and run
@@ -284,3 +283,14 @@ These header files [libs/nelua/glfw](libs/nelua/glfw), [libs/nelua/sdl2](libs/ne
 | **Nim**              | Compiler | SDL3 / SDL2 | [Nim-Platformer-sdl2](https://github.com/def-/nim-platformer)/ [Nim-Platformer-sdl3](https://github.com/dinau/sdl3_nim/tree/main/examples/platformer) |
 | **Ruby**             | Script   | SDL3        | [Ruby-Platformer](https://github.com/dinau/ruby-platformer)                                                                                           |
 | **Zig**              | Compiler | SDL3 / SDL2 | [Zig-Platformer](https://github.com/dinau/zig-platformer)                                                                                             |
+
+
+Notes:
+
+- Using ImPlot3D / ImPlot with Nelua
+- Nelua + ImGui + ImPlot3D / ImPlot demo
+- Build with ImPlot3D / ImPlot
+- ImPlot3D integration example
+- This project builds and runs Dear ImGui + ImPlot3D / ImPlotusing Nelua.
+- ImPlot3D is compiled from source (implot3d.h / implot3d.cpp)
+- ImPlot is compiled from source (implot.h / implot.cpp)

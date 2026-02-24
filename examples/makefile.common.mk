@@ -68,7 +68,8 @@ NELUA_CFLAGS += -I$(DCIMGUI_DIR)
 NELUA_CFLAGS += -I$(CIMGUI_DIR)
 NELUA_CFLAGS += $(HIDE_CONSOLE)
 
-C_OBJS        += $(BUILD_DIR)/setupFonts.o
+C_OBJS        += $(BUILD_DIR)/setupFonts.o \
+                 $(BUILD_DIR)/utils_dcimgui.o
 LINUX_LIB_DIR = /usr/lib/x86_64-linux-gnu
 
 NELUA_LDFLAGS += -L$(LINUX_LIB_DIR)

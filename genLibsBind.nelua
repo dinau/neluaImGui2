@@ -148,7 +148,8 @@ prependStr(#[outfile]#, str)
   nldecl.generate_bindings_file{
     defines = { 'NELUA_GEN'
                ,'CIMGUI_DEFINE_ENUMS_AND_STRUCTS'
-               ,'bool _Bool'
+               --,'bool _Bool'
+               ,'bool int'
                ,'IMGUI_IMPL_API "extern \"C\" __declspec(dllexport)"'
                ,'ImDrawIdx unsigned int'
               },

@@ -129,7 +129,7 @@ local main = function()
       local  selected_fill:cint <static> = 1 -- Colormap by default
       local  sel_colormap :cint <static> = 5 -- Jet by default
 
-      local  solid_color <static> = ImVec4{0.8, 0.8, 0.2, 0.6}
+      local  solid_color <static> = ImVec4_c{0.8, 0.8, 0.2, 0.6}
       -- Generate colormaps
       local colormaps:[]cstring <static> = {"Viridis", "Plasma", "Hot", "Cool", "Pink", "Jet", "Twilight", "RdBu", "BrBG", "PiYG", "Spectral", "Greys"}
       --
@@ -185,7 +185,7 @@ local main = function()
       if selected_fill == 1 then
         ImPlot3D_PushColormap_Str(colormaps[sel_colormap])
       end
-      if ImPlot3D_BeginPlot("Surface Plots", ImVec2{-1, 400}, ImPlot3DFlags_NoClip) then
+      if ImPlot3D_BeginPlot("Surface Plots", ImVec2_c{-1, 400}, ImPlot3DFlags_NoClip) then
         -- Set styles
         ImPlot3D_SetupAxesLimits(-1, 1, -1, 1, -1.5, 1.5)
         ImPlot3D_PushStyleVar_Float(ImPlot3DStyleVar_FillAlpha, 0.8)
@@ -193,8 +193,8 @@ local main = function()
           ImPlot3D_SetNextFillStyle(solid_color)
         end
         local IMPLOT3D_AUTO <const> =  -1                       -- Deduce variable automatically
-        local vec4:ImVec4
-        ImPlot3D_GetColormapColor(&vec4, 1, IMPLOT3D_AUTO)
+        local vec4:ImVec4_c
+        vec4 =  ImPlot3D_GetColormapColor(1, IMPLOT3D_AUTO)
         ImPlot3D_SetNextLineStyle(vec4, IMPLOT3D_AUTO)
 
         -- Plot the surface

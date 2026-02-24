@@ -45,7 +45,7 @@ MAKEFLAGS += --no-print-directory
 # Copy external libraries
 #-------------------------
 EXT_LIB_DIR = c:/000imguin_dev/imguin_git/libs
-EXT_DEAR_BINDINGS_DIR = c:/000imguin_dev/00dear_bindings_data/dear_bindings
+EXT_DEAR_BINDINGS_DIR = c:/dear_bindings_build_work/dear_bindings
 TARGET_DIR = libs
 
 copylibs: imgui dcimgui implot imnodes imguizmo ImGuiFileDialog imgui_toggle implot3d imspinner imCTE imgui-knobs
@@ -139,6 +139,13 @@ NELUA_IMGUI_DIR = libs/nelua/imgui
 # To update libs
 #    1. make copylibs
 #    2. make gen
+#
+# Notice:
+#   Needs patches:
+#     * libs/cimnodes/cimnodes.h: Comment out these lines
+#              typedef struct ImGuiContext ImGuiContext;
+#              typedef struct ImVec2 ImVec2;
+#
 gen: imspinner_patch
 	@cp -f $(ORG_H) $(SAVE_H)
 	@(echo "#include \"dcimgui.h\"" > $(TMP_H); cat $(ORG_H) >> $(TMP_H); mv -f $(TMP_H) $(ORG_H) )

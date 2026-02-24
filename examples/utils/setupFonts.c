@@ -7,6 +7,8 @@
 #include "setupFonts.h"
 #include "IconsFontAwesome6.h"
 
+#include "utils_dcimgui.h"
+
 #define MAX_PATH  2048
 const char* IconFontPath = "../utils/fonticon/fa6/fa-solid-900.ttf";
 char sBufFontPath[MAX_PATH];
@@ -55,33 +57,15 @@ float point2px(float point) { //## Convert point to pixel
 }
 
 static ImFontConfig* config;
-/*---------------------
- * ImFontConfig_create
- *--------------------*/
-ImFontConfig* ImFontConfig_create(void) {
-  size_t sz = sizeof(ImFontConfig);
-  ImFontConfig* cfg = (ImFontConfig*) malloc(sz);
-  memset(cfg, '\0', sz);
-  cfg->FontDataOwnedByAtlas = true;
-  cfg->FontNo = 0;
-  cfg->OversampleH = 3;
-  cfg->OversampleV = 1;
-  cfg->PixelSnapH = false;
-  cfg->GlyphMaxAdvanceX = FLT_MAX;
-  cfg->RasterizerMultiply = 1.0;
-  cfg->RasterizerDensity  = 1.0;
-  cfg->MergeMode = false;
-  cfg->EllipsisChar = (ImWchar)-1;
-  return cfg;
-}
 
-const ImWchar ranges_icon_fonts[]  = {(ImWchar)ICON_MIN_FA, (ImWchar)ICON_MAX_FA, (ImWchar)0};
+//CIMGUI_API ImFontConfig* ImFontConfig_new(void)
+
 /*--------------
  * setupFonts()
  *-------------*/
 void setupFonts(void) {
   ImGuiIO* pio = ImGui_GetIO();
-  config  = ImFontConfig_create(); // TODO free()
+  config  = ImFontConfig_new(); // TODO free()
   ImFont* font = NULL;
   char* fontPath;
   int tableLen = sizeof(WinFontNameTbl) / MAX_PATH;
@@ -115,5 +99,5 @@ void setupFonts(void) {
   }
   // Merge IconFont
   config->MergeMode = true;
-  ImFontAtlas_AddFontFromFileTTF(pio->Fonts, IconFontPath, point2px(11), config , ranges_icon_fonts);
+  ImFontAtlas_AddFontFromFileTTF(pio->Fonts, IconFontPath, point2px(11), config , NULL);
 }

@@ -9,6 +9,7 @@
 
 //typedef struct ImGuiContext ImGuiContext;
 //typedef struct ImVec2 ImVec2;
+
 typedef struct ImNodesContext ImNodesContext;
 typedef struct ImNodesEditorContext ImNodesEditorContext;
 typedef int ImNodesCol;

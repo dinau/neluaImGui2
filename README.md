@@ -34,20 +34,15 @@
 ![alt](https://github.com/dinau/neluaImGui2/actions/workflows/windows.yml/badge.svg) 
 ![alt](https://github.com/dinau/neluaImGui2/actions/workflows/linux.yml/badge.svg)
 
-
-#### Currently highly work in progress
-
----
-
 This project aims to simply and easily build [Dear ImGui](https://github.com/ocornut/imgui) examples with **Nelua language** using [Dear_Bindings](https://github.com/dearimgui/dear_bindings) as first step.  
-(Dear ImGui + [CImGui](https://github.com/cimgui/cimgui)) version is [NeluaImGui](https://github.com/dinau/NeluaImGui).
+(Dear ImGui + [CImGui](https://github.com/cimgui/cimgui) version is [NeluaImGui](https://github.com/dinau/NeluaImGui).)
 
 #### Versions
 
 ---
 
-[DearBindings](https://github.com/dearimgui/dear_bindings): dear_bindings_v0.17_ImGui_v1.92.4-docking  
-
+[DearBindings](https://github.com/dearimgui/dear_bindings): dear_bindings_v0.17_ImGui_v1.92.6-docking  
+ImGui: 1.92.6 docking (2026/02)
 
 #### Prerequisites
 
@@ -55,14 +50,14 @@ This project aims to simply and easily build [Dear ImGui](https://github.com/oco
 
 - Install [MSys2/MinGW](https://www.msys2.org/) (Windows OS)
 - Install [NeLua](https://nelua.io/installing/)
-- Windows OS 10 or later
+- Windows OS 11 or later
    1. Install libraries
    
       ```sh
-      pacman -S mingw-w64-x86_64-{gcc,clang,glfw,pkgconf,SDL2,SDL2_image} make
+      pacman -S mingw-w64-ucrt-x86_64-{gcc,clang,glfw,pkgconf,SDL2,SDL2_image} make
       ```
 
-- Linux: Ubuntu 24.04 / Debian13 families  
+- Linux: Ubuntu 24.04 / Debian families  
    1. Install libraries
 
       ```sh
@@ -246,7 +241,7 @@ These header files [libs/nelua/glfw](libs/nelua/glfw), [libs/nelua/sdl2](libs/ne
 
 - Nelua-0.2.0-dev
 - Gcc.exe (Rev1, Built by MSYS2 project) 15.2.0)
-- Clang version 20.1.8
+- Clang version 21.1.8
 - Git version 2.46.0.windows.1
 - Make: GNU Make 4.4.1
 

@@ -31,3 +31,26 @@
     #define CIMGUI_API EXTERN API
 #endif
 #define CONST const
+
+typedef struct ImTextureRef_c ImTextureRef_c;
+struct ImTextureRef_c {
+    ImTextureData* _TexData;
+    ImTextureID _TexID;
+};
+typedef struct ImVec2_c ImVec2_c;
+struct ImVec2_c
+{
+    float x, y;
+};
+typedef struct ImVec4_c ImVec4_c;
+struct ImVec4_c
+{
+    float x, y, z, w;
+};
+
+typedef struct ImRect_c ImRect_c;
+struct ImRect_c
+{
+    ImVec2_c Min;
+    ImVec2_c Max;
+};

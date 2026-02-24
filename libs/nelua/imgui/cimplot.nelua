@@ -254,6 +254,7 @@ ImGuiStyle = @record{
   GrabMinSize: float32,
   GrabRounding: float32,
   LogSliderDeadzone: float32,
+  ImageRounding: float32,
   ImageBorderSize: float32,
   TabRounding: float32,
   TabBorderSize: float32,
@@ -268,6 +269,10 @@ ImGuiStyle = @record{
   TreeLinesFlags: cint,
   TreeLinesSize: float32,
   TreeLinesRounding: float32,
+  DragDropTargetRounding: float32,
+  DragDropTargetBorderSize: float32,
+  DragDropTargetPadding: float32,
+  ColorMarkerSize: float32,
   ColorButtonPosition: cint,
   ButtonTextAlign: ImVec2,
   SelectableTextAlign: ImVec2,
@@ -284,7 +289,7 @@ ImGuiStyle = @record{
   AntiAliasedFill: boolean,
   CurveTessellationTol: float32,
   CircleTessellationMaxError: float32,
-  Colors: [61]ImVec4,
+  Colors: [62]ImVec4,
   HoverStationaryDelay: float32,
   HoverDelayShort: float32,
   HoverDelayNormal: float32,
@@ -320,6 +325,7 @@ ImGuiIO = @record{
   ConfigNavCursorVisibleAuto: boolean,
   ConfigNavCursorVisibleAlways: boolean,
   ConfigDockingNoSplit: boolean,
+  ConfigDockingNoDockingOver: boolean,
   ConfigDockingWithShift: boolean,
   ConfigDockingAlwaysTabBar: boolean,
   ConfigDockingTransparentPayload: boolean,
@@ -590,7 +596,6 @@ ImFontConfig = @record{
   FontDataOwnedByAtlas: boolean,
   MergeMode: boolean,
   PixelSnapH: boolean,
-  PixelSnapV: boolean,
   OversampleH: cschar,
   OversampleV: cschar,
   EllipsisChar: cushort,
@@ -605,10 +610,12 @@ ImFontConfig = @record{
   FontLoaderFlags: cuint,
   RasterizerMultiply: float32,
   RasterizerDensity: float32,
+  ExtraSizeScale: float32,
   Flags: cint,
   DstFont: *ImFont,
   FontLoader: *ImFontBuilderIO,
-  FontLoaderData: pointer
+  FontLoaderData: pointer,
+  PixelSnapV: boolean
 }
 ImFontGlyph = @record{
   Colored: cuint,
@@ -686,12 +693,12 @@ ImFontBaked = @record{
   LoadNoRenderOnLayout: cuint,
   LastUsedFrame: cint,
   BakedId: cuint,
-  ContainerFont: *ImFont,
+  OwnerFont: *ImFont,
   FontLoaderDatas: pointer
 }
 ImFont = @record{
   LastBaked: *ImFontBaked,
-  ContainerAtlas: *ImFontAtlas,
+  OwnerAtlas: *ImFontAtlas,
   Flags: cint,
   CurrentRasterizerDensity: float32,
   FontId: cuint,
@@ -866,6 +873,7 @@ global ImGuiViewportP: type <cimport,nodecl,forwarddecl> = @record{}
 global ImGuiDebugAllocEntry: type <cimport,nodecl,forwarddecl> = @record{}
 global ImGuiDebugAllocInfo: type <cimport,nodecl,forwarddecl> = @record{}
 global ImGuiStackLevelInfo: type <cimport,nodecl,forwarddecl> = @record{}
+global ImGuiDebugItemPathQuery: type <cimport,nodecl,forwarddecl> = @record{}
 global ImGuiIDStackTool: type <cimport,nodecl,forwarddecl> = @record{}
 global ImGuiTableCellData: type <cimport,nodecl,forwarddecl> = @record{}
 global ImVector_ImFontAtlasRectEntry: type <cimport,nodecl,forwarddecl> = @record{}
@@ -1216,6 +1224,7 @@ ImGuiGroupData = @record{
   BackupCurrLineSize: ImVec2,
   BackupCurrLineTextBaseOffset: float32,
   BackupActiveIdIsAlive: cuint,
+  BackupActiveIdHasBeenEditedThisFrame: boolean,
   BackupDeactivatedIdIsAlive: boolean,
   BackupHoveredIdIsAlive: boolean,
   BackupIsSameLine: boolean,
@@ -1295,7 +1304,8 @@ ImGuiNextItemData = @record{
   OpenVal: boolean,
   OpenCond: cuchar,
   RefVal: ImGuiDataTypeStorage,
-  StorageId: cuint
+  StorageId: cuint,
+  ColorMarker: cuint
 }
 ImGuiLastItemData = @record{
   ID: cuint,
@@ -1616,7 +1626,7 @@ ImGuiDockNode = @record{
   WantHiddenTabBarToggle: boolean
 }
 ImGuiWindowDockStyle = @record{
-  Colors: [8]cuint
+  Colors: [9]cuint
 }
 ImGuiDockContext = @record{
   Nodes: ImGuiStorage,
@@ -1713,17 +1723,20 @@ ImGuiStackLevelInfo = @record{
   DataType: cschar,
   DescOffset: cint
 }
-ImGuiIDStackTool = @record{
-  LastActiveFrame: cint,
-  StackLevel: cint,
-  QueryMainId: cuint,
+ImGuiDebugItemPathQuery = @record{
+  MainID: cuint,
+  Active: boolean,
+  Complete: boolean,
+  Step: cschar,
   Results: ImVector_ImGuiStackLevelInfo,
-  QueryHookActive: boolean,
+  ResultsDescBuf: ImGuiTextBuffer,
+  ResultPathBuf: ImGuiTextBuffer
+}
+ImGuiIDStackTool = @record{
   OptHexEncodeNonAsciiChars: boolean,
   OptCopyToClipboardOnCtrlC: boolean,
-  CopyToClipboardLastTime: float32,
-  ResultPathsBuf: ImGuiTextBuffer,
-  ResultTempBuf: ImGuiTextBuffer
+  LastActiveFrame: cint,
+  CopyToClipboardLastTime: float32
 }
 global ImGuiContextHookType: type <cimport,nodecl,using> = @enum(cint){
   ImGuiContextHookType_NewFramePre = 0,
@@ -1744,6 +1757,15 @@ ImGuiContextHook = @record{
 }
 ImGuiContext = @record{
   Initialized: boolean,
+  WithinFrameScope: boolean,
+  WithinFrameScopeWithImplicitWindow: boolean,
+  TestEngineHookItems: boolean,
+  FrameCount: cint,
+  FrameCountEnded: cint,
+  FrameCountPlatformEnded: cint,
+  FrameCountRendered: cint,
+  Time: float64,
+  ContextName: [16]cchar,
   IO: ImGuiIO,
   PlatformIO: ImGuiPlatformIO,
   Style: ImGuiStyle,
@@ -1758,18 +1780,8 @@ ImGuiContext = @record{
   FontRasterizerDensity: float32,
   CurrentDpiScale: float32,
   DrawListSharedData: ImDrawListSharedData,
-  Time: float64,
-  FrameCount: cint,
-  FrameCountEnded: cint,
-  FrameCountPlatformEnded: cint,
-  FrameCountRendered: cint,
   WithinEndChildID: cuint,
-  WithinFrameScope: boolean,
-  WithinFrameScopeWithImplicitWindow: boolean,
-  GcCompactAll: boolean,
-  TestEngineHookItems: boolean,
   TestEngine: pointer,
-  ContextName: [16]cchar,
   InputEventsQueue: ImVector_ImGuiInputEvent,
   InputEventsTrail: ImVector_ImGuiInputEvent,
   InputEventsNextMouseSource: cint,
@@ -1814,11 +1826,11 @@ ImGuiContext = @record{
   ActiveIdHasBeenEditedBefore: boolean,
   ActiveIdHasBeenEditedThisFrame: boolean,
   ActiveIdFromShortcut: boolean,
+  ActiveIdMouseButton: cschar,
   ActiveIdDisabledId: cuint,
-  ActiveIdMouseButton: cint,
   ActiveIdClickOffset: ImVec2,
-  ActiveIdWindow: *ImGuiWindow,
   ActiveIdSource: ImGuiInputSource,
+  ActiveIdWindow: *ImGuiWindow,
   ActiveIdPreviousFrame: cuint,
   DeactivatedItemData: ImGuiDeactivatedItemData,
   ActiveIdValueOnActivation: ImGuiDataTypeStorage,
@@ -1840,6 +1852,7 @@ ImGuiContext = @record{
   LastItemData: ImGuiLastItemData,
   NextWindowData: ImGuiNextWindowData,
   DebugShowGroupRects: boolean,
+  GcCompactAll: boolean,
   DebugFlashStyleColorIdx: cint,
   ColorStack: ImVector_ImGuiColorMod,
   StyleVarStack: ImVector_ImGuiStyleMod,
@@ -1908,6 +1921,7 @@ ImGuiContext = @record{
   NavJustMovedToKeyMods: cint,
   NavJustMovedToIsTabbing: boolean,
   NavJustMovedToHasSelectionData: boolean,
+  ConfigNavEnableTabbing: boolean,
   ConfigNavWindowingWithGamepad: boolean,
   ConfigNavWindowingKeyNext: cint,
   ConfigNavWindowingKeyPrev: cint,
@@ -1933,7 +1947,8 @@ ImGuiContext = @record{
   DragDropTargetClipRect: ImRect,
   DragDropTargetId: cuint,
   DragDropTargetFullViewport: cuint,
-  DragDropAcceptFlags: cint,
+  DragDropAcceptFlagsCurr: cint,
+  DragDropAcceptFlagsPrev: cint,
   DragDropAcceptIdCurrRectSurface: float32,
   DragDropAcceptIdCurr: cuint,
   DragDropAcceptIdPrev: cuint,
@@ -2017,6 +2032,7 @@ ImGuiContext = @record{
   HookIdNext: cuint,
   LocalizationTable: [13]cstring,
   LogEnabled: boolean,
+  LogLineFirstItem: boolean,
   LogFlags: cint,
   LogWindow: *ImGuiWindow,
   LogFile: *FILE,
@@ -2024,7 +2040,6 @@ ImGuiContext = @record{
   LogNextPrefix: cstring,
   LogNextSuffix: cstring,
   LogLinePosY: float32,
-  LogLineFirstItem: boolean,
   LogDepthRef: cint,
   LogDepthToExpand: cint,
   LogDepthToExpandDefault: cint,
@@ -2052,6 +2067,7 @@ ImGuiContext = @record{
   DebugFlashStyleColorTime: float32,
   DebugFlashStyleColorBackup: ImVec4,
   DebugMetricsConfig: ImGuiMetricsConfig,
+  DebugItemPathQuery: ImGuiDebugItemPathQuery,
   DebugIDStackTool: ImGuiIDStackTool,
   DebugAllocInfo: ImGuiDebugAllocInfo,
   DebugHoveredDockNode: *ImGuiDockNode,
@@ -2105,6 +2121,7 @@ ImGuiWindowTempData = @record{
   DockTabItemStatusFlags: cint,
   DockTabItemRect: ImRect,
   ItemWidth: float32,
+  ItemWidthDefault: float32,
   TextWrapPos: float32,
   ItemWidthStack: ImVector_float,
   TextWrapPosStack: ImVector_float
@@ -2173,14 +2190,15 @@ ImGuiWindow = @record{
   BeginOrderWithinParent: cshort,
   BeginOrderWithinContext: cshort,
   FocusOrder: cshort,
+  AutoPosLastDirection: cint,
   AutoFitFramesX: cschar,
   AutoFitFramesY: cschar,
   AutoFitOnlyGrows: boolean,
-  AutoPosLastDirection: cint,
   HiddenFramesCanSkipItems: cschar,
   HiddenFramesCannotSkipItems: cschar,
   HiddenFramesForRenderOnly: cschar,
   DisableInputsFrames: cschar,
+  BgClickFlags: cint,
   SetWindowPosAllowFlags: cint,
   SetWindowSizeAllowFlags: cint,
   SetWindowCollapsedAllowFlags: cint,
@@ -2201,7 +2219,6 @@ ImGuiWindow = @record{
   LastFrameActive: cint,
   LastFrameJustFocused: cint,
   LastTimeActive: float32,
-  ItemWidthDefault: float32,
   StateStorage: ImGuiStorage,
   ColumnsStorage: ImVector_ImGuiOldColumns,
   FontWindowScale: float32,
@@ -2258,6 +2275,7 @@ ImGuiTabBar = @record{
   ID: cuint,
   SelectedTabId: cuint,
   NextSelectedTabId: cuint,
+  NextScrollToTabId: cuint,
   VisibleTabId: cuint,
   CurrFrameVisible: cint,
   PrevFrameVisible: cint,
@@ -2467,6 +2485,7 @@ ImGuiTable = @record{
   HostSkipItems: boolean
 }
 ImGuiTableTempData = @record{
+  WindowID: cuint,
   TableIndex: cint,
   LastTimeActive: float32,
   AngledHeadersExtraWidth: float32,
@@ -2535,6 +2554,28 @@ ImFontAtlasBuilder = @record{
   PackIdMouseCursors: cint,
   PackIdLinesTexData: cint
 }
+global ImTextureRef_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImTextureRef_c = @record{
+  _TexData: *ImTextureData,
+  _TexID: culonglong
+}
+global ImVec2_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImVec2_c = @record{
+  x: float32,
+  y: float32
+}
+global ImVec4_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImVec4_c = @record{
+  x: float32,
+  y: float32,
+  z: float32,
+  w: float32
+}
+global ImRect_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImRect_c = @record{
+  Min: ImVec2_c,
+  Max: ImVec2_c
+}
 global tm: type <cimport,nodecl> = @record{
   tm_sec: cint,
   tm_min: cint,
@@ -2547,8 +2588,8 @@ global tm: type <cimport,nodecl> = @record{
   tm_isdst: cint
 }
 global ImPlotContext: type <cimport,nodecl,forwarddecl> = @record{}
-global ImPlotTick: type <cimport,nodecl,forwarddecl> = @record{}
-global ImPlotAxis: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlotTick_c: type <cimport,nodecl,forwarddecl> = @record{}
+global ImPlotAxis_c: type <cimport,nodecl,forwarddecl> = @record{}
 global ImPlotAxisColor: type <cimport,nodecl,forwarddecl> = @record{}
 global ImPlotItem: type <cimport,nodecl,forwarddecl> = @record{}
 global ImPlotLegend: type <cimport,nodecl,forwarddecl> = @record{}
@@ -2679,7 +2720,8 @@ global ImPlotLegendFlags_: type <cimport,nodecl,using> = @enum(cint){
   ImPlotLegendFlags_NoMenus = 8,
   ImPlotLegendFlags_Outside = 16,
   ImPlotLegendFlags_Horizontal = 32,
-  ImPlotLegendFlags_Sort = 64
+  ImPlotLegendFlags_Sort = 64,
+  ImPlotLegendFlags_Reverse = 128
 }
 global ImPlotMouseTextFlags_: type <cimport,nodecl,using> = @enum(cint){
   ImPlotMouseTextFlags_None = 0,
@@ -2891,20 +2933,20 @@ global ImPlotBin_: type <cimport,nodecl,using> = @enum(cint){
   ImPlotBin_Rice = -3,
   ImPlotBin_Scott = -4
 }
-global ImPlotPoint: type <cimport,nodecl,forwarddecl> = @record{}
-ImPlotPoint = @record{
+global ImPlotPoint_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImPlotPoint_c = @record{
   x: float64,
   y: float64
 }
-global ImPlotRange: type <cimport,nodecl,forwarddecl> = @record{}
-ImPlotRange = @record{
+global ImPlotRange_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImPlotRange_c = @record{
   Min: float64,
   Max: float64
 }
-global ImPlotRect: type <cimport,nodecl,forwarddecl> = @record{}
-ImPlotRect = @record{
-  X: ImPlotRange,
-  Y: ImPlotRange
+global ImPlotRect_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImPlotRect_c = @record{
+  X: ImPlotRange_c,
+  Y: ImPlotRange_c
 }
 global ImPlotStyle: type <cimport,nodecl,forwarddecl> = @record{}
 ImPlotStyle = @record{
@@ -2919,23 +2961,23 @@ ImPlotStyle = @record{
   DigitalBitGap: float32,
   PlotBorderSize: float32,
   MinorAlpha: float32,
-  MajorTickLen: ImVec2,
-  MinorTickLen: ImVec2,
-  MajorTickSize: ImVec2,
-  MinorTickSize: ImVec2,
-  MajorGridSize: ImVec2,
-  MinorGridSize: ImVec2,
-  PlotPadding: ImVec2,
-  LabelPadding: ImVec2,
-  LegendPadding: ImVec2,
-  LegendInnerPadding: ImVec2,
-  LegendSpacing: ImVec2,
-  MousePosPadding: ImVec2,
-  AnnotationPadding: ImVec2,
-  FitPadding: ImVec2,
-  PlotDefaultSize: ImVec2,
-  PlotMinSize: ImVec2,
-  Colors: [21]ImVec4,
+  MajorTickLen: ImVec2_c,
+  MinorTickLen: ImVec2_c,
+  MajorTickSize: ImVec2_c,
+  MinorTickSize: ImVec2_c,
+  MajorGridSize: ImVec2_c,
+  MinorGridSize: ImVec2_c,
+  PlotPadding: ImVec2_c,
+  LabelPadding: ImVec2_c,
+  LegendPadding: ImVec2_c,
+  LegendInnerPadding: ImVec2_c,
+  LegendSpacing: ImVec2_c,
+  MousePosPadding: ImVec2_c,
+  AnnotationPadding: ImVec2_c,
+  FitPadding: ImVec2_c,
+  PlotDefaultSize: ImVec2_c,
+  PlotMinSize: ImVec2_c,
+  Colors: [21]ImVec4_c,
   Colormap: ImPlotColormap,
   UseLocalTime: boolean,
   UseISO8601: boolean,
@@ -2957,7 +2999,7 @@ ImPlotInputMap = @record{
   ZoomRate: float32
 }
 global ImPlotFormatter: type <cimport,nodecl> = @function(value: float64, buff: cstring, size: cint, user_data: pointer): cint
-global ImPlotGetter: type <cimport,nodecl> = @function(idx: cint, user_data: pointer): ImPlotPoint
+global ImPlotGetter: type <cimport,nodecl> = @function(idx: cint, user_data: pointer): ImPlotPoint_c
 global ImPlotTransform: type <cimport,nodecl> = @function(value: float64, user_data: pointer): float64
 global ImPlotTimeUnit: type <cimport,nodecl> = @cint
 global ImPlotDateFmt: type <cimport,nodecl> = @cint
@@ -2993,16 +3035,16 @@ global ImPlotTimeFmt_: type <cimport,nodecl,using> = @enum(cint){
   ImPlotTimeFmt_HrMin = 8,
   ImPlotTimeFmt_Hr = 9
 }
-global ImPlotLocator: type <cimport,nodecl> = @function(ticker: *ImPlotTicker, range: ImPlotRange, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void
-global ImPlotDateTimeSpec: type <cimport,nodecl,forwarddecl> = @record{}
-ImPlotDateTimeSpec = @record{
+global ImPlotLocator: type <cimport,nodecl> = @function(ticker: *ImPlotTicker, range: ImPlotRange_c, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void
+global ImPlotDateTimeSpec_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImPlotDateTimeSpec_c = @record{
   Date: ImPlotDateFmt,
   Time: ImPlotTimeFmt,
   UseISO8601: boolean,
   Use24HourClock: boolean
 }
-global ImPlotTime: type <cimport,nodecl,forwarddecl> = @record{}
-ImPlotTime = @record{
+global ImPlotTime_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImPlotTime_c = @record{
   S: ctime_t,
   Us: cint
 }
@@ -3034,8 +3076,8 @@ ImPlotPointError = @record{
 }
 global ImPlotAnnotation: type <cimport,nodecl,forwarddecl> = @record{}
 ImPlotAnnotation = @record{
-  Pos: ImVec2,
-  Offset: ImVec2,
+  Pos: ImVec2_c,
+  Offset: ImVec2_c,
   ColorBg: cuint,
   ColorFg: cuint,
   TextOffset: cint,
@@ -3071,10 +3113,10 @@ ImPlotTagCollection = @record{
   TextBuffer: ImGuiTextBuffer,
   Size: cint
 }
-ImPlotTick = @record{
+ImPlotTick_c = @record{
   PlotPos: float64,
   PixelPos: float32,
-  LabelSize: ImVec2,
+  LabelSize: ImVec2_c,
   TextOffset: cint,
   Major: boolean,
   ShowLabel: boolean,
@@ -3084,26 +3126,26 @@ ImPlotTick = @record{
 global ImVector_ImPlotTick: type <cimport,nodecl> = @record{
   Size: cint,
   Capacity: cint,
-  Data: *ImPlotTick
+  Data: *ImPlotTick_c
 }
 ImPlotTicker = @record{
   Ticks: ImVector_ImPlotTick,
   TextBuffer: ImGuiTextBuffer,
-  MaxSize: ImVec2,
-  LateSize: ImVec2,
+  MaxSize: ImVec2_c,
+  LateSize: ImVec2_c,
   Levels: cint
 }
-ImPlotAxis = @record{
+ImPlotAxis_c = @record{
   ID: cuint,
   Flags: ImPlotAxisFlags,
   PreviousFlags: ImPlotAxisFlags,
-  Range: ImPlotRange,
+  Range: ImPlotRange_c,
   RangeCond: ImPlotCond,
   Scale: ImPlotScale,
-  FitExtents: ImPlotRange,
-  OrthoAxis: *ImPlotAxis,
-  ConstraintRange: ImPlotRange,
-  ConstraintZoom: ImPlotRange,
+  FitExtents: ImPlotRange_c,
+  OrthoAxis: *ImPlotAxis_c,
+  ConstraintRange: ImPlotRange_c,
+  ConstraintZoom: ImPlotRange_c,
   Ticker: ImPlotTicker,
   Formatter: ImPlotFormatter,
   FormatterData: pointer,
@@ -3112,8 +3154,8 @@ ImPlotAxis = @record{
   LinkedMin: *float64,
   LinkedMax: *float64,
   PickerLevel: cint,
-  PickerTimeMin: ImPlotTime,
-  PickerTimeMax: ImPlotTime,
+  PickerTimeMin: ImPlotTime_c,
+  PickerTimeMax: ImPlotTime_c,
   TransformForward: ImPlotTransform,
   TransformInverse: ImPlotTransform,
   TransformData: pointer,
@@ -3124,7 +3166,7 @@ ImPlotAxis = @record{
   ScaleToPixel: float64,
   Datum1: float32,
   Datum2: float32,
-  HoverRect: ImRect,
+  HoverRect: ImRect_c,
   LabelOffset: cint,
   ColorMaj: cuint,
   ColorMin: cuint,
@@ -3154,7 +3196,7 @@ ImPlotAlignmentData = @record{
 ImPlotItem = @record{
   ID: cuint,
   Color: cuint,
-  LegendHoverRect: ImRect,
+  LegendHoverRect: ImRect_c,
   NameOffset: cint,
   Show: boolean,
   LegendHovered: boolean,
@@ -3165,11 +3207,11 @@ ImPlotLegend = @record{
   PreviousFlags: ImPlotLegendFlags,
   Location: ImPlotLocation,
   PreviousLocation: ImPlotLocation,
-  Scroll: ImVec2,
+  Scroll: ImVec2_c,
   Indices: ImVector_int,
   Labels: ImGuiTextBuffer,
-  Rect: ImRect,
-  RectClamped: ImRect,
+  Rect: ImRect_c,
+  RectClamped: ImRect_c,
   Hovered: boolean,
   Held: boolean,
   CanGoInside: boolean
@@ -3198,17 +3240,17 @@ ImPlotPlot = @record{
   PreviousFlags: ImPlotFlags,
   MouseTextLocation: ImPlotLocation,
   MouseTextFlags: ImPlotMouseTextFlags,
-  Axes: [6]ImPlotAxis,
+  Axes: [6]ImPlotAxis_c,
   TextBuffer: ImGuiTextBuffer,
   Items: ImPlotItemGroup,
   CurrentX: ImAxis,
   CurrentY: ImAxis,
-  FrameRect: ImRect,
-  CanvasRect: ImRect,
-  PlotRect: ImRect,
-  AxesRect: ImRect,
-  SelectRect: ImRect,
-  SelectStart: ImVec2,
+  FrameRect: ImRect_c,
+  CanvasRect: ImRect_c,
+  PlotRect: ImRect_c,
+  AxesRect: ImRect_c,
+  SelectRect: ImRect_c,
+  SelectStart: ImVec2_c,
   TitleOffset: cint,
   JustCreated: boolean,
   Initialized: boolean,
@@ -3229,7 +3271,7 @@ global ImVector_ImPlotAlignmentData: type <cimport,nodecl> = @record{
 global ImVector_ImPlotRange: type <cimport,nodecl> = @record{
   Size: cint,
   Capacity: cint,
-  Data: *ImPlotRange
+  Data: *ImPlotRange_c
 }
 ImPlotSubplot = @record{
   ID: cuint,
@@ -3239,9 +3281,9 @@ ImPlotSubplot = @record{
   Rows: cint,
   Cols: cint,
   CurrentIdx: cint,
-  FrameRect: ImRect,
-  GridRect: ImRect,
-  CellSize: ImVec2,
+  FrameRect: ImRect_c,
+  GridRect: ImRect_c,
+  CellSize: ImVec2_c,
   RowAlignmentData: ImVector_ImPlotAlignmentData,
   ColAlignmentData: ImVector_ImPlotAlignmentData,
   RowRatios: ImVector_float,
@@ -3254,7 +3296,7 @@ ImPlotSubplot = @record{
 }
 ImPlotNextPlotData = @record{
   RangeCond: [6]ImPlotCond,
-  Range: [6]ImPlotRange,
+  Range: [6]ImPlotRange_c,
   HasRange: [6]boolean,
   Fit: [6]boolean,
   LinkedMin: [6]*float64,
@@ -3262,7 +3304,7 @@ ImPlotNextPlotData = @record{
 }
 global ImPlotNextItemData: type <cimport,nodecl,forwarddecl> = @record{}
 ImPlotNextItemData = @record{
-  Colors: [5]ImVec4,
+  Colors: [5]ImVec4_c,
   LineWeight: float32,
   Marker: ImPlotMarker,
   MarkerSize: float32,
@@ -3350,11 +3392,18 @@ ImPlotContext = @record{
   CurrentAlignmentH: *ImPlotAlignmentData,
   CurrentAlignmentV: *ImPlotAlignmentData
 }
-global ImPlotPoint_getter: type <cimport,nodecl> = @function(data: pointer, idx: cint, point: *ImPlotPoint): pointer
+global ImPlotDateTimeSpec: type <cimport,nodecl> = @ImPlotDateTimeSpec_c
+global ImPlotPoint: type <cimport,nodecl> = @ImPlotPoint_c
+global ImPlotRange: type <cimport,nodecl> = @ImPlotRange_c
+global ImPlotTime: type <cimport,nodecl> = @ImPlotTime_c
+global ImPlotRect: type <cimport,nodecl> = @ImPlotRect_c
+global ImPlotTick: type <cimport,nodecl> = @ImPlotTick_c
+global ImPlotAxis: type <cimport,nodecl> = @ImPlotAxis_c
+global ImPlotPoint_getter: type <cimport,nodecl> = @function(data: pointer, idx: cint, point: *ImPlotPoint_c): pointer
 global function ImPlotPoint_ImPlotPoint_Nil(): *ImPlotPoint <cimport,nodecl> end
 global function ImPlotPoint_destroy(self: *ImPlotPoint): void <cimport,nodecl> end
 global function ImPlotPoint_ImPlotPoint_double(_x: float64, _y: float64): *ImPlotPoint <cimport,nodecl> end
-global function ImPlotPoint_ImPlotPoint_Vec2(p: ImVec2): *ImPlotPoint <cimport,nodecl> end
+global function ImPlotPoint_ImPlotPoint_Vec2(p: ImVec2_c): *ImPlotPoint <cimport,nodecl> end
 global function ImPlotRange_ImPlotRange_Nil(): *ImPlotRange <cimport,nodecl> end
 global function ImPlotRange_destroy(self: *ImPlotRange): void <cimport,nodecl> end
 global function ImPlotRange_ImPlotRange_double(_min: float64, _max: float64): *ImPlotRange <cimport,nodecl> end
@@ -3364,13 +3413,13 @@ global function ImPlotRange_Clamp(self: *ImPlotRange, value: float64): float64 <
 global function ImPlotRect_ImPlotRect_Nil(): *ImPlotRect <cimport,nodecl> end
 global function ImPlotRect_destroy(self: *ImPlotRect): void <cimport,nodecl> end
 global function ImPlotRect_ImPlotRect_double(x_min: float64, x_max: float64, y_min: float64, y_max: float64): *ImPlotRect <cimport,nodecl> end
-global function ImPlotRect_Contains_PlotPoInt(self: *ImPlotRect, p: ImPlotPoint): boolean <cimport,nodecl> end
+global function ImPlotRect_Contains_PlotPoInt(self: *ImPlotRect, p: ImPlotPoint_c): boolean <cimport,nodecl> end
 global function ImPlotRect_Contains_double(self: *ImPlotRect, x: float64, y: float64): boolean <cimport,nodecl> end
-global function ImPlotRect_Size(pOut: *ImPlotPoint, self: *ImPlotRect): void <cimport,nodecl> end
-global function ImPlotRect_Clamp_PlotPoInt(pOut: *ImPlotPoint, self: *ImPlotRect, p: ImPlotPoint): void <cimport,nodecl> end
-global function ImPlotRect_Clamp_double(pOut: *ImPlotPoint, self: *ImPlotRect, x: float64, y: float64): void <cimport,nodecl> end
-global function ImPlotRect_Min(pOut: *ImPlotPoint, self: *ImPlotRect): void <cimport,nodecl> end
-global function ImPlotRect_Max(pOut: *ImPlotPoint, self: *ImPlotRect): void <cimport,nodecl> end
+global function ImPlotRect_Size(self: *ImPlotRect): ImPlotPoint_c <cimport,nodecl> end
+global function ImPlotRect_Clamp_PlotPoInt(self: *ImPlotRect, p: ImPlotPoint_c): ImPlotPoint_c <cimport,nodecl> end
+global function ImPlotRect_Clamp_double(self: *ImPlotRect, x: float64, y: float64): ImPlotPoint_c <cimport,nodecl> end
+global function ImPlotRect_Min(self: *ImPlotRect): ImPlotPoint_c <cimport,nodecl> end
+global function ImPlotRect_Max(self: *ImPlotRect): ImPlotPoint_c <cimport,nodecl> end
 global function ImPlotStyle_ImPlotStyle(): *ImPlotStyle <cimport,nodecl> end
 global function ImPlotStyle_destroy(self: *ImPlotStyle): void <cimport,nodecl> end
 global function ImPlotInputMap_ImPlotInputMap(): *ImPlotInputMap <cimport,nodecl> end
@@ -3380,9 +3429,9 @@ global function ImPlot_DestroyContext(ctx: *ImPlotContext): void <cimport,nodecl
 global function ImPlot_GetCurrentContext(): *ImPlotContext <cimport,nodecl> end
 global function ImPlot_SetCurrentContext(ctx: *ImPlotContext): void <cimport,nodecl> end
 global function ImPlot_SetImGuiContext(ctx: *ImGuiContext): void <cimport,nodecl> end
-global function ImPlot_BeginPlot(title_id: cstring, size: ImVec2, flags: ImPlotFlags): boolean <cimport,nodecl> end
+global function ImPlot_BeginPlot(title_id: cstring, size: ImVec2_c, flags: ImPlotFlags): boolean <cimport,nodecl> end
 global function ImPlot_EndPlot(): void <cimport,nodecl> end
-global function ImPlot_BeginSubplots(title_id: cstring, rows: cint, cols: cint, size: ImVec2, flags: ImPlotSubplotFlags, row_ratios: *float32, col_ratios: *float32): boolean <cimport,nodecl> end
+global function ImPlot_BeginSubplots(title_id: cstring, rows: cint, cols: cint, size: ImVec2_c, flags: ImPlotSubplotFlags, row_ratios: *float32, col_ratios: *float32): boolean <cimport,nodecl> end
 global function ImPlot_EndSubplots(): void <cimport,nodecl> end
 global function ImPlot_SetupAxis(axis: ImAxis, label: cstring, flags: ImPlotAxisFlags): void <cimport,nodecl> end
 global function ImPlot_SetupAxisLimits(axis: ImAxis, v_min: float64, v_max: float64, cond: ImPlotCond): void <cimport,nodecl> end
@@ -3600,36 +3649,36 @@ global function ImPlot_PlotPieChart_S32PtrStr(label_ids: *[0]cstring, values: *c
 global function ImPlot_PlotPieChart_U32PtrStr(label_ids: *[0]cstring, values: *cuint, count: cint, x: float64, y: float64, radius: float64, label_fmt: cstring, angle0: float64, flags: ImPlotPieChartFlags): void <cimport,nodecl> end
 global function ImPlot_PlotPieChart_S64PtrStr(label_ids: *[0]cstring, values: *clonglong, count: cint, x: float64, y: float64, radius: float64, label_fmt: cstring, angle0: float64, flags: ImPlotPieChartFlags): void <cimport,nodecl> end
 global function ImPlot_PlotPieChart_U64PtrStr(label_ids: *[0]cstring, values: *culonglong, count: cint, x: float64, y: float64, radius: float64, label_fmt: cstring, angle0: float64, flags: ImPlotPieChartFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_FloatPtr(label_id: cstring, values: *float32, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_doublePtr(label_id: cstring, values: *float64, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_S8Ptr(label_id: cstring, values: *cschar, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_U8Ptr(label_id: cstring, values: *cuchar, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_S16Ptr(label_id: cstring, values: *cshort, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_U16Ptr(label_id: cstring, values: *cushort, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_S32Ptr(label_id: cstring, values: *cint, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_U32Ptr(label_id: cstring, values: *cuint, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_S64Ptr(label_id: cstring, values: *clonglong, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHeatmap_U64Ptr(label_id: cstring, values: *culonglong, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
-global function ImPlot_PlotHistogram_FloatPtr(label_id: cstring, values: *float32, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_doublePtr(label_id: cstring, values: *float64, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_S8Ptr(label_id: cstring, values: *cschar, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_U8Ptr(label_id: cstring, values: *cuchar, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_S16Ptr(label_id: cstring, values: *cshort, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_U16Ptr(label_id: cstring, values: *cushort, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_S32Ptr(label_id: cstring, values: *cint, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_U32Ptr(label_id: cstring, values: *cuint, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_S64Ptr(label_id: cstring, values: *clonglong, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram_U64Ptr(label_id: cstring, values: *culonglong, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_doublePtr(label_id: cstring, xs: *float64, ys: *float64, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_U8Ptr(label_id: cstring, xs: *cuchar, ys: *cuchar, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_S16Ptr(label_id: cstring, xs: *cshort, ys: *cshort, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_U16Ptr(label_id: cstring, xs: *cushort, ys: *cushort, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_S32Ptr(label_id: cstring, xs: *cint, ys: *cint, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_U32Ptr(label_id: cstring, xs: *cuint, ys: *cuint, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
-global function ImPlot_PlotHistogram2D_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_FloatPtr(label_id: cstring, values: *float32, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_doublePtr(label_id: cstring, values: *float64, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_S8Ptr(label_id: cstring, values: *cschar, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_U8Ptr(label_id: cstring, values: *cuchar, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_S16Ptr(label_id: cstring, values: *cshort, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_U16Ptr(label_id: cstring, values: *cushort, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_S32Ptr(label_id: cstring, values: *cint, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_U32Ptr(label_id: cstring, values: *cuint, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_S64Ptr(label_id: cstring, values: *clonglong, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHeatmap_U64Ptr(label_id: cstring, values: *culonglong, rows: cint, cols: cint, scale_min: float64, scale_max: float64, label_fmt: cstring, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, flags: ImPlotHeatmapFlags): void <cimport,nodecl> end
+global function ImPlot_PlotHistogram_FloatPtr(label_id: cstring, values: *float32, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_doublePtr(label_id: cstring, values: *float64, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_S8Ptr(label_id: cstring, values: *cschar, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_U8Ptr(label_id: cstring, values: *cuchar, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_S16Ptr(label_id: cstring, values: *cshort, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_U16Ptr(label_id: cstring, values: *cushort, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_S32Ptr(label_id: cstring, values: *cint, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_U32Ptr(label_id: cstring, values: *cuint, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_S64Ptr(label_id: cstring, values: *clonglong, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram_U64Ptr(label_id: cstring, values: *culonglong, count: cint, bins: cint, bar_scale: float64, range: ImPlotRange_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_doublePtr(label_id: cstring, xs: *float64, ys: *float64, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_U8Ptr(label_id: cstring, xs: *cuchar, ys: *cuchar, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_S16Ptr(label_id: cstring, xs: *cshort, ys: *cshort, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_U16Ptr(label_id: cstring, xs: *cushort, ys: *cushort, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_S32Ptr(label_id: cstring, xs: *cint, ys: *cint, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_U32Ptr(label_id: cstring, xs: *cuint, ys: *cuint, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
+global function ImPlot_PlotHistogram2D_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, count: cint, x_bins: cint, y_bins: cint, range: ImPlotRect_c, flags: ImPlotHistogramFlags): float64 <cimport,nodecl> end
 global function ImPlot_PlotDigital_FloatPtr(label_id: cstring, xs: *float32, ys: *float32, count: cint, flags: ImPlotDigitalFlags, offset: cint, stride: cint): void <cimport,nodecl> end
 global function ImPlot_PlotDigital_doublePtr(label_id: cstring, xs: *float64, ys: *float64, count: cint, flags: ImPlotDigitalFlags, offset: cint, stride: cint): void <cimport,nodecl> end
 global function ImPlot_PlotDigital_S8Ptr(label_id: cstring, xs: *cschar, ys: *cschar, count: cint, flags: ImPlotDigitalFlags, offset: cint, stride: cint): void <cimport,nodecl> end
@@ -3641,37 +3690,37 @@ global function ImPlot_PlotDigital_U32Ptr(label_id: cstring, xs: *cuint, ys: *cu
 global function ImPlot_PlotDigital_S64Ptr(label_id: cstring, xs: *clonglong, ys: *clonglong, count: cint, flags: ImPlotDigitalFlags, offset: cint, stride: cint): void <cimport,nodecl> end
 global function ImPlot_PlotDigital_U64Ptr(label_id: cstring, xs: *culonglong, ys: *culonglong, count: cint, flags: ImPlotDigitalFlags, offset: cint, stride: cint): void <cimport,nodecl> end
 global function ImPlot_PlotDigitalG(label_id: cstring, getter: ImPlotPoint_getter, data: pointer, count: cint, flags: ImPlotDigitalFlags): void <cimport,nodecl> end
-global function ImPlot_PlotImage(label_id: cstring, tex_ref: ImTextureRef, bounds_min: ImPlotPoint, bounds_max: ImPlotPoint, uv0: ImVec2, uv1: ImVec2, tint_col: ImVec4, flags: ImPlotImageFlags): void <cimport,nodecl> end
-global function ImPlot_PlotText(text: cstring, x: float64, y: float64, pix_offset: ImVec2, flags: ImPlotTextFlags): void <cimport,nodecl> end
+global function ImPlot_PlotImage(label_id: cstring, tex_ref: ImTextureRef_c, bounds_min: ImPlotPoint_c, bounds_max: ImPlotPoint_c, uv0: ImVec2_c, uv1: ImVec2_c, tint_col: ImVec4_c, flags: ImPlotImageFlags): void <cimport,nodecl> end
+global function ImPlot_PlotText(text: cstring, x: float64, y: float64, pix_offset: ImVec2_c, flags: ImPlotTextFlags): void <cimport,nodecl> end
 global function ImPlot_PlotDummy(label_id: cstring, flags: ImPlotDummyFlags): void <cimport,nodecl> end
-global function ImPlot_DragPoint(id: cint, x: *float64, y: *float64, col: ImVec4, size: float32, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, held: *boolean): boolean <cimport,nodecl> end
-global function ImPlot_DragLineX(id: cint, x: *float64, col: ImVec4, thickness: float32, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, held: *boolean): boolean <cimport,nodecl> end
-global function ImPlot_DragLineY(id: cint, y: *float64, col: ImVec4, thickness: float32, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, held: *boolean): boolean <cimport,nodecl> end
-global function ImPlot_DragRect(id: cint, x1: *float64, y1: *float64, x2: *float64, y2: *float64, col: ImVec4, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, held: *boolean): boolean <cimport,nodecl> end
-global function ImPlot_Annotation_Bool(x: float64, y: float64, col: ImVec4, pix_offset: ImVec2, clamp: boolean, round: boolean): void <cimport,nodecl> end
-global function ImPlot_Annotation_Str(x: float64, y: float64, col: ImVec4, pix_offset: ImVec2, clamp: boolean, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
-global function ImPlot_AnnotationV(x: float64, y: float64, col: ImVec4, pix_offset: ImVec2, clamp: boolean, fmt: cstring, args: cvalist): void <cimport,nodecl> end
-global function ImPlot_TagX_Bool(x: float64, col: ImVec4, round: boolean): void <cimport,nodecl> end
-global function ImPlot_TagX_Str(x: float64, col: ImVec4, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
-global function ImPlot_TagXV(x: float64, col: ImVec4, fmt: cstring, args: cvalist): void <cimport,nodecl> end
-global function ImPlot_TagY_Bool(y: float64, col: ImVec4, round: boolean): void <cimport,nodecl> end
-global function ImPlot_TagY_Str(y: float64, col: ImVec4, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
-global function ImPlot_TagYV(y: float64, col: ImVec4, fmt: cstring, args: cvalist): void <cimport,nodecl> end
+global function ImPlot_DragPoint(id: cint, x: *float64, y: *float64, col: ImVec4_c, size: float32, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, out_held: *boolean): boolean <cimport,nodecl> end
+global function ImPlot_DragLineX(id: cint, x: *float64, col: ImVec4_c, thickness: float32, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, out_held: *boolean): boolean <cimport,nodecl> end
+global function ImPlot_DragLineY(id: cint, y: *float64, col: ImVec4_c, thickness: float32, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, out_held: *boolean): boolean <cimport,nodecl> end
+global function ImPlot_DragRect(id: cint, x1: *float64, y1: *float64, x2: *float64, y2: *float64, col: ImVec4_c, flags: ImPlotDragToolFlags, out_clicked: *boolean, out_hovered: *boolean, out_held: *boolean): boolean <cimport,nodecl> end
+global function ImPlot_Annotation_Bool(x: float64, y: float64, col: ImVec4_c, pix_offset: ImVec2_c, clamp: boolean, round: boolean): void <cimport,nodecl> end
+global function ImPlot_Annotation_Str(x: float64, y: float64, col: ImVec4_c, pix_offset: ImVec2_c, clamp: boolean, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
+global function ImPlot_AnnotationV(x: float64, y: float64, col: ImVec4_c, pix_offset: ImVec2_c, clamp: boolean, fmt: cstring, args: cvalist): void <cimport,nodecl> end
+global function ImPlot_TagX_Bool(x: float64, col: ImVec4_c, round: boolean): void <cimport,nodecl> end
+global function ImPlot_TagX_Str(x: float64, col: ImVec4_c, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
+global function ImPlot_TagXV(x: float64, col: ImVec4_c, fmt: cstring, args: cvalist): void <cimport,nodecl> end
+global function ImPlot_TagY_Bool(y: float64, col: ImVec4_c, round: boolean): void <cimport,nodecl> end
+global function ImPlot_TagY_Str(y: float64, col: ImVec4_c, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
+global function ImPlot_TagYV(y: float64, col: ImVec4_c, fmt: cstring, args: cvalist): void <cimport,nodecl> end
 global function ImPlot_SetAxis(axis: ImAxis): void <cimport,nodecl> end
 global function ImPlot_SetAxes(x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
-global function ImPlot_PixelsToPlot_Vec2(pOut: *ImPlotPoint, pix: ImVec2, x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
-global function ImPlot_PixelsToPlot_Float(pOut: *ImPlotPoint, x: float32, y: float32, x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
-global function ImPlot_PlotToPixels_PlotPoInt(pOut: *ImVec2, plt: ImPlotPoint, x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
-global function ImPlot_PlotToPixels_double(pOut: *ImVec2, x: float64, y: float64, x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
-global function ImPlot_GetPlotPos(pOut: *ImVec2): void <cimport,nodecl> end
-global function ImPlot_GetPlotSize(pOut: *ImVec2): void <cimport,nodecl> end
-global function ImPlot_GetPlotMousePos(pOut: *ImPlotPoint, x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
-global function ImPlot_GetPlotLimits(pOut: *ImPlotRect, x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
+global function ImPlot_PixelsToPlot_Vec2(pix: ImVec2_c, x_axis: ImAxis, y_axis: ImAxis): ImPlotPoint_c <cimport,nodecl> end
+global function ImPlot_PixelsToPlot_Float(x: float32, y: float32, x_axis: ImAxis, y_axis: ImAxis): ImPlotPoint_c <cimport,nodecl> end
+global function ImPlot_PlotToPixels_PlotPoInt(plt: ImPlotPoint_c, x_axis: ImAxis, y_axis: ImAxis): ImVec2_c <cimport,nodecl> end
+global function ImPlot_PlotToPixels_double(x: float64, y: float64, x_axis: ImAxis, y_axis: ImAxis): ImVec2_c <cimport,nodecl> end
+global function ImPlot_GetPlotPos(): ImVec2_c <cimport,nodecl> end
+global function ImPlot_GetPlotSize(): ImVec2_c <cimport,nodecl> end
+global function ImPlot_GetPlotMousePos(x_axis: ImAxis, y_axis: ImAxis): ImPlotPoint_c <cimport,nodecl> end
+global function ImPlot_GetPlotLimits(x_axis: ImAxis, y_axis: ImAxis): ImPlotRect_c <cimport,nodecl> end
 global function ImPlot_IsPlotHovered(): boolean <cimport,nodecl> end
 global function ImPlot_IsAxisHovered(axis: ImAxis): boolean <cimport,nodecl> end
 global function ImPlot_IsSubplotsHovered(): boolean <cimport,nodecl> end
 global function ImPlot_IsPlotSelected(): boolean <cimport,nodecl> end
-global function ImPlot_GetPlotSelection(pOut: *ImPlotRect, x_axis: ImAxis, y_axis: ImAxis): void <cimport,nodecl> end
+global function ImPlot_GetPlotSelection(x_axis: ImAxis, y_axis: ImAxis): ImPlotRect_c <cimport,nodecl> end
 global function ImPlot_CancelPlotSelection(): void <cimport,nodecl> end
 global function ImPlot_HideNextItem(hidden: boolean, cond: ImPlotCond): void <cimport,nodecl> end
 global function ImPlot_BeginAlignedPlots(group_id: cstring, vertical: boolean): boolean <cimport,nodecl> end
@@ -3693,17 +3742,17 @@ global function ImPlot_StyleColorsClassic(dst: *ImPlotStyle): void <cimport,node
 global function ImPlot_StyleColorsDark(dst: *ImPlotStyle): void <cimport,nodecl> end
 global function ImPlot_StyleColorsLight(dst: *ImPlotStyle): void <cimport,nodecl> end
 global function ImPlot_PushStyleColor_U32(idx: ImPlotCol, col: cuint): void <cimport,nodecl> end
-global function ImPlot_PushStyleColor_Vec4(idx: ImPlotCol, col: ImVec4): void <cimport,nodecl> end
+global function ImPlot_PushStyleColor_Vec4(idx: ImPlotCol, col: ImVec4_c): void <cimport,nodecl> end
 global function ImPlot_PopStyleColor(count: cint): void <cimport,nodecl> end
 global function ImPlot_PushStyleVar_Float(idx: ImPlotStyleVar, val: float32): void <cimport,nodecl> end
 global function ImPlot_PushStyleVar_Int(idx: ImPlotStyleVar, val: cint): void <cimport,nodecl> end
-global function ImPlot_PushStyleVar_Vec2(idx: ImPlotStyleVar, val: ImVec2): void <cimport,nodecl> end
+global function ImPlot_PushStyleVar_Vec2(idx: ImPlotStyleVar, val: ImVec2_c): void <cimport,nodecl> end
 global function ImPlot_PopStyleVar(count: cint): void <cimport,nodecl> end
-global function ImPlot_SetNextLineStyle(col: ImVec4, weight: float32): void <cimport,nodecl> end
-global function ImPlot_SetNextFillStyle(col: ImVec4, alpha_mod: float32): void <cimport,nodecl> end
-global function ImPlot_SetNextMarkerStyle(marker: ImPlotMarker, size: float32, fill: ImVec4, weight: float32, outline: ImVec4): void <cimport,nodecl> end
-global function ImPlot_SetNextErrorBarStyle(col: ImVec4, size: float32, weight: float32): void <cimport,nodecl> end
-global function ImPlot_GetLastItemColor(pOut: *ImVec4): void <cimport,nodecl> end
+global function ImPlot_SetNextLineStyle(col: ImVec4_c, weight: float32): void <cimport,nodecl> end
+global function ImPlot_SetNextFillStyle(col: ImVec4_c, alpha_mod: float32): void <cimport,nodecl> end
+global function ImPlot_SetNextMarkerStyle(marker: ImPlotMarker, size: float32, fill: ImVec4_c, weight: float32, outline: ImVec4_c): void <cimport,nodecl> end
+global function ImPlot_SetNextErrorBarStyle(col: ImVec4_c, size: float32, weight: float32): void <cimport,nodecl> end
+global function ImPlot_GetLastItemColor(): ImVec4_c <cimport,nodecl> end
 global function ImPlot_GetStyleColorName(idx: ImPlotCol): cstring <cimport,nodecl> end
 global function ImPlot_GetMarkerName(idx: ImPlotMarker): cstring <cimport,nodecl> end
 global function ImPlot_AddColormap_Vec4Ptr(name: cstring, cols: *ImVec4, size: cint, qual: boolean): ImPlotColormap <cimport,nodecl> end
@@ -3714,18 +3763,18 @@ global function ImPlot_GetColormapIndex(name: cstring): ImPlotColormap <cimport,
 global function ImPlot_PushColormap_PlotColormap(cmap: ImPlotColormap): void <cimport,nodecl> end
 global function ImPlot_PushColormap_Str(name: cstring): void <cimport,nodecl> end
 global function ImPlot_PopColormap(count: cint): void <cimport,nodecl> end
-global function ImPlot_NextColormapColor(pOut: *ImVec4): void <cimport,nodecl> end
+global function ImPlot_NextColormapColor(): ImVec4_c <cimport,nodecl> end
 global function ImPlot_GetColormapSize(cmap: ImPlotColormap): cint <cimport,nodecl> end
-global function ImPlot_GetColormapColor(pOut: *ImVec4, idx: cint, cmap: ImPlotColormap): void <cimport,nodecl> end
-global function ImPlot_SampleColormap(pOut: *ImVec4, t: float32, cmap: ImPlotColormap): void <cimport,nodecl> end
-global function ImPlot_ColormapScale(label: cstring, scale_min: float64, scale_max: float64, size: ImVec2, format: cstring, flags: ImPlotColormapScaleFlags, cmap: ImPlotColormap): void <cimport,nodecl> end
+global function ImPlot_GetColormapColor(idx: cint, cmap: ImPlotColormap): ImVec4_c <cimport,nodecl> end
+global function ImPlot_SampleColormap(t: float32, cmap: ImPlotColormap): ImVec4_c <cimport,nodecl> end
+global function ImPlot_ColormapScale(label: cstring, scale_min: float64, scale_max: float64, size: ImVec2_c, format: cstring, flags: ImPlotColormapScaleFlags, cmap: ImPlotColormap): void <cimport,nodecl> end
 global function ImPlot_ColormapSlider(label: cstring, t: *float32, out: *ImVec4, format: cstring, cmap: ImPlotColormap): boolean <cimport,nodecl> end
-global function ImPlot_ColormapButton(label: cstring, size: ImVec2, cmap: ImPlotColormap): boolean <cimport,nodecl> end
+global function ImPlot_ColormapButton(label: cstring, size: ImVec2_c, cmap: ImPlotColormap): boolean <cimport,nodecl> end
 global function ImPlot_BustColorCache(plot_title_id: cstring): void <cimport,nodecl> end
 global function ImPlot_GetInputMap(): *ImPlotInputMap <cimport,nodecl> end
 global function ImPlot_MapInputDefault(dst: *ImPlotInputMap): void <cimport,nodecl> end
 global function ImPlot_MapInputReverse(dst: *ImPlotInputMap): void <cimport,nodecl> end
-global function ImPlot_ItemIcon_Vec4(col: ImVec4): void <cimport,nodecl> end
+global function ImPlot_ItemIcon_Vec4(col: ImVec4_c): void <cimport,nodecl> end
 global function ImPlot_ItemIcon_U32(col: cuint): void <cimport,nodecl> end
 global function ImPlot_ColormapIcon(cmap: ImPlotColormap): void <cimport,nodecl> end
 global function ImPlot_GetPlotDrawList(): *ImDrawList <cimport,nodecl> end
@@ -3853,7 +3902,7 @@ global function ImPlotTime_destroy(self: *ImPlotTime): void <cimport,nodecl> end
 global function ImPlotTime_ImPlotTime_time_t(s: ctime_t, us: cint): *ImPlotTime <cimport,nodecl> end
 global function ImPlotTime_RollOver(self: *ImPlotTime): void <cimport,nodecl> end
 global function ImPlotTime_ToDouble(self: *ImPlotTime): float64 <cimport,nodecl> end
-global function ImPlotTime_FromDouble(pOut: *ImPlotTime, t: float64): void <cimport,nodecl> end
+global function ImPlotTime_FromDouble(t: float64): ImPlotTime_c <cimport,nodecl> end
 global function ImPlotColormapData_ImPlotColormapData(): *ImPlotColormapData <cimport,nodecl> end
 global function ImPlotColormapData_destroy(self: *ImPlotColormapData): void <cimport,nodecl> end
 global function ImPlotColormapData_Append(self: *ImPlotColormapData, name: cstring, keys: *cuint, count: cint, qual: boolean): cint <cimport,nodecl> end
@@ -3870,32 +3919,36 @@ global function ImPlotColormapData_GetTable(self: *ImPlotColormapData, cmap: ImP
 global function ImPlotColormapData_GetTableSize(self: *ImPlotColormapData, cmap: ImPlotColormap): cint <cimport,nodecl> end
 global function ImPlotColormapData_GetTableColor(self: *ImPlotColormapData, cmap: ImPlotColormap, idx: cint): cuint <cimport,nodecl> end
 global function ImPlotColormapData_LerpTable(self: *ImPlotColormapData, cmap: ImPlotColormap, t: float32): cuint <cimport,nodecl> end
-global function ImPlotPointError_ImPlotPointError(x: float64, y: float64, neg: float64, pos: float64): *ImPlotPointError <cimport,nodecl> end
+global function ImPlotPointError_ImPlotPointError_Nil(): *ImPlotPointError <cimport,nodecl> end
 global function ImPlotPointError_destroy(self: *ImPlotPointError): void <cimport,nodecl> end
+global function ImPlotPointError_ImPlotPointError_double(x: float64, y: float64, neg: float64, pos: float64): *ImPlotPointError <cimport,nodecl> end
 global function ImPlotAnnotation_ImPlotAnnotation(): *ImPlotAnnotation <cimport,nodecl> end
 global function ImPlotAnnotation_destroy(self: *ImPlotAnnotation): void <cimport,nodecl> end
 global function ImPlotAnnotationCollection_ImPlotAnnotationCollection(): *ImPlotAnnotationCollection <cimport,nodecl> end
 global function ImPlotAnnotationCollection_destroy(self: *ImPlotAnnotationCollection): void <cimport,nodecl> end
-global function ImPlotAnnotationCollection_AppendV(self: *ImPlotAnnotationCollection, pos: ImVec2, off: ImVec2, bg: cuint, fg: cuint, clamp: boolean, fmt: cstring, args: cvalist): void <cimport,nodecl> end
-global function ImPlotAnnotationCollection_Append(self: *ImPlotAnnotationCollection, pos: ImVec2, off: ImVec2, bg: cuint, fg: cuint, clamp: boolean, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
+global function ImPlotAnnotationCollection_AppendV(self: *ImPlotAnnotationCollection, pos: ImVec2_c, off: ImVec2_c, bg: cuint, fg: cuint, clamp: boolean, fmt: cstring, args: cvalist): void <cimport,nodecl> end
+global function ImPlotAnnotationCollection_Append(self: *ImPlotAnnotationCollection, pos: ImVec2_c, off: ImVec2_c, bg: cuint, fg: cuint, clamp: boolean, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
 global function ImPlotAnnotationCollection_GetText(self: *ImPlotAnnotationCollection, idx: cint): cstring <cimport,nodecl> end
 global function ImPlotAnnotationCollection_Reset(self: *ImPlotAnnotationCollection): void <cimport,nodecl> end
+global function ImPlotTag_ImPlotTag(): *ImPlotTag <cimport,nodecl> end
+global function ImPlotTag_destroy(self: *ImPlotTag): void <cimport,nodecl> end
 global function ImPlotTagCollection_ImPlotTagCollection(): *ImPlotTagCollection <cimport,nodecl> end
 global function ImPlotTagCollection_destroy(self: *ImPlotTagCollection): void <cimport,nodecl> end
 global function ImPlotTagCollection_AppendV(self: *ImPlotTagCollection, axis: ImAxis, value: float64, bg: cuint, fg: cuint, fmt: cstring, args: cvalist): void <cimport,nodecl> end
 global function ImPlotTagCollection_Append(self: *ImPlotTagCollection, axis: ImAxis, value: float64, bg: cuint, fg: cuint, fmt: cstring, ...: cvarargs): void <cimport,nodecl> end
 global function ImPlotTagCollection_GetText(self: *ImPlotTagCollection, idx: cint): cstring <cimport,nodecl> end
 global function ImPlotTagCollection_Reset(self: *ImPlotTagCollection): void <cimport,nodecl> end
-global function ImPlotTick_ImPlotTick(value: float64, major: boolean, level: cint, show_label: boolean): *ImPlotTick <cimport,nodecl> end
+global function ImPlotTick_ImPlotTick_Nil(): *ImPlotTick <cimport,nodecl> end
 global function ImPlotTick_destroy(self: *ImPlotTick): void <cimport,nodecl> end
+global function ImPlotTick_ImPlotTick_double(value: float64, major: boolean, level: cint, show_label: boolean): *ImPlotTick <cimport,nodecl> end
 global function ImPlotTicker_ImPlotTicker(): *ImPlotTicker <cimport,nodecl> end
 global function ImPlotTicker_destroy(self: *ImPlotTicker): void <cimport,nodecl> end
 global function ImPlotTicker_AddTick_doubleStr(self: *ImPlotTicker, value: float64, major: boolean, level: cint, show_label: boolean, label: cstring): *ImPlotTick <cimport,nodecl> end
 global function ImPlotTicker_AddTick_doublePlotFormatter(self: *ImPlotTicker, value: float64, major: boolean, level: cint, show_label: boolean, formatter: ImPlotFormatter, data: pointer): *ImPlotTick <cimport,nodecl> end
-global function ImPlotTicker_AddTick_PlotTick(self: *ImPlotTicker, tick: ImPlotTick): *ImPlotTick <cimport,nodecl> end
+global function ImPlotTicker_AddTick_PlotTick(self: *ImPlotTicker, tick: ImPlotTick_c): *ImPlotTick <cimport,nodecl> end
 global function ImPlotTicker_GetText_Int(self: *ImPlotTicker, idx: cint): cstring <cimport,nodecl> end
-global function ImPlotTicker_GetText_PlotTick(self: *ImPlotTicker, tick: ImPlotTick): cstring <cimport,nodecl> end
-global function ImPlotTicker_OverrideSizeLate(self: *ImPlotTicker, size: ImVec2): void <cimport,nodecl> end
+global function ImPlotTicker_GetText_PlotTick(self: *ImPlotTicker, tick: ImPlotTick_c): cstring <cimport,nodecl> end
+global function ImPlotTicker_OverrideSizeLate(self: *ImPlotTicker, size: ImVec2_c): void <cimport,nodecl> end
 global function ImPlotTicker_Reset(self: *ImPlotTicker): void <cimport,nodecl> end
 global function ImPlotTicker_TickCount(self: *ImPlotTicker): cint <cimport,nodecl> end
 global function ImPlotAxis_ImPlotAxis(): *ImPlotAxis <cimport,nodecl> end
@@ -3904,7 +3957,7 @@ global function ImPlotAxis_Reset(self: *ImPlotAxis): void <cimport,nodecl> end
 global function ImPlotAxis_SetMin(self: *ImPlotAxis, _min: float64, force: boolean): boolean <cimport,nodecl> end
 global function ImPlotAxis_SetMax(self: *ImPlotAxis, _max: float64, force: boolean): boolean <cimport,nodecl> end
 global function ImPlotAxis_SetRange_double(self: *ImPlotAxis, v1: float64, v2: float64): void <cimport,nodecl> end
-global function ImPlotAxis_SetRange_PlotRange(self: *ImPlotAxis, range: ImPlotRange): void <cimport,nodecl> end
+global function ImPlotAxis_SetRange_PlotRange(self: *ImPlotAxis, range: ImPlotRange_c): void <cimport,nodecl> end
 global function ImPlotAxis_SetAspect(self: *ImPlotAxis, unit_per_pix: float64): void <cimport,nodecl> end
 global function ImPlotAxis_PixelSize(self: *ImPlotAxis): float32 <cimport,nodecl> end
 global function ImPlotAxis_GetAspect(self: *ImPlotAxis): float64 <cimport,nodecl> end
@@ -3974,7 +4027,7 @@ global function ImPlotPlot_YAxis__const(self: *ImPlotPlot, i: cint): *ImPlotAxis
 global function ImPlotPlot_EnabledAxesX(self: *ImPlotPlot): cint <cimport,nodecl> end
 global function ImPlotPlot_EnabledAxesY(self: *ImPlotPlot): cint <cimport,nodecl> end
 global function ImPlotPlot_SetAxisLabel(self: *ImPlotPlot, axis: *ImPlotAxis, label: cstring): void <cimport,nodecl> end
-global function ImPlotPlot_GetAxisLabel(self: *ImPlotPlot, axis: ImPlotAxis): cstring <cimport,nodecl> end
+global function ImPlotPlot_GetAxisLabel(self: *ImPlotPlot, axis: ImPlotAxis_c): cstring <cimport,nodecl> end
 global function ImPlotSubplot_ImPlotSubplot(): *ImPlotSubplot <cimport,nodecl> end
 global function ImPlotSubplot_destroy(self: *ImPlotSubplot): void <cimport,nodecl> end
 global function ImPlotNextPlotData_ImPlotNextPlotData(): *ImPlotNextPlotData <cimport,nodecl> end
@@ -4007,39 +4060,39 @@ global function ImPlot_AnyAxesHovered(axes: *ImPlotAxis, count: cint): boolean <
 global function ImPlot_FitThisFrame(): boolean <cimport,nodecl> end
 global function ImPlot_FitPointX(x: float64): void <cimport,nodecl> end
 global function ImPlot_FitPointY(y: float64): void <cimport,nodecl> end
-global function ImPlot_FitPoint(p: ImPlotPoint): void <cimport,nodecl> end
-global function ImPlot_RangesOverlap(r1: ImPlotRange, r2: ImPlotRange): boolean <cimport,nodecl> end
+global function ImPlot_FitPoint(p: ImPlotPoint_c): void <cimport,nodecl> end
+global function ImPlot_RangesOverlap(r1: ImPlotRange_c, r2: ImPlotRange_c): boolean <cimport,nodecl> end
 global function ImPlot_ShowAxisContextMenu(axis: *ImPlotAxis, equal_axis: *ImPlotAxis, time_allowed: boolean): void <cimport,nodecl> end
-global function ImPlot_GetLocationPos(pOut: *ImVec2, outer_rect: ImRect, inner_size: ImVec2, location: ImPlotLocation, pad: ImVec2): void <cimport,nodecl> end
-global function ImPlot_CalcLegendSize(pOut: *ImVec2, items: *ImPlotItemGroup, pad: ImVec2, spacing: ImVec2, vertical: boolean): void <cimport,nodecl> end
-global function ImPlot_ClampLegendRect(legend_rect: *ImRect, outer_rect: ImRect, pad: ImVec2): boolean <cimport,nodecl> end
-global function ImPlot_ShowLegendEntries(items: *ImPlotItemGroup, legend_bb: ImRect, interactable: boolean, pad: ImVec2, spacing: ImVec2, vertical: boolean, DrawList: *ImDrawList): boolean <cimport,nodecl> end
-global function ImPlot_ShowAltLegend(title_id: cstring, vertical: boolean, size: ImVec2, interactable: boolean): void <cimport,nodecl> end
+global function ImPlot_GetLocationPos(outer_rect: ImRect_c, inner_size: ImVec2_c, location: ImPlotLocation, pad: ImVec2_c): ImVec2_c <cimport,nodecl> end
+global function ImPlot_CalcLegendSize(items: *ImPlotItemGroup, pad: ImVec2_c, spacing: ImVec2_c, vertical: boolean): ImVec2_c <cimport,nodecl> end
+global function ImPlot_ClampLegendRect(legend_rect: *ImRect, outer_rect: ImRect_c, pad: ImVec2_c): boolean <cimport,nodecl> end
+global function ImPlot_ShowLegendEntries(items: *ImPlotItemGroup, legend_bb: ImRect_c, interactable: boolean, pad: ImVec2_c, spacing: ImVec2_c, vertical: boolean, DrawList: *ImDrawList): boolean <cimport,nodecl> end
+global function ImPlot_ShowAltLegend(title_id: cstring, vertical: boolean, size: ImVec2_c, interactable: boolean): void <cimport,nodecl> end
 global function ImPlot_ShowLegendContextMenu(legend: *ImPlotLegend, visible: boolean): boolean <cimport,nodecl> end
-global function ImPlot_LabelAxisValue(axis: ImPlotAxis, value: float64, buff: cstring, size: cint, round: boolean): void <cimport,nodecl> end
+global function ImPlot_LabelAxisValue(axis: ImPlotAxis_c, value: float64, buff: cstring, size: cint, round: boolean): void <cimport,nodecl> end
 global function ImPlot_GetItemData(): *ImPlotNextItemData <cimport,nodecl> end
-global function ImPlot_IsColorAuto_Vec4(col: ImVec4): boolean <cimport,nodecl> end
+global function ImPlot_IsColorAuto_Vec4(col: ImVec4_c): boolean <cimport,nodecl> end
 global function ImPlot_IsColorAuto_PlotCol(idx: ImPlotCol): boolean <cimport,nodecl> end
-global function ImPlot_GetAutoColor(pOut: *ImVec4, idx: ImPlotCol): void <cimport,nodecl> end
-global function ImPlot_GetStyleColorVec4(pOut: *ImVec4, idx: ImPlotCol): void <cimport,nodecl> end
+global function ImPlot_GetAutoColor(idx: ImPlotCol): ImVec4_c <cimport,nodecl> end
+global function ImPlot_GetStyleColorVec4(idx: ImPlotCol): ImVec4_c <cimport,nodecl> end
 global function ImPlot_GetStyleColorU32(idx: ImPlotCol): cuint <cimport,nodecl> end
-global function ImPlot_AddTextVertical(DrawList: *ImDrawList, pos: ImVec2, col: cuint, text_begin: cstring, text_end: cstring): void <cimport,nodecl> end
-global function ImPlot_AddTextCentered(DrawList: *ImDrawList, top_center: ImVec2, col: cuint, text_begin: cstring, text_end: cstring): void <cimport,nodecl> end
-global function ImPlot_CalcTextSizeVertical(pOut: *ImVec2, text: cstring): void <cimport,nodecl> end
-global function ImPlot_CalcTextColor_Vec4(bg: ImVec4): cuint <cimport,nodecl> end
+global function ImPlot_AddTextVertical(DrawList: *ImDrawList, pos: ImVec2_c, col: cuint, text_begin: cstring, text_end: cstring): void <cimport,nodecl> end
+global function ImPlot_AddTextCentered(DrawList: *ImDrawList, top_center: ImVec2_c, col: cuint, text_begin: cstring, text_end: cstring): void <cimport,nodecl> end
+global function ImPlot_CalcTextSizeVertical(text: cstring): ImVec2_c <cimport,nodecl> end
+global function ImPlot_CalcTextColor_Vec4(bg: ImVec4_c): cuint <cimport,nodecl> end
 global function ImPlot_CalcTextColor_U32(bg: cuint): cuint <cimport,nodecl> end
 global function ImPlot_CalcHoverColor(col: cuint): cuint <cimport,nodecl> end
-global function ImPlot_ClampLabelPos(pOut: *ImVec2, pos: ImVec2, size: ImVec2, Min: ImVec2, Max: ImVec2): void <cimport,nodecl> end
+global function ImPlot_ClampLabelPos(pos: ImVec2_c, size: ImVec2_c, Min: ImVec2_c, Max: ImVec2_c): ImVec2_c <cimport,nodecl> end
 global function ImPlot_GetColormapColorU32(idx: cint, cmap: ImPlotColormap): cuint <cimport,nodecl> end
 global function ImPlot_NextColormapColorU32(): cuint <cimport,nodecl> end
 global function ImPlot_SampleColormapU32(t: float32, cmap: ImPlotColormap): cuint <cimport,nodecl> end
-global function ImPlot_RenderColorBar(colors: *cuint, size: cint, DrawList: *ImDrawList, bounds: ImRect, vert: boolean, reversed: boolean, continuous: boolean): void <cimport,nodecl> end
+global function ImPlot_RenderColorBar(colors: *cuint, size: cint, DrawList: *ImDrawList, bounds: ImRect_c, vert: boolean, reversed: boolean, continuous: boolean): void <cimport,nodecl> end
 global function ImPlot_NiceNum(x: float64, round: boolean): float64 <cimport,nodecl> end
 global function ImPlot_OrderOfMagnitude(val: float64): cint <cimport,nodecl> end
 global function ImPlot_OrderToPrecision(order: cint): cint <cimport,nodecl> end
 global function ImPlot_Precision(val: float64): cint <cimport,nodecl> end
 global function ImPlot_RoundTo(val: float64, prec: cint): float64 <cimport,nodecl> end
-global function ImPlot_Intersection(pOut: *ImVec2, a1: ImVec2, a2: ImVec2, b1: ImVec2, b2: ImVec2): void <cimport,nodecl> end
+global function ImPlot_Intersection(a1: ImVec2_c, a2: ImVec2_c, b1: ImVec2_c, b2: ImVec2_c): ImVec2_c <cimport,nodecl> end
 global function ImPlot_FillRange_Vector_Float_Ptr(buffer: *ImVector_float, n: cint, vmin: float32, vmax: float32): void <cimport,nodecl> end
 global function ImPlot_FillRange_Vector_double_Ptr(buffer: *ImVector_double, n: cint, vmin: float64, vmax: float64): void <cimport,nodecl> end
 global function ImPlot_FillRange_Vector_S8_Ptr(buffer: *ImVector_ImS8, n: cint, vmin: cschar, vmax: cschar): void <cimport,nodecl> end
@@ -4050,37 +4103,37 @@ global function ImPlot_FillRange_Vector_S32_Ptr(buffer: *ImVector_ImS32, n: cint
 global function ImPlot_FillRange_Vector_U32_Ptr(buffer: *ImVector_ImU32, n: cint, vmin: cuint, vmax: cuint): void <cimport,nodecl> end
 global function ImPlot_FillRange_Vector_S64_Ptr(buffer: *ImVector_ImS64, n: cint, vmin: clonglong, vmax: clonglong): void <cimport,nodecl> end
 global function ImPlot_FillRange_Vector_U64_Ptr(buffer: *ImVector_ImU64, n: cint, vmin: culonglong, vmax: culonglong): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_FloatPtr(values: *float32, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_doublePtr(values: *float64, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_S8Ptr(values: *cschar, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_U8Ptr(values: *cuchar, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_S16Ptr(values: *cshort, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_U16Ptr(values: *cushort, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_S32Ptr(values: *cint, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_U32Ptr(values: *cuint, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_S64Ptr(values: *clonglong, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
-global function ImPlot_CalculateBins_U64Ptr(values: *culonglong, count: cint, meth: ImPlotBin, range: ImPlotRange, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_FloatPtr(values: *float32, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_doublePtr(values: *float64, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_S8Ptr(values: *cschar, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_U8Ptr(values: *cuchar, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_S16Ptr(values: *cshort, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_U16Ptr(values: *cushort, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_S32Ptr(values: *cint, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_U32Ptr(values: *cuint, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_S64Ptr(values: *clonglong, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
+global function ImPlot_CalculateBins_U64Ptr(values: *culonglong, count: cint, meth: ImPlotBin, range: ImPlotRange_c, bins_out: *cint, width_out: *float64): void <cimport,nodecl> end
 global function ImPlot_IsLeapYear(year: cint): boolean <cimport,nodecl> end
 global function ImPlot_GetDaysInMonth(year: cint, month: cint): cint <cimport,nodecl> end
-global function ImPlot_MkGmtTime(pOut: *ImPlotTime, ptm: *tm): void <cimport,nodecl> end
-global function ImPlot_GetGmtTime(t: ImPlotTime, ptm: *tm): *tm <cimport,nodecl> end
-global function ImPlot_MkLocTime(pOut: *ImPlotTime, ptm: *tm): void <cimport,nodecl> end
-global function ImPlot_GetLocTime(t: ImPlotTime, ptm: *tm): *tm <cimport,nodecl> end
-global function ImPlot_MkTime(pOut: *ImPlotTime, ptm: *tm): void <cimport,nodecl> end
-global function ImPlot_GetTime(t: ImPlotTime, ptm: *tm): *tm <cimport,nodecl> end
-global function ImPlot_MakeTime(pOut: *ImPlotTime, year: cint, month: cint, day: cint, hour: cint, min: cint, sec: cint, us: cint): void <cimport,nodecl> end
-global function ImPlot_GetYear(t: ImPlotTime): cint <cimport,nodecl> end
-global function ImPlot_GetMonth(t: ImPlotTime): cint <cimport,nodecl> end
-global function ImPlot_AddTime(pOut: *ImPlotTime, t: ImPlotTime, unit: ImPlotTimeUnit, count: cint): void <cimport,nodecl> end
-global function ImPlot_FloorTime(pOut: *ImPlotTime, t: ImPlotTime, unit: ImPlotTimeUnit): void <cimport,nodecl> end
-global function ImPlot_CeilTime(pOut: *ImPlotTime, t: ImPlotTime, unit: ImPlotTimeUnit): void <cimport,nodecl> end
-global function ImPlot_RoundTime(pOut: *ImPlotTime, t: ImPlotTime, unit: ImPlotTimeUnit): void <cimport,nodecl> end
-global function ImPlot_CombineDateTime(pOut: *ImPlotTime, date_part: ImPlotTime, time_part: ImPlotTime): void <cimport,nodecl> end
-global function ImPlot_Now(pOut: *ImPlotTime): void <cimport,nodecl> end
-global function ImPlot_Today(pOut: *ImPlotTime): void <cimport,nodecl> end
-global function ImPlot_FormatTime(t: ImPlotTime, buffer: cstring, size: cint, fmt: ImPlotTimeFmt, use_24_hr_clk: boolean): cint <cimport,nodecl> end
-global function ImPlot_FormatDate(t: ImPlotTime, buffer: cstring, size: cint, fmt: ImPlotDateFmt, use_iso_8601: boolean): cint <cimport,nodecl> end
-global function ImPlot_FormatDateTime(t: ImPlotTime, buffer: cstring, size: cint, fmt: ImPlotDateTimeSpec): cint <cimport,nodecl> end
+global function ImPlot_MkGmtTime(ptm: *tm): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_GetGmtTime(t: ImPlotTime_c, ptm: *tm): *tm <cimport,nodecl> end
+global function ImPlot_MkLocTime(ptm: *tm): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_GetLocTime(t: ImPlotTime_c, ptm: *tm): *tm <cimport,nodecl> end
+global function ImPlot_MkTime(ptm: *tm): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_GetTime(t: ImPlotTime_c, ptm: *tm): *tm <cimport,nodecl> end
+global function ImPlot_MakeTime(year: cint, month: cint, day: cint, hour: cint, min: cint, sec: cint, us: cint): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_GetYear(t: ImPlotTime_c): cint <cimport,nodecl> end
+global function ImPlot_GetMonth(t: ImPlotTime_c): cint <cimport,nodecl> end
+global function ImPlot_AddTime(t: ImPlotTime_c, unit: ImPlotTimeUnit, count: cint): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_FloorTime(t: ImPlotTime_c, unit: ImPlotTimeUnit): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_CeilTime(t: ImPlotTime_c, unit: ImPlotTimeUnit): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_RoundTime(t: ImPlotTime_c, unit: ImPlotTimeUnit): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_CombineDateTime(date_part: ImPlotTime_c, time_part: ImPlotTime_c): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_Now(): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_Today(): ImPlotTime_c <cimport,nodecl> end
+global function ImPlot_FormatTime(t: ImPlotTime_c, buffer: cstring, size: cint, fmt: ImPlotTimeFmt, use_24_hr_clk: boolean): cint <cimport,nodecl> end
+global function ImPlot_FormatDate(t: ImPlotTime_c, buffer: cstring, size: cint, fmt: ImPlotDateFmt, use_iso_8601: boolean): cint <cimport,nodecl> end
+global function ImPlot_FormatDateTime(t: ImPlotTime_c, buffer: cstring, size: cint, fmt: ImPlotDateTimeSpec_c): cint <cimport,nodecl> end
 global function ImPlot_ShowDatePicker(id: cstring, level: *cint, t: *ImPlotTime, t1: *ImPlotTime, t2: *ImPlotTime): boolean <cimport,nodecl> end
 global function ImPlot_ShowTimePicker(id: cstring, t: *ImPlotTime): boolean <cimport,nodecl> end
 global function ImPlot_TransformForward_Log10(v: float64, noname1: pointer): float64 <cimport,nodecl> end
@@ -4092,7 +4145,7 @@ global function ImPlot_TransformInverse_Logit(v: float64, noname1: pointer): flo
 global function ImPlot_Formatter_Default(value: float64, buff: cstring, size: cint, data: pointer): cint <cimport,nodecl> end
 global function ImPlot_Formatter_Logit(value: float64, buff: cstring, size: cint, noname1: pointer): cint <cimport,nodecl> end
 global function ImPlot_Formatter_Time(noname1: float64, buff: cstring, size: cint, data: pointer): cint <cimport,nodecl> end
-global function ImPlot_Locator_Default(ticker: *ImPlotTicker, range: ImPlotRange, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end
-global function ImPlot_Locator_Time(ticker: *ImPlotTicker, range: ImPlotRange, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end
-global function ImPlot_Locator_Log10(ticker: *ImPlotTicker, range: ImPlotRange, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end
-global function ImPlot_Locator_SymLog(ticker: *ImPlotTicker, range: ImPlotRange, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end
+global function ImPlot_Locator_Default(ticker: *ImPlotTicker, range: ImPlotRange_c, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end
+global function ImPlot_Locator_Time(ticker: *ImPlotTicker, range: ImPlotRange_c, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end
+global function ImPlot_Locator_Log10(ticker: *ImPlotTicker, range: ImPlotRange_c, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end
+global function ImPlot_Locator_SymLog(ticker: *ImPlotTicker, range: ImPlotRange_c, pixels: float32, vertical: boolean, formatter: ImPlotFormatter, formatter_data: pointer): void <cimport,nodecl> end

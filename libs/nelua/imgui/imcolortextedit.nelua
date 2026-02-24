@@ -6,8 +6,8 @@
 cdefine "CIMGUI_DEFINE_ENUMS_AND_STRUCTS"
 cinclude "cimCTE.h"
 ]==]
-global ImVec2: type <cimport,nodecl,forwarddecl> = @record{}
-ImVec2 = @record{
+global ImVec2_c: type <cimport,nodecl,forwarddecl> = @record{}
+ImVec2_c = @record{
   x: float32,
   y: float32
 }
@@ -84,7 +84,7 @@ global function TextEditor_Redo(self: *TextEditor, aSteps: cint): void <cimport,
 global function TextEditor_CanUndo(self: *TextEditor): boolean <cimport,nodecl> end
 global function TextEditor_CanRedo(self: *TextEditor): boolean <cimport,nodecl> end
 global function TextEditor_GetUndoIndex(self: *TextEditor): cint <cimport,nodecl> end
-global function TextEditor_Render(self: *TextEditor, aTitle: cstring, aParentIsFocused: boolean, aSize: ImVec2, aBorder: boolean): boolean <cimport,nodecl> end
+global function TextEditor_Render(self: *TextEditor, aTitle: cstring, aParentIsFocused: boolean, aSize: ImVec2_c, aBorder: boolean): boolean <cimport,nodecl> end
 global function TextEditor_UnitTests(self: *TextEditor): void <cimport,nodecl> end
 global function TextEditor_SetText(self: *TextEditor, aText: cstring): void <cimport,nodecl> end
 global function TextEditor_GetText_alloc(self: *TextEditor): cstring <cimport,nodecl> end

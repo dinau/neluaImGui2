@@ -151,7 +151,6 @@ ImFontConfig = @record{
   FontDataOwnedByAtlas: boolean,
   MergeMode: boolean,
   PixelSnapH: boolean,
-  PixelSnapV: boolean,
   OversampleH: cschar,
   OversampleV: cschar,
   EllipsisChar: cushort,
@@ -166,10 +165,12 @@ ImFontConfig = @record{
   FontLoaderFlags: cuint,
   RasterizerMultiply: float32,
   RasterizerDensity: float32,
+  ExtraSizeScale: float32,
   Flags: cint,
   DstFont: *ImFont,
   FontLoader: *ImFontLoader,
-  FontLoaderData: pointer
+  FontLoaderData: pointer,
+  PixelSnapV: boolean
 }
 ImFontGlyph = @record{
   Colored: cuint,
@@ -247,12 +248,12 @@ ImFontBaked = @record{
   LoadNoRenderOnLayout: cuint,
   LastUsedFrame: cint,
   BakedId: cuint,
-  ContainerFont: *ImFont,
+  OwnerFont: *ImFont,
   FontLoaderDatas: pointer
 }
 ImFont = @record{
   LastBaked: *ImFontBaked,
-  ContainerAtlas: *ImFontAtlas,
+  OwnerAtlas: *ImFontAtlas,
   Flags: cint,
   CurrentRasterizerDensity: float32,
   FontId: cuint,
@@ -293,6 +294,7 @@ global ImGuiFileDialogFlags_: type <cimport,nodecl,using,ctypedef'ImGuiFileDialo
   ImGuiFileDialogFlags_DisableQuickPathSelection = 4096,
   ImGuiFileDialogFlags_ShowDevicesButton = 8192,
   ImGuiFileDialogFlags_NaturalSorting = 16384,
+  ImGuiFileDialogFlags_OptionalFileName = 32768,
   ImGuiFileDialogFlags_Default = 521
 }
 global IGFD_ResultMode: type <cimport,nodecl> = @cint
@@ -355,5 +357,5 @@ global function IGFD_AddPlacesGroup(vContextPtr: *ImGuiFileDialog, vGroupName: c
 global function IGFD_RemovePlacesGroup(vContextPtr: *ImGuiFileDialog, vGroupName: cstring): boolean <cimport,nodecl> end
 global function IGFD_AddPlace(vContextPtr: *ImGuiFileDialog, vGroupName: cstring, vPlaceName: cstring, vPlacePath: cstring, vCanBeSaved: boolean, vIconText: cstring): boolean <cimport,nodecl> end
 global function IGFD_RemovePlace(vContextPtr: *ImGuiFileDialog, vGroupName: cstring, vPlaceName: cstring): boolean <cimport,nodecl> end
-global IGFD_VERSION: cstring <comptime> = "v0.6.8"
-global IGFD_IMGUI_SUPPORTED_VERSION: cstring <comptime> = "1.90.5 WIP"
+global IGFD_VERSION: cstring <comptime> = "v0.6.9 WIP"
+global IGFD_IMGUI_SUPPORTED_VERSION: cstring <comptime> = "1.92.3"

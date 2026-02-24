@@ -127,7 +127,7 @@ local main = function()
           ys3[i] = math.pow(10.0, xs[i])
         end
       end
-      if ImPlot_BeginPlot("Log Plot", ImVec2{-1, 0}, 0) then
+      if ImPlot_BeginPlot("Log Plot", ImVec2_c{-1, 0}, 0) then
         defer ImPlot_EndPlot() end
         ImPlot_SetupAxisScale_PlotScale(ImAxis_X1, ImPlotScale_Log10)
         ImPlot_SetupAxesLimits(0.1, 100, 0, 10, ImPlotCond_Once)
@@ -176,10 +176,9 @@ local main = function()
             ImGui_Text("%.3f V", data[offset])
             ImGui_TableSetColumnIndex(2)
             ImGui_PushIDInt(row)
-            local vec4: ImVec4
-            ImPlot_GetColormapColor(&vec4, row, IMPLOT_AUTO)
+            local vec4 = ImPlot_GetColormapColor(row, IMPLOT_AUTO)
             -- TODO
-            Sparkline("##spark", &data, dtSize, 0, 11.0, offset , ImVec4{vec4.x, vec4.y, vec4.z, vec4.w } , ImVec2{-1, 35})
+            Sparkline("##spark", &data, dtSize, 0, 11.0, offset , ImVec4{vec4.x, vec4.y, vec4.z, vec4.w } , ImVec2_c{-1, 35})
             ImGui_PopID()
         end
         ImPlot_PopColormap(1)
@@ -207,13 +206,13 @@ end -- main() end
 ----------------
 --- Sparkline()
 ----------------
-function Sparkline(id: string, values: *float32, count: cint, min_v: float32, max_v: float32, offset: cint, col: ImVec4, size: ImVec2)
-    ImPlot_PushStyleVar_Vec2(ImPlotStyleVar_PlotPadding, ImVec2{0, 0 })
-    if ImPlot_BeginPlot(id, ImVec2{size.x, size.y}, ImPlotFlags_CanvasOnly) then
+function Sparkline(id: string, values: *float32, count: cint, min_v: float32, max_v: float32, offset: cint, col: ImVec4, size: ImVec2_c)
+    ImPlot_PushStyleVar_Vec2(ImPlotStyleVar_PlotPadding, ImVec2_c{0, 0 })
+    if ImPlot_BeginPlot(id, ImVec2_c{size.x, size.y}, ImPlotFlags_CanvasOnly) then
       ImPlot_SetupAxes(nilptr, nilptr, ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)
       ImPlot_SetupAxesLimits(0, count - 1, min_v, max_v, ImGuiCond_Always)
-      ImPlot_SetNextLineStyle(ImVec4{col.x, col.y, col.z, col.w}, IMPLOT_AUTO)
-      ImPlot_SetNextFillStyle(ImVec4{col.x, col.y, col.z, col.w}, 0.25)
+      ImPlot_SetNextLineStyle(ImVec4_c{col.x, col.y, col.z, col.w}, IMPLOT_AUTO)
+      ImPlot_SetNextFillStyle(ImVec4_c{col.x, col.y, col.z, col.w}, 0.25)
       ImPlot_PlotLine_FloatPtrInt(id, values, count, 1.0, 0, ImPlotLineFlags_Shaded, offset, #float32)
       ImPlot_EndPlot()
     end

@@ -1,0 +1,28 @@
+require 'os'
+require'math'
+--
+require'cimgui'
+require'simple'
+require'imgui_backend_opengl3'
+require'imgui_backend_glfw'
+require'loadImage'
+require'saveImage'
+require'utils'
+require'IconsFontAwesome6'
+
+local showDemoWindow = true
+
+global infoWindow = function()
+    ImGui_Begin("Info window", nil, 0)
+    defer ImGui_End() end
+    local s = "GLFW v" .. tostring(glfwGetVersionString())
+    ImGui_Text("%s", ICON_FA_COMMENT .. " " .. s)
+    ImGui_Text("%s", ICON_FA_COMMENT_SMS .. " " .. "OpenGL v" .. tostring((@cstring)(glGetString(GL_VERSION))))
+    ImGui_Text("%s", ICON_FA_COMMENT_DOTS .. " Dear ImGui")   ImGui_SameLine()
+    ImGui_Text("%s", ImGui_GetVersion())
+    ImGui_Text("%s", ICON_FA_COMMENT_MEDICAL .. " ")   ImGui_SameLine()
+    ImGui_Text("%s", _VERSION)
+    ImGui_Checkbox("ImGui Demo", &showDemoWindow)
+    ImGui_ColorEdit3("Background color", &clearColor, 0)
+    ImGui_Text("Application average %.3f ms/frame (%.1f FPS)", (1000.0 / pio.Framerate), pio.Framerate)
+end
